@@ -1,5 +1,9 @@
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views import generic, View
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the homepage of this site.")
+class Home(generic.TemplateView):
+    template_name = "home.html"
