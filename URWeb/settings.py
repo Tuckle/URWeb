@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
@@ -117,13 +116,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
-
 # default static files settings for PythonAnywhere.
 # see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
-MEDIA_ROOT = u'/home/URWeb/URWeb/media'
+MEDIA_ROOT = u'D:\\work\\Facultate\\WEB\\PROJECT\\URWeb\\URWeb\\media'
 MEDIA_URL = '/media/'
-STATIC_ROOT = u'/home/URWeb/URWeb/static'
+STATIC_ROOT = u'D:\\work\\Facultate\\WEB\\PROJECT\\URWeb\\static'
 STATIC_URL = '/static/'
 
 

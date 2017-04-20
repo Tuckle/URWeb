@@ -22,3 +22,8 @@ class ForgotPassword(generic.TemplateView):
 
 class Logout(generic.TemplateView):
     template_name = "logout.html"
+
+
+class Home(generic.TemplateView):
+    template_name = "home.html"
+
