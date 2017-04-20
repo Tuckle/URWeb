@@ -54,7 +54,7 @@ ROOT_URLCONF = 'URWeb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS':[os.path.join(os.path.dirname(__file__), 'templates/')],
+        'DIRS': [r'D:\work\Facultate\WEB\PROJECT\URWeb\URWeb\templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

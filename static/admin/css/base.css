@@ -481,6 +481,9 @@ input[type=button][disabled].default {
     opacity: 0.4;
 }
 
+.btn-space {
+    margin-right: 80px;
+}
 
 /* MODULES */
 
