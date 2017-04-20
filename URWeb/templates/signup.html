@@ -28,7 +28,7 @@
                             <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Sign In</a></div>
                         </div>  
                         <div class="panel-body" >
-                            <form id="signupform" class="form-horizontal" role="form">
+                            <form id="signupform" class="form-horizontal" role="form" action="/signup" method="post">
                                 
                                 <div id="signupalert" style="display:none" class="alert alert-danger">
                                     <p>Error:</p>
@@ -72,7 +72,7 @@
 
                                 <div class="form-group">                    
                                     <div class="col-sm-12 controls">
-                                        <button id="btn-signup" type="button" class="btn btn-info"><i class="icon-hand-right"></i> Sign Up</button>
+                                        <input type="submit" id="btn-signup" class="btn btn-success" value = 'Signup' name='simpleSignup'>
                                         <button id="btn-fbsignup" type="button" class="btn btn-facebook"><i class="icon-facebook"></i> Sign Up with Facebook</button>  
 					<button id="btn-gmsignup" type="button" class="btn btn-google"><i class="icon-gmail"></i> Sign Up with Gmail</button>
                                     </div>

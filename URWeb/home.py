@@ -16,3 +16,9 @@ class MyAccount(generic.TemplateView):
 
 class SignUp(generic.TemplateView):
     template_name = "signup.html"
+
+class ForgotPassword(generic.TemplateView):
+    template_name = "forgotpassword.html"
+
+class Logout(generic.TemplateView):
+    template_name = "logout.html"

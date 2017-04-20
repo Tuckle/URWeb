@@ -16,13 +16,18 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from URWeb import home
-from URWeb.login import LoginView
+from URWeb.login  import LoginView
+from URWeb.logout import LogoutView
+from URWeb.signup import SignupView
+from URWeb.forgotpassword import ForgotPasswordView
 from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
     url(r'^admin',  admin.site.urls),
     url(r'^login',  LoginView.as_view(template_name="login.html"), name='login'),
-    url(r'^signup', TemplateView.as_view(template_name='signup.html'), name='signup'),		
-    url(r'^myaccount', TemplateView.as_view(template_name='myaccount.html'), name='myaccount')
+    url(r'^signup', SignupView.as_view(template_name="signup.html"), name='signup'),		
+    url(r'^myaccount', TemplateView.as_view(template_name='myaccount.html'), name='myaccount'),
+    url(r'^forgotpassword', ForgotPasswordView.as_view(template_name="forgotpassword.html"), name='forgotpassword'),
+    url(r'^logout', LogoutView.as_view(template_name="logout.html"), name='logout')	
 ]
