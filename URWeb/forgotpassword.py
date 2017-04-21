@@ -17,14 +17,6 @@ class ForgotPasswordView(View):
         new_password_2 = request.POST['check-new-password']
         print(username)
 
-        if not username:
-            return HttpResponse('Username is a mandatory field!')
-        if not old_password:
-            return HttpResponse('You need to fill in the old password!')
-        if not new_password_1:
-            return HttpResponse('You need to fill in the new password!')
-        if not new_password_2:
-            return HttpResponse('You need to check the new password!')
         if new_password_1!=new_password_2:
             return HttpResponse('The two new passwords must be the same!')
         else:

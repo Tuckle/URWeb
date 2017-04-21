@@ -9,47 +9,59 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-
-        <!-- <link rel="stylesheet" type="text/css" href="../frontend/style/style.css"> -->
-
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
+	
         <style type="text/css">
-            .container-fluid{
+           body {
                 {% load static %}
                 background-image: url({% static "images/background.jpg" %});
                 background-size: cover;
+		background-repeat: no-repeat;
                 background-position: center;
-        		position:absolute;
+        	position:absolute;
         	
-        		top: 0px;
-        		bottom: 0px;
-        		left: 0px;
-        		right: 0px;
-                height: 100%;
+        	top: 0px;
+        	bottom: 0px;
+        	left: 0px;
+        	right: 0px;
+                height: 400%;
 		
                 padding: 0;
-            }
-            .container {
-                  height: 100%;
-                  width: 100%;
-                  display: flex;
-                  position: fixed;
-                  align-items: center;
-                  justify-content: center;
                 }
-      
         </style>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
-
+    
     <body>
-        <div class="container-fluid text-center container"  id="top"> 
-                <p>Hello, I will help you find the locations you need!<br></p> 
-        </div>
-    </body>
+        <div class="container-fluid container">    
+        <div id="homebox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+            <div class="panel panel-info" >
 
+                    <div class="panel-heading">
+		       <div class="panel-title">Sign In</div>
+                       <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="/login">Log in your account</a></div>
+                    </div> 
+                        
+                        <div style="padding-top:30px" class="panel-body" >
+
+                        <div style="display:none" id="home-alert" class="alert alert-danger col-sm-12"></div>
+
+                        <form id="homeform" class="form-horizontal" role="form" action="" method="post">
+                            
+                            <center>Hello, I will help you find the locations you need!</center>
+                                
+                        </form>     
+                        
+                        </div>                     
+            </div>  
+        </div>
+        </div>
+    
+    </body>
 </html>

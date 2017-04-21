@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.views import View
+from django.shortcuts import render_to_response
 from django.shortcuts import redirect  
 
 class SignupView(View):
@@ -17,12 +18,5 @@ class SignupView(View):
         firstname = request.POST['firstname']
         lastname  = request.POST['lastname']
 
-        if not username:
-            return HttpResponse('Username is a mandatory field!')
-        if not password:
-            return HttpResponse('Password is a mandatory field!')
-        if not email:
-            return HttpResponse('Email is a mandatory field!')
-        else:
-            return redirect('/myaccount')
-                
+        redirect('/myaccount')
+        return render_to_response('myaccount.html', {'name': request.POST['username']})                

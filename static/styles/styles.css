@@ -1,0 +1,26 @@
+            
+           .container-fluid{
+                {% load static %}
+                background-image: url({% static "images/background.jpg" %});
+                background-size: cover;
+                background-position: center;
+        		position:absolute;
+        	
+        		top: 0px;
+        		bottom: 0px;
+        		left: 0px;
+        		right: 0px;
+                height: 100%;
+		
+                padding: 0;
+            }
+            .container {
+                  height: 100%;
+                  width: 100%;
+                  display: flex;
+                  position: fixed;
+                  align-items: center;
+                  justify-content: center;
+                }
+      
+	
