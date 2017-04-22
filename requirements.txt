@@ -5,3 +5,4 @@ py -3 -m pip install -r /path/to/requirements.txt
 requests
 social-auth-app-django
 python-social-auth[django]
+pyjwkest
