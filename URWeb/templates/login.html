@@ -51,6 +51,27 @@
 
     
 	<body class>
+
+	<script>
+  	window.fbAsyncInit = function() {
+   	 FB.init({
+     	 appId      : '1856496534625387',
+      	xfbml      : true,
+     	 version    : 'v2.9'
+    	});
+    	FB.AppEvents.logPageView();
+  	};
+
+  	(function(d, s, id){
+    	 var js, fjs = d.getElementsByTagName(s)[0];
+     	if (d.getElementById(id)) {return;}
+     	js = d.createElement(s); js.id = id;
+     	js.src = "//connect.facebook.net/en_US/sdk.js";
+     	fjs.parentNode.insertBefore(js, fjs);
+   	}(document, 'script', 'facebook-jssdk'));
+	</script>
+
+
         <div class="container-fluid container">    
         <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
             <div class="panel panel-info" >
@@ -89,8 +110,8 @@
 
                                     <div class="col-sm-12 controls">
                                         <input type="submit" id="btn-login" class="btn btn-success" value = 'Login' name='simpleLogin'>
-                                        <a id="btn-fblogin"   class="btn btn-facebook" href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a>
-                                        <a id="btn-gmlogin"   class="btn btn-google" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Login with Gmail</a>
+                                        <a id="btn-fblogin"   class="btn btn-facebook" href="{% url 'social:begin' 'facebook' %}?next=/myaccount">Login with Facebook</a>
+                                        <a id="btn-gmlogin"   class="btn btn-google" href="{% url 'social:begin' 'google-oauth2' %}?next=/myaccount">Login with Gmail</a>
                                         <a id="btn-twlogin"   class="btn btn-twitter" href="{% url 'social:begin' 'twitter' %}?next=/myaccount">Login with Twitter</a>
 
                                     </div>
