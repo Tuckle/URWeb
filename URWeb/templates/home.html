@@ -52,11 +52,19 @@
 
                         <div style="display:none" id="home-alert" class="alert alert-danger col-sm-12"></div>
 
-                        <form id="homeform" class="form-horizontal" role="form" action="" method="post">
-                            
+                        <p> 
                             <center>Hello, I will help you find the locations you need!</center>
+			    
+                            {% if user and not user.is_anonymous %}
+                               Hello {{ user.get_full_name|default:user.username }}!
+                                <li>
+       				    <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
+     				</li>
+                            {% else %}
+                            <center>   I don’t think we’ve met before. </center>
+                            {% endif %}
                                 
-                        </form>     
+                        </p>     
                         
                         </div>                     
             </div>  

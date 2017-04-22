@@ -9,6 +9,8 @@ class LoginView(View):
     template_name = "login.html"
     
     def get(self, request, *args, **kwargs):
+        if request.user is not None and not request.user.is_anonymous:
+            return redirect("/")
         return render(request, self.template_name)            
 
     def post(self, request, *args, **kwargs):

@@ -1,29 +1,15 @@
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.views import generic, View
-from django.conf import settings
+from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+from django.views import View
+from django.shortcuts import redirect  
+from django.shortcuts import render_to_response
+from django.template.context import RequestContext
 
-
-class Login(generic.TemplateView):
-    template_name = "login.html"
-
-                                
-class MyAccount(generic.TemplateView):
-    template_name = "myaccount.html"
-
-
-class SignUp(generic.TemplateView):
-    template_name = "signup.html"
-
-class ForgotPassword(generic.TemplateView):
-    template_name = "forgotpassword.html"
-
-class Logout(generic.TemplateView):
-    template_name = "logout.html"
-
-
-class Home(generic.TemplateView):
+class HomeView(View):
     template_name = "home.html"
+    
+    def get(self, request, *args, **kwargs):
+        return render_to_response('home.html', {'user': request.user, 'request': request})        
 
+   

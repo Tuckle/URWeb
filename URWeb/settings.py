@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
+from .config import *
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,7 +26,7 @@ SECRET_KEY = '&ncu9ucx_4oz9_k$k&%=b=3^2=!&vn-8i01qm5#pn1=_996_#u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [u'URWeb.pythonanywhere.com', u'127.0.0.1']
+ALLOWED_HOSTS = [u'URWeb.pythonanywhere.com', u'127.0.0.1', "home.com"]
 
 
 # Application definition
@@ -36,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'social_django',
+    'social.apps.django_app.default',
 ]
 
 MIDDLEWARE = [
@@ -61,10 +64,26 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
 ]
+
+
+AUTHENTICATION_BACKENDS = (
+   'social.backends.facebook.FacebookOAuth2',
+   'social.backends.google.GoogleOAuth2',
+   'social.backends.twitter.TwitterOAuth',
+   'django.contrib.auth.backends.ModelBackend',
+)
+
 
 WSGI_APPLICATION = 'URWeb.wsgi.application'
 
@@ -124,9 +143,6 @@ STATIC_ROOT = u'D:\\work\\Facultate\\WEB\\PROJECT\\URWeb\\static'
 STATIC_URL = '/static/'
 
 
-#hardcoded values for login testing
-ADMIN_LOGIN = 'admin'
-ADMIN_PASSWORD = 'admin'
-
 APPEND_SLASH = False
+LOGIN_REDIRECT_URL = '/'
    
