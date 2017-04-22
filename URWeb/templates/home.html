@@ -56,9 +56,9 @@
                             <center>Hello, I will help you find the locations you need!</center>
 			    
                             {% if user and not user.is_anonymous %}
-                               Hello {{ user.get_full_name|default:user.username }}!
+                               <center>Hello {{ user.get_full_name|default:user.username }}!</center>
                                 <li>
-       				    <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
+       				<center><a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a></center>
      				</li>
                             {% else %}
                             <center>   I don’t think we’ve met before. </center>

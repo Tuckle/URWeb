@@ -91,7 +91,7 @@
                                         <input type="submit" id="btn-login" class="btn btn-success" value = 'Login' name='simpleLogin'>
                                         <a id="btn-fblogin"   class="btn btn-facebook" href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a>
                                         <a id="btn-gmlogin"   class="btn btn-google" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Login with Gmail</a>
-                                        <a id="btn-twlogin"   class="btn btn-twitter" href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Login with Twitter</a>
+                                        <a id="btn-twlogin"   class="btn btn-twitter" href="{% url 'social:begin' 'twitter' %}?next=/myaccount">Login with Twitter</a>
 
                                     </div>
 
