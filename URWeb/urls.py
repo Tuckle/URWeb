@@ -26,8 +26,8 @@ from django.views.generic import TemplateView
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url('', include('social.apps.django_app.urls', namespace='social')),
     url('', include('django.contrib.auth.urls', namespace='auth')),
+    url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^admin', include(admin.site.urls)),
     url(r'^$', HomeView.as_view(template_name='home.html'), name='home'),
     url(r'^login',  LoginView.as_view(template_name="login.html"), name='login'),

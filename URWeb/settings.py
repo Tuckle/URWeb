@@ -142,7 +142,6 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = u'D:\\work\\Facultate\\WEB\\PROJECT\\URWeb\\static'
 STATIC_URL = '/static/'
 
-
 APPEND_SLASH = False
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
