@@ -16,13 +16,8 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.conf import settings
 from django.contrib import admin
-from URWeb.home import HomeView
-from URWeb.login  import LoginView
-from URWeb.logout import LogoutView
-from URWeb.signup import SignupView
-from URWeb.myaccount import MyAccountView
-from URWeb.forgotpassword import ForgotPasswordView
-from django.views.generic import TemplateView
+from .home import HomeView
+from .app.authentication.urls import auth_urls
 from django.conf.urls.static import static
 
 urlpatterns = [
@@ -30,9 +25,5 @@ urlpatterns = [
     url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^admin', include(admin.site.urls)),
     url(r'^$', HomeView.as_view(template_name='home.html'), name='home'),
-    url(r'^login',  LoginView.as_view(template_name="login.html"), name='login'),
-    url(r'^signup', SignupView.as_view(template_name="signup.html"), name='signup'),		
-    url(r'^myaccount', MyAccountView.as_view(template_name='myaccount.html'), name='myaccount'),
-    url(r'^forgotpassword', ForgotPasswordView.as_view(template_name="forgotpassword.html"), name='forgotpassword'),
-    url(r'^logout', LogoutView.as_view(template_name="logout.html"), name='logout')
+    url(r'^', include(auth_urls))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
