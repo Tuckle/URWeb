@@ -61,6 +61,11 @@
       </div>
     </nav>
     <div id="map" style="max-height: 80%;"></div>
+    <div id="infowindow-content" class="hidden">
+      <img id="place-icon" src="" height="16" width="16"><br>
+      <span id="place-name"  class="title"></span><br>
+      <span id="place-address"></span>
+    </div>
 <!--
     <ul class="list-group" style="max-height: 80%; max-width: 25%; /*margin-left: auto; margin-right: 0; top: -15px;*/">
         <li class="list-group-item">Pisi</li>
@@ -73,15 +78,10 @@
         </select>
       </div>
       <div class="form-group">
-          <button type="submit" class="btn btn-default">Select</button>
+          <button type="submit" class="btn btn-default" onclick="getSelectedPluginData()">Select</button>
          </div>
       </div>
     
-    <div>
-      <button class="btn btn-default" onclick="getDoc()">Refresh</button>
-      <label>Some text:</label>
-      <label id="txtItem33">TEEER</label>
-    </div>
     <div id = "plugin-data">
       
     </div>
@@ -213,6 +213,62 @@
         }
       })
     })
+
+	function nodeScriptReplace(node) {
+        if ( nodeScriptIs(node) === true ) {
+                node.parentNode.replaceChild( nodeScriptClone(node) , node );
+        }
+        else {
+                var i        = 0;
+                var children = node.childNodes;
+                while ( i < children.length ) {
+                        nodeScriptReplace( children[i++] );
+                }
+        }
+
+        return node;
+	}
+	function nodeScriptIs(node) {
+        return node.tagName === 'SCRIPT';
+	}
+	function nodeScriptClone(node){
+        var script  = document.createElement("script");
+        script.text = node.innerHTML;
+        for( var i = node.attributes.length-1; i >= 0; i-- ) {
+                script.setAttribute( node.attributes[i].name, node.attributes[i].value );
+        }
+        return script;
+	}
+
+    function getSelectedPluginData()
+    {
+
+		var div = document.getElementById("plugin-data")
+		div.innerHTML = ''
+    	$.ajax({
+    		type: 'get',
+    		url: '/api/plugins/' + document.getElementById("selection1").value,
+    		processData:false,
+    		success: function(data){
+    			data = JSON.parse(data)
+    			if (!data['result']){
+    				var div = document.getElementById("plugin-data")
+	          		div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data['msg'] + '</div>'
+	          	}
+	          	else
+	          	{
+	          		var div = document.getElementById("plugin-data")
+	          		div.name = document.getElementById("selection1").value
+	          		div.innerHTML = data['html']
+	          		nodeScriptReplace(document.getElementById("plugin-data"));
+	          	}
+    		},
+    		failure: function(data){
+    			var div = document.getElementById("plugin-data")
+	          	div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
+    		}
+    	})
+    }
 
     function loadViewPlugins()
     {
@@ -404,7 +460,7 @@
           // other map click event handlers from receiving the event.
           event.stop();
           this.calculateAndDisplayRoute(event.placeId);
-          // this.getPlaceInformation(event.placeId);
+          this.getPlaceInformation(event.placeId);
         }
       };
 
@@ -427,13 +483,14 @@
         var me = this;
         this.placesService.getDetails({placeId: placeId}, function(place, status) {
           if (status === 'OK') {
+          	$("#infowindow-content").removeClass("hidden")
             me.infowindow.close();
             me.infowindow.setPosition(place.geometry.location);
             me.infowindowContent.children['place-icon'].src = place.icon;
             me.infowindowContent.children['place-name'].textContent = place.name;
-            me.infowindowContent.children['place-id'].textContent = place.place_id;
             me.infowindowContent.children['place-address'].textContent =
                 place.formatted_address;
+
             me.infowindow.open(me.map);
           }
         });

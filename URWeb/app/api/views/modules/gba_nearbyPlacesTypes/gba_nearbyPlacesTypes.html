@@ -1,0 +1,75 @@
+  <div class="well well-sm">Get Nearby Location Types - Formular</div>
+  <div id="pluginAlertZone">
+  </div>
+  <form class="form-horizontal">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="radius">Radius:</label>
+        <div class="col-sm-2">
+          <input type="number" class="form-control" id="radiusEntry" placeholder="Enter a number lower than 1000">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="languageSelection">Language:</label>
+        <div class="col-sm-1">
+          <select class = "form-control" id="languageSelection">
+            <option>en</option>
+            <option>ro</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"> 
+        <div class="col-sm-offset-2 col-sm-2">
+          <div class="checkbox">
+            <label><input type="checkbox" id="checkBoxOpenNow"> Open Now</label>
+            <span id="arctip" title="If this option is checked the api will return only the places with the open now status active." data-html="true" rel="tooltip" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group"> 
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="button" class="btn btn-default" onclick="getTypesFunction()">Get Types</button>
+        </div>
+      </div>
+    </form>
+    <div class="well well-sm" id="resultText" class="hidden">Get Nearby Location Types - Results</div>
+    <div id="resultContent"></div>
+    <script>
+      $("#arctip").tooltip({
+        placement: "top"
+      });
+      $("#resultText").addClass('hidden');
+      function getTypesFunction()
+      { 
+        $("#resultText").addClass('hidden');
+        var number = document.getElementById("radiusEntry").value
+        var language = document.getElementById("languageSelection").value
+        var checkbox = document.getElementById("checkBoxOpenNow").value
+        if (number > 2000 || number < 5)
+        {
+          console.log("Warning")
+          var div = document.getElementById("pluginAlertZone")
+          div.innerHTML = '<div class="alert alert-warning"><strong>Warning!</strong> Invalid data in required fields! (radius must pe lower than 2000 and greater than 5)</div>'
+        }
+        else
+        {
+          var data = {radius : number, lng: language, open_now: checkbox}
+          $.ajax({
+            type: 'post',
+            url: '/api/plugins/' + document.getElementById("plugin-data").name,
+            data : JSON.stringify(data),
+            processData: false,
+            success: function(data){
+              var div = document.getElementById("resultContent")
+              div.innerHTML = data
+              $("#resultText").removeClass('hidden');
+            },
+            failure: function(data){
+              var div = document.getElementById("resultContent")
+              div.innerHTML = '<div class="alert alert-danger"><strong>Warning!</strong> Something has failed</div>'
+              $("#resultText").removeClass('hidden');
+            }
+          })
+        }
+      }
+
+    </script> 
