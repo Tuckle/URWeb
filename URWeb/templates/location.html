@@ -52,7 +52,7 @@
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="#" data-toggle="modal" data-target="#addPlugin" onclick="addPluginModalLoad()">Add Plugin</a></li>
-                  <li><a href="#" data-toggle="modal" data-target="#viewPlugin">View Plugin</a></li>
+                  <li><a href="#" data-toggle="modal" data-target="#viewPlugin" onclick="loadViewPlugins()">View Plugin</a></li>
                 </ul>
               </li>
             <li><a href="#"><span class="glyphicon glyphicon-user"></span> Username</a></li>
@@ -158,7 +158,7 @@
             <h4 class="modal-title">Plugins</h4>
           </div>
           <div class="modal-body">
-            <div class="list-group">
+            <div class="list-group" id="pluginsViewList">
                 <!-- info -->
                  <div class="panel-group">
                   <div class="panel panel-default">
@@ -192,23 +192,57 @@
     $(document).ready(function() {
       $.ajax({
         type: 'get',
-        url: '../api/plugins',
+        url: '/api/plugins',
         processData:false,
         success:function(data)
         {
-          var div = document.getElementById("selection1")
-          div.innerHTML = data
+          var result = '';
+          data = JSON.parse(data)
+          data = data['data']
+          for (x in data){
+				result += '<option>' + data[x].name + '</option>'
+          	}
+    		var div = document.getElementById("selection1")
+    		div.innerHTML = result
+
         },
         failure:function(data)
         {
           var div = document.getElementById("selection1")
-          div.innerHTML = '<option>Error<option>'
+          div.innerHTML = '<option>Error</option>'
         }
       })
-      var div = document.getElementById("selection1")
-      div.innerHTML = '<option>mere</option><option>ana</option>'
-
     })
+
+    function loadViewPlugins()
+    {
+    	$.ajax({
+    		type: 'get',
+    		url: '/api/plugins',
+	        processData:false,
+	        success:function(data)
+	        {
+	        	var result = '';
+	          data = JSON.parse(data)
+	          data = data['data']
+	          counter = 0
+	          for (x in data){	          	
+	          	result += '<div class="panel-group"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse' + counter + '">' + 
+          		data[x].name + '</a></h4></div><div id="collapse' + counter + '" class="panel-collapse collapse"><div class="panel-body">Description:' + data[x].description + '</div></div></div><br>'
+    			counter += 1
+	    		}
+    			var div = document.getElementById("pluginsViewList")
+	          div.innerHTML = result
+	        },
+	        failure:function(data)
+	        {
+	          var div = document.getElementById("pluginsViewList")
+	          div.innerHTML = 'Error'
+	        }
+
+	    	})
+    }
+
     function addPluginModalLoad()
     {
       var div = document.getElementById("alertZone")

@@ -1,0 +1,24 @@
+(lp0
+(dp1
+S'path'
+p2
+S''
+p3
+sS'name'
+p4
+S'Find nearby places'
+p5
+sS'description'
+p6
+S'Custom plugin to find nearby places'
+p7
+sa(dp8
+g2
+g3
+sg4
+S'Find nearby location types'
+p9
+sg6
+S'Custom plugin to find nearby location types'
+p10
+sa.
