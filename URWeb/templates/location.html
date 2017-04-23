@@ -13,6 +13,11 @@
 
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script> 
+        var map, infoWindow;
+    	var origin = {lat: -34.397, lng: 150.644};
+	    var origin2;
+        </script>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -242,7 +247,7 @@
 
     function getSelectedPluginData()
     {
-
+    	
 		var div = document.getElementById("plugin-data")
 		div.innerHTML = ''
     	$.ajax({
@@ -350,10 +355,7 @@
     function appendHtml(id, el, str) {
   var div = document.getElementById(id);
   div.innerHTML = str;
-}
-    var origin = {lat: -34.397, lng: 150.644};
-    var origin2;
-    // var origin2 = new Object();
+}    // var origin2 = new Object();
     // origin2.lat_ = origin['lat'];
 
     // origin2.lat = function() {
@@ -365,7 +367,7 @@
     // origin2.lng = function() {
     //   return this.lng_;
     // }
-    var map, infoWindow;
+    
     function getDoc(){
       console.log("function getDoc()");
       

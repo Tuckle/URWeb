@@ -65,6 +65,7 @@ class Plugins(generic.View):
 			data = json.loads(request.body)
 			result = ''
 		else:
+			formatType = format
 			value = False
 			if not self.dictObject:
 				self.loadDict()
@@ -75,12 +76,13 @@ class Plugins(generic.View):
 					break
 			pathToPlugin = os.path.join(self.pluginsModulesPath, path, path + ".py")
 			exec('from .modules.{}.{} import Plugin'.format(path, path))
+			result = ''
 			try:
 				result = locals()
-				exec("result = Plugin().run({})".format(request.body), globals(), result)
-				print(result['result'])
+				exec("result = Plugin().run({}, {})".format(request.body, formatType), globals(), result)
+				result = result['result']
 			except Exception as e:
 				print("No module named Main found\n{}".format(e))
-			return HttpResponse("None")
+			return HttpResponse(result)
 
 
