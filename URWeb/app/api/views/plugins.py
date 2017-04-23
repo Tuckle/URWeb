@@ -7,5 +7,5 @@ from django.conf import settings
 import requests
 
 
-class Location(generic.TemplateView):
-    template_name = "location.html"
+class Plugins(generic.View):
+    pass
