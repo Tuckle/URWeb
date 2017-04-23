@@ -35,3 +35,8 @@ class Plugins(generic.View):
 			return HttpResponse("OK")
 		else:
 			return HttpResponse("Bad plugin name")
+
+	def post(self, request, name, format):
+		data = json.loads(request.body)
+		result = ''
+		

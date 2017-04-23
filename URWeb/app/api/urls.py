@@ -19,5 +19,5 @@ from .views.nearby import NearbyPlaces
 
 api_urls = [
     url(r'^/plugins(?:/(?P<name>\w+))?(?:/(?P<format>\w+))?$', Plugins.as_view(), name='plugins'),
-    url(r'^/nearby/places(?:/(?P<place_id>\w+))?(?P<format>\w+))?$', NearbyPlaces.as_view(), name='nearby_places')
+#    url(r'^/nearby/places(?:/(?P<place_id>\w+))?(?P<format>\w+))?$', NearbyPlaces.as_view(), name='nearby_places')
 ]
