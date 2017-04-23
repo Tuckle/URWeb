@@ -15,7 +15,6 @@ class ForgotPasswordView(View):
         old_password  = request.POST['old-password']
         new_password_1 = request.POST['new-password']
         new_password_2 = request.POST['check-new-password']
-        print(username)
 
         if new_password_1!=new_password_2:
             return HttpResponse('The two new passwords must be the same!')

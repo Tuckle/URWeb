@@ -16,6 +16,6 @@ class HomeView(View):
     template_name = "home.html"
     
     def get(self, request, *args, **kwargs):
-        return render_to_response(self.template_name, {'user': request.user, 'request': request})
+        return render(request, self.template_name, {'user': request.user, 'request': request})
         
 

@@ -2,7 +2,6 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.views import View
-from django.shortcuts import render_to_response
 from django.shortcuts import redirect  
 
 class SignupView(View):
@@ -19,4 +18,4 @@ class SignupView(View):
         lastname  = request.POST['lastname']
 
         redirect('/myaccount')
-        return render_to_response('myaccount.html', {'name': request.POST['username']})                
+        return render(request, 'myaccount.html', {'name': request.POST['username']})                

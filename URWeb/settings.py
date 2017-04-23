@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&ncu9ucx_4oz9_k$k&%=b=3^2=!&vn-8i01qm5#pn1=_996_#u'
+SECRET_KEY = r'&ncu9ucx_4oz9_k$k&%=b=3^2=!&vn-8i01qm5#pn1=_996_#u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'social_django',
     'social.apps.django_app.default',
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -143,5 +144,9 @@ STATIC_ROOT = u'D:\\work\\Facultate\\WEB\\PROJECT\\URWeb\\static'
 STATIC_URL = '/static/'
 
 APPEND_SLASH = False
-LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/myaccount'
+LOGIN_URL = '/login'
+
+AUTH_QR_CODE_EXPIRATION_TIME = 30 
+AUTH_QR_CODE_REDIRECT_URL = "/myaccount"
+SITE_ID = 1

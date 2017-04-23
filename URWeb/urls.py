@@ -29,5 +29,6 @@ urlpatterns = [
     url(r'^$', HomeView.as_view(template_name='home.html'), name='home'),
     url(r'^location', Location.as_view(), name='location'),
     url(r'^', include(auth_urls)),
-    url(r'^api', include(api_urls))
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    url(r'^api', include(api_urls)),
+    url(r'^qr', include('qrauth.urls')),
+   ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

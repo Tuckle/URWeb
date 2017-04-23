@@ -6,3 +6,6 @@ social-auth-app-django
 python-social-auth[django]
 pyjwkest
 tweepy
+Redis
+django-qrauth
+//qrauth lib has been modified to work with Django 1.11. It has been moved to project folder;
