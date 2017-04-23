@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.conf import settings
 from django.contrib import admin
 from .home import HomeView
+from .location import Location
 from .app.authentication.urls import auth_urls
 from .app.api.urls import api_urls
 from django.conf.urls.static import static
@@ -26,6 +27,7 @@ urlpatterns = [
     url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^admin', include(admin.site.urls)),
     url(r'^$', HomeView.as_view(template_name='home.html'), name='home'),
+    url(r'^location', Location.as_view(), name='location'),
     url(r'^', include(auth_urls)),
     url(r'^api', include(api_urls))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
