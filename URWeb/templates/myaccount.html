@@ -33,6 +33,10 @@
                 padding: 0;
               }
 
+	  .custom {
+ 	   width: 300px;
+           }
+
         </style>
 
         <!-- Latest compiled JavaScript -->
@@ -51,7 +55,10 @@
         <div id="myaccountbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
             <div class="panel panel-info" >
                     <div class="panel-heading">
-                        <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="/logout">Log out</a></div>
+		    <div class = "custom">	
+                        <button><a href="/location">Get your location</a></button>
+			<button><a href="{% url 'auth:logout' %}?next=/logout">Logout</a></button>
+		    </div>
                     </div>     
 
                     <div style="padding-top:30px" class="panel-body" >
@@ -64,10 +71,7 @@
                         <div style="display:none" id="myaccount-alert" class="alert alert-danger col-sm-12"></div>
                 
 		  	    {% if user and not user.is_anonymous %}
-                               <center>Hello {{ user.get_full_name|default:user.username }}!</center>
-                                <li>
-       				<center><a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a></center>
-     				</li>
+                                <center>Hello {{ user.get_full_name|default:user.username }}!</center>
                             {% endif %}
                            
                         </div>                     

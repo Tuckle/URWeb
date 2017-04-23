@@ -58,7 +58,7 @@
                             {% if user and not user.is_anonymous %}
                                <center>Hello {{ user }}!</center>
                                 <li>
-       				<center><a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a></center>
+       				<center><a href="{% url 'auth:logout' %}?next=/logout">Logout</a></center>
      				</li>
                             {% else %}
                             <center>   I don’t think we’ve met before. </center>
