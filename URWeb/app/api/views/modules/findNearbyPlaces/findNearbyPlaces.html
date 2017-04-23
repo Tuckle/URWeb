@@ -1,0 +1,42 @@
+<!--
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+-->
+<div class="well well-sm">Find and view nearby places</div>
+<div id="pluginAlertZone"></div>
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="radius">Radius:</label>
+        <div class="col-sm-1">
+          <input type="number" class="form-control" id="radius" placeholder="default" max="2000" min="5">
+        </div>
+        <label class="control-label col-sm-1" for="languageSelection">Language:</label>
+        <div class="col-sm-1">
+          <select class = "form-control" id="languageSelection">
+            <option>en</option>
+            <option>ro</option>
+          </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="typeSelection">Type:</label>
+        <div class="col-sm-3">
+          <select class = "form-control" id="typeSelection">
+            <option>None selected</option>
+          </select>
+        </div>
+    </div>
+    <div class="form-group">
+            <label class="checkbox-inline col-sm-offset-2"><input type="checkbox" id="rankByProeminence"> Rank by proeminence</label>
+<!--            <span id="proemTip" title="Tooltip" data-html="true" rel="tooltip" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>-->
+            <label class="checkbox-inline"><input type="checkbox" id="checkBoxOpenNow"> Open Now</label>
+            <span id="arctip" title="If this option is checked the api will return only the places with the open now status active." data-html="true" rel="tooltip" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+    </div>
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-8">
+      <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+  </div>
+</form> 
