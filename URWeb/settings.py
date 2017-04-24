@@ -150,3 +150,11 @@ LOGIN_URL = '/login'
 AUTH_QR_CODE_EXPIRATION_TIME = 300 
 AUTH_QR_CODE_REDIRECT_URL = "/myaccount"
 SITE_ID = 1
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'urweburweb@gmail.com'
+EMAIL_HOST_PASSWORD = 'orangeorange'
+EMAIL_PORT = 587
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
