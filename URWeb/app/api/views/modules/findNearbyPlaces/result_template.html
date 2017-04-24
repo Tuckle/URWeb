@@ -1,0 +1,21 @@
+{% if html_data %}
+<div class="list-group">
+{% for obj in html_data %}
+    <div class="list-group-item">
+        <div data-toggle="collapse" data-target="#c{{loop.index}}">
+            {{ obj.name }}
+            {% if obj.icon %}
+                <img src="{{obj.icon}}">
+            {% endif %}
+            <span class="badge">{{ obj.rating }}</span>
+        </div>
+        <div id="c{{loop.index}}" class="collapse">
+            More data here
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+{% else %}
+Error message. No data found.
+{% endif %}

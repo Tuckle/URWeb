@@ -7,7 +7,7 @@
             <div class="panel panel-info" >
 
                     <div class="panel-heading">
-		       <div class="panel-title">Home</div>
+		       <div class="panel-title">HOME PAGE</div>
                        <div style="float:right; font-size: 80%; position: relative; top:-10px">
 			    {% if user and not user.is_anonymous %}
 			        <a href="/login">My Account</a>
@@ -25,7 +25,7 @@
                           			    
                             {% if user and not user.is_anonymous %}
                                <center>Hello, {{ user }}!</center>
-			     <br><center><button><a href="{% url 'auth:logout' %}?next=/logout">Logout</a></button></center></br>
+			     <br><center><a href="{% url 'auth:logout' %}?next=/logout" class="btn btn-primary">Logout</a></center></br>
      				
                             {% else %}
                             <center>   I don’t think we’ve met before. </center>
