@@ -82,6 +82,7 @@
         }
         else
         {
+            document.getElementById("resultContent").innerHTML = '<div class="alert alert-info"><strong>Info!</strong> Please wait while we search the wanted information. This might take several minuntes.</div>'
             if (origin2)
             {
                 locationData = {lat: origin2.lat(), lng: origin2.lng()}
