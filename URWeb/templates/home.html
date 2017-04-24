@@ -22,12 +22,11 @@
                         <div style="display:none" id="home-alert" class="alert alert-danger col-sm-12"></div>
 
                         <p> 
-                            <center>Hello, I will help you find the locations you need!</center>
-			    
+                          			    
                             {% if user and not user.is_anonymous %}
-                               <center>Hello {{ user }}!</center>
+                               <center>Hello, {{ user }}!</center>
                                 <li>
-       				<center><a href="{% url 'auth:logout' %}?next=/logout">Logout</a></center>
+       				<center><button><a href="{% url 'auth:logout' %}?next=/logout">Logout</a></button></center>
      				</li>
                             {% else %}
                             <center>   I don’t think we’ve met before. </center>
