@@ -157,4 +157,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'urweburweb@gmail.com'
 EMAIL_HOST_PASSWORD = 'orangeorange'
 EMAIL_PORT = 587
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # During development only

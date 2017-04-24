@@ -26,20 +26,12 @@
          <style type="text/css">
            body {
                 {% load static %}
-                background-image: url({% static "images/background.jpg" %});
-                background-size: cover;
-		background-repeat: no-repeat;
-                background-position: center;
-        	position:absolute;
-        	
-        	top: 0px;
-        	bottom: 0px;
-        	left: 0px;
-        	right: 0px;
-                height: 400%;
-		
-                padding: 0;
-                }
+                background-image: url({% static "images/background.png" %});
+                -webkit-background-size: cover;
+        	-moz-background-size: cover;
+        	-o-background-size: cover;
+        	background-size: cover;       
+		}
 	     
         </style>
 

@@ -24,7 +24,7 @@ from .views import views as core_views
 
 auth_urls = [
     #url(r'^login',  LoginView.as_view(template_name="login.html"), name='login'),
-    url(r'^login',  auth_views.login, {'template_name': 'login.html', "redirect_authenticated_user": True}, name='login'),
+    url(r'^login',  auth_views.login, {'template_name': 'login.html'}, name='login',"redirect_authenticated_user": True),
     url(r'^logout', auth_views.logout, {'template_name': 'logout.html', 'next_page': '/'}, name='logout'),
     #url(r'^logout', LogoutView.as_view(template_name="logout.html"), name='logout')
     #url(r'^signup', SignupView.as_view(template_name="signup.html"), name='signup'),
