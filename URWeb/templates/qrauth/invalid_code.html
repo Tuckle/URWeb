@@ -1,10 +1,25 @@
-{% extends "base.html" %}
+	{% extends 'base.html' %} 
+  	{% block content %}
+        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+            <div class="panel panel-info" >
+                    <div class="panel-heading">
+                        <div class="panel-title">Invalid QR code</div>
+                    </div>     
 
-{% block title %}Invalid QR code{% endblock %}
+                    <div style="padding-top:30px" class="panel-body" >
 
-{% block content %}
-<div class="error">
-<h1>Invalid QR code</h1>
-<p>The QR code you are using for authentication is invalid. Please try to open the page with the QR code again and then rescan it.</p>
-</div>
-{% endblock %}
+                        <div style="display:none" id="invqr-alert" class="alert alert-danger col-sm-12"></div>
+                            
+                        <form id="invqrform" class="form-horizontal" role="form" method="post">
+                            {% csrf_token %}
+                           
+			<div class="error">
+			<p>The QR code you are using for authentication is invalid. Please try to open the page with the QR code again and then rescan it.</p>
+			</div>
+                                 
+	
+		        </form>     
+                        </div>                     
+                    </div>  
+        </div>
+	{% endblock %}

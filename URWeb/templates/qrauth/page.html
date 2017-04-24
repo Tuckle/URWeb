@@ -1,13 +1,26 @@
+	{% extends 'base.html' %} 
+  	{% block content %}
+        <div id="resetcompletebox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+            <div class="panel panel-info" >
+                    <div class="panel-heading">
+                        <div class="panel-title">Authentication QR code</div>
+                    </div>     
 
-{% extends "base.html" %}
+                    <div style="padding-top:30px" class="panel-body" >
 
-{% block title %}Authentication QR code{% endblock %}
+                        <div style="display:none" id="qrcomplete-alert" class="alert alert-danger col-sm-12"></div>
+                            
+                        <form id="qrcompleteform" class="form-horizontal" role="form" method="post">
+                             
+			<div class="qr_code">
+		<p>Scan this QR code to instantly sign in to the website on your mobile device (a smartphone, a tablet, etc):</p>	
+		<div><img src="{% url "auth_qr_code" auth_code %}" alt="QR"></div>
+		<p>Every generated QR code only works once and only for 5 minutes. If you need another QR code, just open <a href="{% url "qr_code_page" %}">this page</a> again.</p>
+		</div>
+                		
 
-{% block content %}
-<div class="qr_code">
-<h1>Authentication QR code</h1>
-<p>Scan this QR code to instantly sign in to the website on your mobile device (a smartphone, a tablet, etc):</p>
-<div><img src="{% url "auth_qr_code" auth_code %}" alt="QR"></div>
-<p>Every generated QR code only works once and only for 5 minutes. If you need another QR code, just open <a href="{% url "qr_code_page" %}">this page</a> again.</p>
-</div>
-{% endblock %}
+		        </form>     
+                    </div>                     
+             </div>  
+        </div>
+	{% endblock %}
