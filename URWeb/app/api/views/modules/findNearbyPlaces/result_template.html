@@ -1,21 +1,121 @@
 {% if html_data %}
 <div class="list-group">
-{% for obj in html_data %}
+    {% for obj in html_data %}
     <div class="list-group-item">
-        <div data-toggle="collapse" data-target="#c{{loop.index}}">
-            {{ obj.name }}
+        <div data-toggle="modal" data-target="#c{{loop.index}}">
             {% if obj.icon %}
-                <img src="{{obj.icon}}">
+            <img src="{{obj.icon}}">
             {% endif %}
+            {% if obj.name %}
+            {{ obj.name }}
+            {% else %}
+            <i>Unknown location name</i>
+            {% endif %}
+            {% if obj.rating %}
             <span class="badge">{{ obj.rating }}</span>
+            {% endif %}
         </div>
-        <div id="c{{loop.index}}" class="collapse">
-            More data here
+        <!--
+<div id="c{{loop.index}}" class="collapse">
+More data here
+</div>
+-->
+        <!-- Modal -->
+        <div id="c{{loop.index}}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">
+                            {% if obj.name %}
+                            {{ obj.name }}
+                            {% else %}
+                            <i>Unknown location name</i>
+                            {% endif %}
+                            {% if obj.rating %}
+                            <span class="badge">{{ obj.rating }}</span>
+                            {% endif %}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        {% if obj.place_details or 'place_details' in obj %}
+                        <div class="container">
+                        {% if 'website' in obj.place_details %}
+                        <a href="{{obj.place_details.website}}" class="row">Website</a>
+                        {% endif %}
+                        {% if 'formatted_address' in obj.place_details %}
+                        <div class="row"><b>Address: </b>{{obj.place_details.formatted_address}}</div>
+                        {% endif %}
+                        {% if 'vicinity' in obj.place_details %}
+                        <div class="row"><b>Vicinity: </b>{{obj.place_details.vicinity}}</div>
+                        {% endif %}
+                        {% if 'formatted_phone_number' in obj.place_details %}
+                        <div class="row"><b>Phone number: </b>{{obj.place_details.formatted_phone_number}}</div>
+                        {% endif %}
+                        {% if 'international_phone_number' in obj.place_details %}
+                        <div class="row"><b>International phone number: </b>{{obj.place_details.international_phone_number}}</div>
+                        {% endif %}
+                        {% if 'opening_hours' in obj.place_details %}
+                        {% if 'open_now' in obj.place_details.opening_hours %}
+                        <p class="row"><b>Open now</b></p>
+                        {% endif %}
+                        </div>
+                        {% if 'weekday_text' in obj.place_details.opening_hours %}
+                        <div>
+                            <b>Program:</b>
+                            <ul class="list-group">
+                                {% for day in obj.place_details.opening_hours.weekday_text %}
+                                <li class="list-group-item">{{day}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if 'reviews' in obj.place_details %}
+                        <h3><b>Reviews</b></h3><br>
+                        <div class="panel-group" id="reviews">
+                            {% for review in obj.place_details.reviews %}
+                            <div class="panel panel-default" style="overflow: auto;">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#reviews" href="#{{obj.place_id}}{{loop.index}}">
+                                            Author: {% if 'author_name' in review %}{{review.author_name}}{% else %}Unknown{% endif %}&nbsp;&nbsp;
+                                            {% if 'relative_time_description' in review %}{{review.relative_time_description}}{% endif %}
+                                            {% if 'rating' in review %}<span class="badge">{{ review.rating }}</span>{% endif %}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="{{obj.place_id}}{{loop.index}}" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        {% if 'text' in review %}
+                                        {{review.text}}
+                                        {% else %}
+                                        Empty review
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
-{% endfor %}
+    {% endfor %}
 </div>
 
 {% else %}
-Error message. No data found.
+<div class="alert alert-warning">
+    <strong>Warning!</strong> No data found with the given input. Try to cover a wider area by selecting a bigger radius or choose more types.
+</div>
 {% endif %}
