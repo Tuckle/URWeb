@@ -1,0 +1,112 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div class="well well-sm">Find and view nearby places</div>
+<div id="pluginAlertZone"></div>
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="radius">String:</label>
+        <div class="col-sm-3">
+        	<input type="text" class="form-control" id="string" placeholder="default">
+        </div>
+
+        <label class="control-label col-sm-1" for="language">Language:</label>
+        <div class="col-sm-1">
+            <select class = "form-control" id="language">
+                <option>en</option>
+                <option>ro</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="typeSelection">Types:</label>
+        <div class="col-sm-3">
+            <select class = "form-control" id="typeSelection">
+            </select>
+        </div>
+        <label class="control-label col-sm-1" for="radius">Radius:</label>
+        <div class="col-sm-1">
+            <input type="number" class="form-control" id="radius" placeholder="default" max="20000" min="5">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-8">
+            <button type="button" class="btn btn-default" onclick="findNearbyPlaces()">Submit</button>
+        </div>
+    </div>
+</form> 
+<div class="well well-sm" id="resultText">Get Nearby Location Types - Results</div>
+<div id="resultContent"></div>
+<script>
+    $("#resultText").addClass('hidden');
+    var types = ['address', 'establishment', '(regions)', '(cities)']
+    
+    
+    function addOption(opt) {
+        var sel = document.getElementById("typeSelection")
+        var copyOpt = opt.replace(/_/, " ")
+        copyOpt = copyOpt.charAt(0).toUpperCase() + copyOpt.slice(1)
+        sel.innerHTML += '<option value="' + opt + '">' + copyOpt + "</option>"
+    }
+    for(var indx = 0; indx < types.length; indx ++) {
+        addOption(types[indx])
+    }
+    
+    
+    function findNearbyPlaces()
+    { 
+        var div = document.getElementById("pluginAlertZone")
+        div.innerHTML = ''
+        document.getElementById("resultContent").innerHTML = ''
+        $("#resultText").addClass('hidden');
+        var string = document.getElementById("string").value
+        var language = document.getElementById("language").value
+        var radius = document.getElementById("radius").value
+        var selectedTypes = $("#typeSelection").val()
+
+        if (string.length == 0){
+        	var div = document.getElementById("pluginAlertZone")
+            div.innerHTML = '<div class="alert alert-warning"><strong>Warning!</strong> No string has been entered</div>'
+        }
+        else{
+	    	if (radius < 5 || radius > 20000){
+	        	var div = document.getElementById("pluginAlertZone")
+	            div.innerHTML = '<div class="alert alert-warning"><strong>Warning!</strong> No valid radius has been entered</div>'
+        	}    
+
+        	else{
+		        document.getElementById("resultContent").innerHTML = '<div class="alert alert-info"><strong>Info!</strong> Please wait while we search the wanted information. This might take several minuntes.</div>'
+		        if (origin2)
+		        {
+		            locationData = {lat: origin2.lat(), lng: origin2.lng()}
+		        }
+		        else
+		        {
+		            locationData = {lat: origin.lat, lng: origin.lng}
+		        }
+
+		        var data = {string: string, language: language, location_data: locationData, location_types: selectedTypes, radius: radius}
+		        $.ajax({
+		            type: 'post',
+		            url: '/api/plugins/' + document.getElementById("plugin-data").name,
+		            data : JSON.stringify(data),
+		            processData: false,
+		            success: function(data){
+		                var div = document.getElementById("resultContent")
+		                div.innerHTML = data
+		                $("#resultText").removeClass('hidden');
+		            },
+		            failure: function(data){
+		                var div = document.getElementById("resultContent")
+		                div.innerHTML = '<div class="alert alert-danger"><strong>Warning!</strong> Unable to retrieve data from server.</div>'
+		                $("#resultText").removeClass('hidden');
+		            }
+		        })
+		    }
+    	}
+    }
+
+</script> 

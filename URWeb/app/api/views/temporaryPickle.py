@@ -23,3 +23,12 @@ def dump(path, data):
 # data[0]['path'] = 'findNearbyPlaces'
 # print(data)
 # dump(path, data)
+data = load(path)
+new = {
+    'name': 'searchLocationByName',
+    'description': 'Searches location based on input text',
+    'path': 'searchLocationByName'
+}
+data.append(new)
+dump(path, data)
+
