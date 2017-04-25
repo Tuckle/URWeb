@@ -18,6 +18,7 @@ from django.conf import settings
 from django.contrib import admin
 from .home import HomeView
 from .location import Location
+from .beacon import Beacon
 from .app.authentication.urls import auth_urls
 from .app.api.urls import api_urls
 from django.conf.urls.static import static
@@ -31,4 +32,5 @@ urlpatterns = [
     url(r'^', include(auth_urls)),
     url(r'^api', include(api_urls)),
     url(r'^qr', include('qrauth.urls')),
+    url(r'^beacon(?:/(?P<beacon_name>\d![a-zA-Z0-9]+))?', Beacon.as_view(), name='beacon'),
    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

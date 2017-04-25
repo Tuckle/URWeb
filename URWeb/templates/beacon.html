@@ -1,0 +1,41 @@
+	{% extends 'base.html' %}
+
+	{% block title %}Home{% endblock %}
+	
+        {% block content %}    
+        <div id="beaconBox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+            <div class="panel panel-info" >
+
+                    <div class="panel-heading">
+		       <div class="panel-title">BEACON</div>
+                        <div style="padding-top:30px" class="panel-body" >
+                            
+                        <div style="display:none" id="beacon-alert" class="alert alert-danger col-sm-12"></div>
+                             <form class="form-horizontal" method="post">
+                              <div class="form-group">
+                                <label class="control-label col-sm-2" for="bid">Id:</label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" id="bid" name="bid" placeholder="Enter beacon id in hexa">
+                                </div>
+                              </div>
+                              <div class="form-group form-inline">
+                                 <label class="control-label col-sm-2" for="btype">Type:</label>
+                                  <div class="col-sm-10">
+                                  <select class="form-control" id="btype" name="btype">
+                                    <option>1</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                  </select> 
+                                    </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                  <button type="submit" class="btn btn-default">Submit</button>
+                                </div>
+                              </div>
+                            </form>                        
+                        </div>                     
+            </div>  
+        </div>
+	{% endblock %}
