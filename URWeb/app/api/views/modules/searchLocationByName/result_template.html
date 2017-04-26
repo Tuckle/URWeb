@@ -37,7 +37,7 @@
                     {% endif %}
                 </h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="overflow: scroll" >
                 {% if obj.place_details or 'place_details' in obj %}
                 <div class="container">
                     {% if 'website' in obj.place_details %}
@@ -76,10 +76,10 @@
                 <h3><b>Reviews</b></h3><br>
                 <div class="panel-group" id="reviews">
                     {% for review in obj.place_details.reviews %}
-                    <div class="panel panel-default" style="overflow: auto;">
+                    <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#reviews" href="#{{obj.place_id}}{{loop.index}}">
+                                <a data-toggle="collapse" data-parent="#reviews" style="overflow: auto" href="#{{obj.place_id}}{{loop.index}}">
                                     Author: {% if 'author_name' in review %}{{review.author_name}}{% else %}Unknown{% endif %}&nbsp;&nbsp;
                                     {% if 'relative_time_description' in review %}{{review.relative_time_description}}{% endif %}
                                     {% if 'rating' in review %}<span class="badge">{{ review.rating }}</span>{% endif %}
