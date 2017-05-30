@@ -20,10 +20,10 @@
 <!-- Modals -->
 {% for obj in html_data %}
 <div id="c{{loop.index}}" tabindex="-1" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="overflow:auto;width:auto;">
 
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content" style="overflow-y: auto;width:auto;height:auto; margin: 50px 50px 50px 50px">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">
@@ -37,7 +37,7 @@
                     {% endif %}
                 </h4>
             </div>
-            <div class="modal-body" style="overflow: scroll" >
+            <div class="modal-body" style="overflow:auto;width:auto;">
                 {% if obj.place_details or 'place_details' in obj %}
                 <div class="container">
                     {% if 'website' in obj.place_details %}
@@ -79,14 +79,14 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#reviews" style="overflow: auto" href="#{{obj.place_id}}{{loop.index}}">
+                                <a data-toggle="collapse" data-parent="#reviews" style="overflow:auto;width:auto;" href="#{{obj.place_id}}{{loop.index}}">
                                     Author: {% if 'author_name' in review %}{{review.author_name}}{% else %}Unknown{% endif %}&nbsp;&nbsp;
                                     {% if 'relative_time_description' in review %}{{review.relative_time_description}}{% endif %}
                                     {% if 'rating' in review %}<span class="badge">{{ review.rating }}</span>{% endif %}
                                 </a>
                             </h4>
                         </div>
-                        <div id="{{obj.place_id}}{{loop.index}}" class="panel-collapse collapse in">
+                        <div id="{{obj.place_id}}{{loop.index}}" class="panel-collapse collapse in" style="overflow: auto" >
                             <div class="panel-body">
                                 {% if 'text' in review %}
                                 {{review.text}}

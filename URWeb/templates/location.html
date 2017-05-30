@@ -53,6 +53,15 @@
             
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Friends
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#" data-toggle="modal" data-target="#viewFriends" onclick="viewFriendsModal()">View Friends</a></li>
+                  <li><a href="#" data-toggle="modal" data-target="#friendRequests" onclick="friendRequestsModal()">Friend Requests</a></li>
+                  <li><a href="#" data-toggle="modal" data-target="#addFriends" onclick="addFriendsModal()">Add Friends</a></li>
+                </ul>
+              </li>
+            <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Plugins
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -60,7 +69,7 @@
                   <li><a href="#" data-toggle="modal" data-target="#viewPlugin" onclick="loadViewPlugins()">View Plugin</a></li>
                 </ul>
               </li>
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Username</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-user" id="usernameValue">Username</span></a></li>
           </ul>
         </div>
       </div>
@@ -188,12 +197,137 @@
       </div>
     </div>
     
+    <div id="viewFriends" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">View Friends</h4>
+          </div>
+          <div class="modal-body" style="overflow:auto;height: auto">
+            <div class="list-group" id="viewFriendsList">
+                <!-- info -->
+                 <div class="panel-group">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#viewFriendsollapse1">Test</a>
+                      </h4>
+                    </div>
+                    <div id="viewFriendsollapse1" class="panel-collapse collapse">
+                      <div class="panel-body">Email: test@test.com</div>
+                    </div>
+                  </div>
+                <!-- info -->
+            </div>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  <div id="friendRequests" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Friend Requests</h4>
+          </div>
+          <div class="modal-body" style="overflow:auto;height: auto">
+          <div id="friendRequestsAlertZone">
+            <!-- <div class="alert alert-success">
+                <strong>Success!</strong> The file has been uploaded!
+            </div> -->
+          </div>
+            <div class="list-group" id="friendRequestsList">
+                <!-- info -->
+                 <div class="panel-group">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#friendRequestscollapse1" id="idForFriendRequestList1">Test</a>
+                      </h4>
+                    </div>
+                    <div id="friendRequestscollapse1" class="panel-collapse collapse">
+                      <div class="panel-body">Email: test@test.com Message: Ana are mere</div>
+                      <button type="button" class="btn btn-default" data-toggle="collapse" href="#friendRequestscollapse1" onclick="acceptFriendRequest('idForFriendRequestList1')">Accept</button>
+                      <button type="button" class="btn btn-default" data-toggle="collapse" href="#friendRequestscollapse1" onclick="rejectFriendRequest('idForFriendRequestList1')">Reject</button>
+                    </div>
+                  </div>
+                <!-- info -->
+            </div>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="addFriends" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add Friend</h4>
+          </div>
+           <div id="addFriendsAlertZone">
+            <!-- <div class="alert alert-success">
+                <strong>Success!</strong> The file has been uploaded!
+            </div> -->
+          </div>
+          <div class="modal-body">
+             <form class="form-horizontal">
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="emAddress">Email address:</label>
+                <div class="col-sm-10">
+                  <input class="form-control" id="emAddress" placeholder="Enter an email address">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                <!-- HERE PUT DATA AND VERIFY IT -->
+                 <button type="button" class="btn btn-primary pull-right" onclick="sendFriendRequest()">Send Request</button>
+                </div>
+              </div>
+            </form>
+            
+            <!-- ADD BS ALERTS TO NOTIFY USER IF PLUGIN WAS ADDED -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- End of Modals -->
       
       
     <!-- Scripts -->
     <!-- ----------------- -->
     <script>
+    function setUsername(usernameInput)
+    {
+      var div = document.getElementById("usernameValue")
+      div.innerHTML = usernameInput;
+    }
     $(document).ready(function() {
       $.ajax({
         type: 'get',
@@ -245,6 +379,74 @@
         return script;
 	}
 
+    function getUsername()
+    {
+      var div = document.getElementById("usernameValue")
+      return div.innerHTML;
+    }
+
+    function acceptFriendRequest(modalId)
+    {
+      var div = document.getElementById(modalId)
+      div = div.innerHTML
+      data = {user: div}
+      var div = document.getElementById("friendRequestsAlertZone")
+      div.innerHTML = ''
+      $.ajax({
+        type: 'put',
+        url: '../api/accept_friend/' + getUsername(),
+        data: JSON.stringify(data),
+        processData:false,
+        success:function(data){
+          if (data === "OK")
+          {
+            var div = document.getElementById("friendRequestsAlertZone")
+            div.innerHTML = '<div class="alert alert-success"><strong>Success!</strong> The request has been send!</div>'
+          }
+          else
+          {
+            var div = document.getElementById("friendRequestsAlertZone")
+            div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
+          }
+        },
+        failure:function(error){
+          var div = document.getElementById("friendRequestsAlertZone")
+          div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + error + '</div>'
+        }
+      });
+    }
+
+    function rejectFriendRequest(modalId)
+    {
+      var div = document.getElementById(modalId)
+      div = div.innerHTML
+      data = {user: div}
+      var div = document.getElementById("friendRequestsAlertZone")
+      div.innerHTML = ''
+      $.ajax({
+        type: 'put',
+        url: '../api/reject_friend/' + getUsername(),
+        data: JSON.stringify(data),
+        processData:false,
+        success:function(data){
+          if (data === "OK")
+          {
+            var div = document.getElementById("friendRequestsAlertZone")
+            div.innerHTML = '<div class="alert alert-success"><strong>Success!</strong> The request has been send!</div>'
+          }
+          else
+          {
+            var div = document.getElementById("friendRequestsAlertZone")
+            div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
+          }
+        },
+        failure:function(error){
+          var div = document.getElementById("friendRequestsAlertZone")
+          div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + error + '</div>'
+        }
+      });
+    }
+
     function getSelectedPluginData()
     {
     	
@@ -273,6 +475,117 @@
 	          	div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
     		}
     	})
+    }
+
+    function friendRequestsModal()
+    {
+
+      // var div = document.getElementById("friendRequestsList")
+      // div.innerHTML = 'Loading...'
+     $.ajax({
+        type: 'get',
+        url: '/api/friend_requests/' + getUsername(),
+          processData:false,
+          success:function(data)
+          {
+            var result = '';
+            data = JSON.parse(data)
+            data = data['data']
+            counter = 0
+            for (x in data){              
+              result += '<div class="panel-group"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#friendsRequestsModal' + counter + '"' 
+              + ' id="idForFriendRequestList' + counter + '">' + 
+              data[x].name + '</a></h4></div><div id="friendsRequestsModal' + counter + '" class="panel-collapse collapse"><div class="panel-body">Email:' + data[x].email + '</div>'+
+              '<button type="button" class="btn btn-default" data-toggle="collapse" href="#friendsRequestsModal' + counter + '"  onclick="acceptFriendRequest(\'idForFriendRequestList' + counter + '\')">Accept</button>' + 
+              '<button type="button" class="btn btn-default" data-toggle="collapse" href="#friendsRequestsModal' + counter + '" onclick="rejectFriendRequest(\'idForFriendRequestList'+counter + '\')">Reject</button>' + 
+              '</div></div><br>'
+          counter += 1
+          }
+          var div = document.getElementById("friendRequestsList")
+            div.innerHTML = result
+          },
+          failure:function(data)
+          {
+            var div = document.getElementById("friendRequestsList")
+            div.innerHTML = 'Error'
+          }
+
+        }) 
+    }
+
+
+    function viewFriendsModal()
+    {
+      var div = document.getElementById("viewFriendsList")
+      div.innerHTML = 'Loading...'
+     $.ajax({
+        type: 'get',
+        url: '/api/friends/' + getUsername(),
+          processData:false,
+          success:function(data)
+          {
+            var result = '';
+            data = JSON.parse(data)
+            data = data['data']
+            counter = 0
+            for (x in data){              
+              result += '<div class="panel-group"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#viewFriendsModal' + counter + '">' + 
+              data[x].name + '</a></h4></div><div id="viewFriendsModal' + counter + '" class="panel-collapse collapse"><div class="panel-body">Email:' + data[x].email + ' <br>Message: ' + data[x].message + 
+              '</div></div></div><br>'
+          counter += 1
+          }
+          var div = document.getElementById("viewFriendsList")
+            div.innerHTML = result
+          },
+          failure:function(data)
+          {
+            var div = document.getElementById("viewFriendsList")
+            div.innerHTML = 'Error'
+          }
+
+        }) 
+    }
+    function addFriendsModal()
+    {
+      var div = document.getElementById("addFriendsAlertZone")
+      div.innerHTML = ''
+    }
+
+function sendFriendRequest(){  
+      var div = document.getElementById("addFriendsAlertZone")
+      div.innerHTML = ''
+      var emailAddress = document.getElementById("emAddress").value
+      var data = {email: emailAddress}
+      var regexVerifier = new RegExp("^[A-Za-z0-9.@!#$%_]+$")
+      if (regexVerifier.test(emailAddress) == false)
+      {
+        var div = document.getElementById("addFriendsAlertZone")
+        div.innerHTML = '<div class="alert alert-warning"><strong>Warning!</strong> Invalid email!</div>'
+      }
+      else{
+        $.ajax({
+          type: 'put',
+          url: '../api/send_request/' + getUsername(),
+          data: JSON.stringify(data),
+          processData:false,
+          success:function(data){
+            if (data === "OK")
+            {
+              var div = document.getElementById("addFriendsAlertZone")
+              div.innerHTML = '<div class="alert alert-success"><strong>Success!</strong> The request has been send!</div>'
+            }
+            else
+            {
+              var div = document.getElementById("addFriendsAlertZone")
+              div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
+            }
+          },
+          failure:function(error){
+            var div = document.getElementById("addFriendsAlertZone")
+            div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + error + '</div>'
+          }
+        });
+      }
     }
 
     function loadViewPlugins()

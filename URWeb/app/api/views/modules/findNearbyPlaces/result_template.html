@@ -20,11 +20,12 @@
 <!-- Modals -->
 {% for obj in html_data %}
 <div id="c{{loop.index}}" tabindex="-1" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="overflow:auto;width:auto;">
 
         <!-- Modal content-->
-        <div class="modal-content" style="overflow: scroll">
-            <div class="modal-header">
+        <!-- <div class="modal-content" style="overflow: scroll"> -->
+        <div class="modal-content" style="overflow-y: auto;width:auto;height:auto; margin: 100px 100px 100px 100px">
+            <div class="modal-header" style="overflow-y: auto;width:auto;height:auto;">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">
                     {% if obj.name %}
@@ -37,7 +38,8 @@
                     {% endif %}
                 </h4>
             </div>
-            <div class="modal-body">
+            <!-- <div class="modal-body"> -->
+            <div class="modal-body" style="overflow:auto;width:auto;">
                 {% if obj.place_details or 'place_details' in obj %}
                 <div class="container">
                     {% if 'website' in obj.place_details %}
