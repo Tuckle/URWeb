@@ -1,13 +1,32 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 import json
 import re
 import os
+import shutil
 import pickle
 import zipfile
+
+class PluginConstants:
+	PLUGIN_PATH_LIST = r'URWeb\app\api\views\pluginsList'
+	PLUGINS_MODULES_PATH = r'URWeb\app\api\views\modules'
+	PLUGINS_DOWNLOAD_PATH = r'URWeb\app\api\views\temp_downloads'
+	TEMPLATE_DICT = {
+		'name': '',
+		'description': '',
+		'path': ''
+	}
+
+	def load_plugins_list(self):
+		with open(self.PLUGIN_PATH_LIST, "rb") as f:
+			return pickle.load(f)
+
+	def save_plugins_list(self, plugins_data):
+		with open(self.PLUGIN_PATH_LIST, "wb") as f:
+			pickle.dump(plugins_data, f)		                          	
+	
                                 
 class Plugins(generic.View):
 
@@ -26,7 +45,7 @@ class Plugins(generic.View):
 		self.dictObject = pickle.load(pFile)
 		pFile.close()
 
-	def refresh_plugin_list(plugin_name, plugin_description, plugin_path):
+	def refresh_plugin_list(self, plugin_name, plugin_description, plugin_path):
 		self.loadDict()
 		self.dictObject.append({
 		    'name': plugin_name,
@@ -121,3 +140,92 @@ class Plugins(generic.View):
 			return HttpResponse(result)
 
 
+class UploadPlugin(generic.View):
+	PLUGIN_CONSTANTS = PluginConstants()
+	ERROR = 'Failed to save file'
+
+	def post(self, request, name):
+		if request.FILES and request.FILES.get('file_upload'):
+			file_uploaded = self.save_and_process_file(request.FILES)
+			if not file_uploaded:
+				if not self.ERROR:
+					self.ERROR = 'Failed to save file'
+				return HttpResponse(self.ERROR)
+		return HttpResponse('OK')
+	
+	def unzip_file(self, file_path, to_dir):
+		try:
+			f = zipfile.ZipFile(file_path, "r")
+			f.extractall(to_dir)
+			f.close()
+		except Exception as ex:
+			print(str(ex))
+			self.ERROR = str(ex)
+			return False
+		return True
+	
+	def download_file(self, file_data, to_path):
+		if not os.path.exists(self.PLUGIN_CONSTANTS.PLUGINS_DOWNLOAD_PATH):
+			os.makedirs(self.PLUGIN_CONSTANTS.PLUGINS_DOWNLOAD_PATH)
+		try:
+			with open(to_path, "wb+") as f:
+				for chunk in file_data.chunks():
+					f.write(chunk)				
+		except Exception as ex:
+			print(str(ex))
+			self.ERROR = str(ex)
+			return False
+		return True
+
+	def check_plugin(self, plugin_name):
+		plugin_path = os.path.join(self.PLUGIN_CONSTANTS.PLUGINS_MODULES_PATH, plugin_name, plugin_name + ".py")
+		exec('from .modules.{}.{} import Plugin'.format(plugin_name, plugin_name))
+		result = ''
+		try:
+			result = locals()
+			exec("result = Plugin().run({}, {})".format(request.body, 'json'), globals(), result)
+			result = result['result']
+		except Exception as e:
+			exception_msg = "No module named Main found\n{}".format(e)
+			print(exception_msg)
+			self.ERROR = exception_msg
+			return False
+		return True
+
+	def add_plugin_to_list(self, plugin_name, plugin_path, description):
+		plugins_data = self.PLUGIN_CONSTANTS.load_plugins_list()
+		new_plugin = dict(PluginConstants.TEMPLATE_DICT)
+		new_plugin['name'] = plugin_name
+		new_plugin['description'] = description
+		new_plugin['path'] = plugin_path
+		plugins_data.append(new_plugin)
+		self.PLUGIN_CONSTANTS.save_plugins_list(plugins_data)
+
+	def save_and_process_file(self, file_dict):
+		file_data = file_dict.get('file_upload')
+		plugin_name = file_dict.get('name')
+		plugin_description = file_dict.get('desc')
+
+		fname, fext = os.path.splitext(file_data.name) 
+		if not plugin_name:
+			plugin_name = fname
+		plugin_name = plugin_name.replace('[^\w]+', '_').replace('_+', '_')
+		if not plugin_description:
+			plugin_description = 'No description found for this plugin'
+
+		zip_path = os.path.join(self.PLUGIN_CONSTANTS.PLUGINS_DOWNLOAD_PATH, file_data.name)
+		if not self.download_file(file_data, zip_path):
+			return False
+
+		save_to = os.path.join(self.PLUGIN_CONSTANTS.PLUGINS_MODULES_PATH, fname)
+		if not self.unzip_file(zip_path, save_to):
+			return False
+		os.remove(zip_path)
+		
+		#if not check_plugin(fname):
+		#	shutil.rmtree(save_to)
+		#	return False
+
+		self.add_plugin_to_list(plugin_name, save_to, plugin_description)	
+
+		return True
