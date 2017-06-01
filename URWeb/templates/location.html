@@ -394,7 +394,7 @@
       div.innerHTML = ''
       $.ajax({
         type: 'put',
-        url: '../api/accept_friend/' + getUsername(),
+        url: '../api/friends/accept_request/' + getUsername(),
         data: JSON.stringify(data),
         processData:false,
         success:function(data){
@@ -425,7 +425,7 @@
       div.innerHTML = ''
       $.ajax({
         type: 'put',
-        url: '../api/reject_friend/' + getUsername(),
+        url: '../api/friends/reject_request/' + getUsername(),
         data: JSON.stringify(data),
         processData:false,
         success:function(data){
@@ -480,11 +480,11 @@
     function friendRequestsModal()
     {
 
-      // var div = document.getElementById("friendRequestsList")
-      // div.innerHTML = 'Loading...'
+      var div = document.getElementById("friendRequestsList")
+      div.innerHTML = 'Loading...'
      $.ajax({
         type: 'get',
-        url: '/api/friend_requests/' + getUsername(),
+        url: '/api/friends/friend_requests/' + getUsername(),
           processData:false,
           success:function(data)
           {
@@ -520,7 +520,7 @@
       div.innerHTML = 'Loading...'
      $.ajax({
         type: 'get',
-        url: '/api/friends/' + getUsername(),
+        url: '/api/friends/view/' + getUsername(),
           processData:false,
           success:function(data)
           {
@@ -565,7 +565,7 @@ function sendFriendRequest(){
       else{
         $.ajax({
           type: 'put',
-          url: '../api/send_request/' + getUsername(),
+          url: '../api/friends/send_request/' + getUsername(),
           data: JSON.stringify(data),
           processData:false,
           success:function(data){
