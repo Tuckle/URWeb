@@ -13,19 +13,25 @@ from URWeb.app.models.models import FriendsRequest
 from URWeb.app.models.models import User
 from URWeb.app.models.models import Friends
 
-class RejectRequest(generic.View):
+class RemoveFriend(generic.View):
+
 	def put(self, request, username):
+		
+		data = json.loads(request.body)
+		user = data['user']
+
 		if not username:
 			response = dict()
 			return HttpResponse(json.dumps(response))
 		else:
-			data = json.loads(request.body)
-			user = data['user']
-			print("Floricele2")
+			data = "Not ok"
+
 			try:
-				FriendsRequest.objects.all().filter(from_user = user).filter(to_user = username).delete()
+				Friends.objects.all().filter(username1 = username).filter(username2 = user).delete()
+				Friends.objects.all().filter(username1 = user).filter(username2 = username).delete()
 				data = "OK"
-			except Exception as e:
-				data = str(e)
-			return HttpResponse(json.dumps(data))
+			except Exception as ex:
+				data = str(ex)
+
+			return HttpResponse(json.dumps(data))		
 		

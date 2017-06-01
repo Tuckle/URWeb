@@ -9,20 +9,67 @@ import os
 import pickle
 import zipfile
 
+from URWeb.app.models.models import FriendsRequest
+from URWeb.app.models.models import User
+from URWeb.app.models.models import Friends
+
 class SendFriendRequest(generic.View):
-	def get(self, request, username):
-		if not username:
-			response = dict()
-			return HttpResponse(json.dumps(response))
-		else:
-			data = dict()
-			return HttpResponse(json.dumps(data))
 
 	def put(self, request, username):
+		
+		data = json.loads(request.body)
+		email = data['email']
+
+		# tempUser = User(username = 'Gigi', firstname = 'Gheorghe', lastname = 'Balan', password = '00000000000000000000000000000000', email = 'gbalan@yahoo.com', pos_lat = '00,00', pos_lng = '00,00')
+		# tempUser.save()
+		# tempUser = User(username = 'Uli', firstname = 'Iulian', lastname = 'Bute', password = '00000000000000000000000000000001', email = 'ibute@yahoo.com', pos_lat = '00,00', pos_lng = '00,00')
+		# tempUser.save()
+		# tempUser = User(username = 'Adi', firstname = 'Adrian', lastname = 'Piriu', password = '00000000000000000000000000000002', email = 'apiriu@yahoo.com', pos_lat = '00,00', pos_lng = '00,00')
+		# tempUser.save()
+		# tempUser = User(username = 'PreaNesuferita', firstname = 'Ingrid', lastname = 'Stoleru', password = '00000000000000000000000000000003', email = 'istoleru@yahoo.com', pos_lat = '00,00', pos_lng = '00,00')
+		# tempUser.save()
+
+
+
 		if not username:
 			response = dict()
 			return HttpResponse(json.dumps(response))
 		else:
-			data = dict()
+			data = "Not ok"
+
+			try:
+				user = User.objects.get(email = email)
+
+				friendsList = Friends.objects.all().filter(username1 = username)
+				actualFriends = set()
+				for item in friendsList:
+					actualFriends.add(item.username2)
+
+				friendsList = Friends.objects.all().filter(username2 = username)			
+				for item in friendsList:
+					actualFriends.add(item.username1)
+				
+
+				if user.username in actualFriends:
+					data = 'You are already friends. The request has been discarded!'
+					return HttpResponse(json.dumps(data))		
+
+				if user.username == username:
+					data = 'You canot be friend with yourself. The request has been discarded!'
+					return HttpResponse(json.dumps(data))							
+
+				currentFriendsRequest = FriendsRequest.objects.all().filter(from_user = username)
+				for items in currentFriendsRequest:
+					if user == items.to_user:
+						data = 'You have already send a requests. The request has been discarded!'
+						return HttpResponse(json.dumps(data))	
+
+				friendRequest = FriendsRequest(from_user = username, to_user = user.username)
+				friendRequest.save()
+				data = "OK"
+
+			except Exception as ex:
+				data = str(ex)
+
 			return HttpResponse(json.dumps(data))		
 		

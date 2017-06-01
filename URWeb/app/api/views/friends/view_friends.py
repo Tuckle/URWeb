@@ -3,6 +3,10 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
+from URWeb.app.models.models import FriendsRequest
+from URWeb.app.models.models import User
+from URWeb.app.models.models import Friends
+
 import json
 import re
 import os
@@ -16,4 +20,28 @@ class ViewFriends(generic.View):
 			return HttpResponse(json.dumps(response))
 		else:
 			data = dict()
+			tempStuff = Friends.objects.all()
+			for items in tempStuff:
+				print(items.username1, items.username2)
+
+			friendsList = Friends.objects.all().filter(username1 = username)
+			actualFriends = set()
+			for item in friendsList:
+				actualFriends.add(item.username2)
+
+			friendsList = Friends.objects.all().filter(username2 = username)			
+			for item in friendsList:
+				actualFriends.add(item.username1)
+			
+			listI = list()
+			for item in actualFriends:
+				try:
+					user_ = User.objects.get(username = item)					
+					tt = {"name":item, "email":user_.email}
+					listI.append(tt)
+				except:
+					tt = {"name":item, "email":"No email."}
+					listI.append(tt)
+			data = dict()
+			data['data'] = listI
 			return HttpResponse(json.dumps(data))
