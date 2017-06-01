@@ -138,7 +138,7 @@
                     <label class="control-label col-sm-2" for="brs">Archive:</label>
                     <div class="col-sm-10">
                     <span class="btn btn-default btn-file" id="brs">
-                        <input type="file" name="inputArchive">
+                        <input type="file" name="inputArchive" id="file_input">
                     </span>
                     <span id="arctip" title="Upload a zip archive which contains a .py file and an optional .html file" data-html="true" rel="tooltip" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                     </div>
@@ -625,6 +625,12 @@ function sendFriendRequest(){
     function submitPlugin(){
       var pluginName = document.getElementById("plname").value
       var description = document.getElementById("pldesc").value
+      var files = document.getElementById("file_input")
+      var file = files.files[0]
+      var formData = new FormData()
+      formData.append('file_upload', file)
+      formData.append('name', pluginName)
+      formData.append('desc', description)
       var data = {name: pluginName, desc: description}
       var regexVerifier = new RegExp("^[A-Za-z0-9.@!#$%_]+$")
       if (regexVerifier.test(pluginName) == false || regexVerifier.test(description) == false)
@@ -634,10 +640,11 @@ function sendFriendRequest(){
       }
       else{
         $.ajax({
-          type: 'put',
-          url: '../api/plugins',
-          data: JSON.stringify(data),
+          type: 'post',
+          url: '../api/plugins/new_plugin/upload/new_plugin',
+          data: formData,
           processData:false,
+	  contentType: false,
           success:function(data){
             if (data === "OK")
             {
