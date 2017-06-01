@@ -16,8 +16,8 @@ def dump(path, data):
     try:
         with open(path, "wb") as f:
             pickle.dump(data, f)
-    except Exception:
-        pass
+    except Exception as ex:
+        print(str(ex))
 
 # data = load(path)
 # data[0]['path'] = 'findNearbyPlaces'
@@ -25,13 +25,13 @@ def dump(path, data):
 # dump(path, data)
 data = load(path)
 new = {
-    'name': 'searchLocationByName',
-    'description': 'Searches location based on input text',
-    'path': 'searchLocationByName'
+    'name': 'searchTaxis',
+    'description': 'Searches taxis based on input radius',
+    'path': 'searchTaxis'
 }
 
 print(data)
-data = data[:3]
+#data = data[:3]
 print(data)
 #exit(1)
 #data.append(new)
