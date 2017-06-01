@@ -146,7 +146,7 @@ class UploadPlugin(generic.View):
 
 	def post(self, request, name):
 		if request.FILES and request.FILES.get('file_upload'):
-			file_uploaded = self.save_and_process_file(request.FILES.get('file_upload'))
+			file_uploaded = self.save_and_process_file(request.FILES)
 			if not file_uploaded:
 				if not self.ERROR:
 					self.ERROR = 'Failed to save file'
@@ -165,6 +165,8 @@ class UploadPlugin(generic.View):
 		return True
 	
 	def download_file(self, file_data, to_path):
+		if not os.path.exists(self.PLUGIN_CONSTANTS.PLUGINS_DOWNLOAD_PATH):
+			os.makedirs(self.PLUGIN_CONSTANTS.PLUGINS_DOWNLOAD_PATH)
 		try:
 			with open(to_path, "wb+") as f:
 				for chunk in file_data.chunks():
@@ -199,8 +201,18 @@ class UploadPlugin(generic.View):
 		plugins_data.append(new_plugin)
 		self.PLUGIN_CONSTANTS.save_plugins_list(plugins_data)
 
-	def save_and_process_file(self, file_data):
+	def save_and_process_file(self, file_dict):
+		file_data = file_dict.get('file_upload')
+		plugin_name = file_dict.get('name')
+		plugin_description = file_dict.get('desc')
+
 		fname, fext = os.path.splitext(file_data.name) 
+		if not plugin_name:
+			plugin_name = fname
+		plugin_name = plugin_name.replace('[^\w]+', '_').replace('_+', '_')
+		if not plugin_description:
+			plugin_description = 'No description found for this plugin'
+
 		zip_path = os.path.join(self.PLUGIN_CONSTANTS.PLUGINS_DOWNLOAD_PATH, file_data.name)
 		if not self.download_file(file_data, zip_path):
 			return False
@@ -214,6 +226,6 @@ class UploadPlugin(generic.View):
 		#	shutil.rmtree(save_to)
 		#	return False
 
-		self.add_plugin_to_list(fname, save_to, '')	
+		self.add_plugin_to_list(plugin_name, save_to, plugin_description)	
 
 		return True
