@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'social_django',
     'social.apps.django_app.default',
-    'django.contrib.sites',
+    'django.contrib.sites'
 ]
 
 MIDDLEWARE = [
