@@ -706,7 +706,7 @@ function sendFriendRequest(){
       formData.append('desc', description)
       var data = {name: pluginName, desc: description}
       var regexVerifier = new RegExp("^[A-Za-z0-9.@!#$%_]+$")
-      if (regexVerifier.test(pluginName) == false || regexVerifier.test(description) == false)
+      if (regexVerifier.test(pluginName) == false)
       {
         var div = document.getElementById("alertZone")
         div.innerHTML = '<div class="alert alert-warning"><strong>Warning!</strong> Invalid data in required fields!</div>'

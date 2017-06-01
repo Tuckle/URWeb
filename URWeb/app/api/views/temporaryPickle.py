@@ -31,9 +31,9 @@ new = {
 }
 
 print(data)
-data = data[:3]
+#data = data[:3]
 print(data)
-#exit(1)
+exit(1)
 #data.append(new)
 dump(path, data)
 
