@@ -142,12 +142,15 @@ class Plugins(generic.View):
 
 class UploadPlugin(generic.View):
 	PLUGIN_CONSTANTS = PluginConstants()
+	ERROR = 'Failed to save file'
 
 	def post(self, request, name):
 		if request.FILES and request.FILES.get('file_upload'):
 			file_uploaded = self.save_and_process_file(request.FILES.get('file_upload'))
 			if not file_uploaded:
-				return HttpResponseNotFound('Failed to save file')
+				if not self.ERROR:
+					self.ERROR = 'Failed to save file'
+				return HttpResponse(self.ERROR)
 		return HttpResponse('OK')
 	
 	def unzip_file(self, file_path, to_dir):
@@ -157,6 +160,7 @@ class UploadPlugin(generic.View):
 			f.close()
 		except Exception as ex:
 			print(str(ex))
+			self.ERROR = str(ex)
 			return False
 		return True
 	
@@ -167,6 +171,7 @@ class UploadPlugin(generic.View):
 					f.write(chunk)				
 		except Exception as ex:
 			print(str(ex))
+			self.ERROR = str(ex)
 			return False
 		return True
 
@@ -179,7 +184,9 @@ class UploadPlugin(generic.View):
 			exec("result = Plugin().run({}, {})".format(request.body, 'json'), globals(), result)
 			result = result['result']
 		except Exception as e:
-			print("No module named Main found\n{}".format(e))
+			exception_msg = "No module named Main found\n{}".format(e)
+			print(exception_msg)
+			self.ERROR = exception_msg
 			return False
 		return True
 
