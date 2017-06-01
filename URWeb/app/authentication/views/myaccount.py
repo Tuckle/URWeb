@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from django.views import View
 from django.shortcuts import redirect
 from django.template.context import RequestContext
+from django.contrib.auth.decorators import login_required
 import tweepy
 
 class MyAccountView(View):
