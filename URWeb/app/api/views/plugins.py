@@ -197,7 +197,7 @@ class UploadPlugin(generic.View):
 		new_plugin = dict(PluginConstants.TEMPLATE_DICT)
 		new_plugin['name'] = plugin_name
 		new_plugin['description'] = description
-		new_plugin['path'] = plugin_path
+		new_plugin['path'] = plugin_name
 		plugins_data.append(new_plugin)
 		self.PLUGIN_CONSTANTS.save_plugins_list(plugins_data)
 

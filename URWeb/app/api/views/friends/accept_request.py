@@ -9,20 +9,48 @@ import os
 import pickle
 import zipfile
 
+from URWeb.app.models.models import FriendsRequest
+from URWeb.app.models.models import User
+from URWeb.app.models.models import Friends
+
 class AcceptRequest(generic.View):
-	def get(self, request, username):
-		if not username:
-			response = dict()
-			return HttpResponse(json.dumps(response))
-		else:
-			data = dict()
-			return HttpResponse(json.dumps(data))
 
 	def put(self, request, username):
+		
 		if not username:
 			response = dict()
 			return HttpResponse(json.dumps(response))
 		else:
-			data = dict()
+			
+			data = json.loads(request.body)
+			user = data['user']
+			
+			try:
+
+				friendsList = Friends.objects.all().filter(username1 = username)
+				actualFriends = set()
+				for item in friendsList:
+					actualFriends.add(item.username2)
+
+				friendsList = Friends.objects.all().filter(username2 = username)			
+				for item in friendsList:
+					actualFriends.add(item.username1)
+					
+				if user in actualFriends:
+					try:
+						FriendsRequest.objects.all().filter(from_user = user).filter(to_user = username).delete()
+						data = 'You are already friends. The request has been discarded!'
+					except Exception as e:
+						data = str(e)
+					return HttpResponse(json.dumps(data))			
+
+				friend = Friends(username1 = username, username2 = user)
+				FriendsRequest.objects.all().filter(from_user = user).filter(to_user = username).delete()
+				friend.save()
+				data = "OK"
+
+			except Exception as e:
+				data = str(e)
+
 			return HttpResponse(json.dumps(data))		
 		

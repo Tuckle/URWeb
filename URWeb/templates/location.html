@@ -13,6 +13,8 @@
 
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
         <script> 
         var map, infoWindow;
     	var origin = {lat: -34.397, lng: 150.644};
@@ -33,6 +35,7 @@
     </style>
   </head>
   <body>
+
       <nav class="navbar navbar-inverse">
       <div class="container-fluid">
 <!--
@@ -49,9 +52,10 @@
           <ul class="nav navbar-nav">
 <!--            <li class="active"><a href="#">Back</a></li>-->
               <button onclick="location.href='.'" class="btn navbar-btn">Back</button>
+               <input type="checkbox" data-toggle="toggle" data-on="Sharing Location - Active" data-off="Sharing Location - Disabled"  data-width="250" navbar-center id="sharingLocationButton">
           </ul>
-            
           <ul class="nav navbar-nav navbar-right">
+
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Friends
                 <span class="caret"></span></a>
@@ -213,11 +217,12 @@
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#viewFriendsollapse1">Test</a>
+                        <a data-toggle="collapse" href="#viewFriendsollapse1" id="idForViewFriend1">Test</a>
                       </h4>
                     </div>
                     <div id="viewFriendsollapse1" class="panel-collapse collapse">
-                      <div class="panel-body">Email: test@test.com</div>
+                      <div class="panel-body">Email: test@test.com</div>                      
+                      <button type="button" class="btn btn-default" data-toggle="collapse" href="#friendRequestscollapse1" onclick="removeFriend('idForViewFriend1')">Remove</button>
                     </div>
                   </div>
                 <!-- info -->
@@ -323,6 +328,42 @@
     <!-- Scripts -->
     <!-- ----------------- -->
     <script>
+	$('#sharingLocationButton').change(async function() {
+	  	while ($(this).prop('checked') == true)
+		{
+ 			navigator.geolocation.getCurrentPosition(function(position) {
+            pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+ 			// console.log(pos)
+ 			data = {location : pos}
+ 			$.ajax({
+	      		type: 'put',
+	      		url: '../api/set_location/' + getUsername(),
+	          	data: JSON.stringify(data),
+	          	processData:false,
+        	});
+
+ 			}
+            )
+  			await sleep(30000);
+  		}
+	})
+
+    function sleep(ms) {
+  		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	async function sharinglocation() {
+		while (true)
+		{
+ 			console.log('Taking a break...');
+  			await sleep(30000);
+  			console.log('30 second later');
+  		}
+	}
+
     function setUsername(usernameInput)
     {
       var div = document.getElementById("usernameValue")
@@ -385,68 +426,7 @@
       return div.innerHTML;
     }
 
-    function acceptFriendRequest(modalId)
-    {
-      var div = document.getElementById(modalId)
-      div = div.innerHTML
-      data = {user: div}
-      var div = document.getElementById("friendRequestsAlertZone")
-      div.innerHTML = ''
-      $.ajax({
-        type: 'put',
-        url: '../api/friends/accept_request/' + getUsername(),
-        data: JSON.stringify(data),
-        processData:false,
-        success:function(data){
-          if (data === "OK")
-          {
-            var div = document.getElementById("friendRequestsAlertZone")
-            div.innerHTML = '<div class="alert alert-success"><strong>Success!</strong> The request has been send!</div>'
-          }
-          else
-          {
-            var div = document.getElementById("friendRequestsAlertZone")
-            div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
-          }
-        },
-        failure:function(error){
-          var div = document.getElementById("friendRequestsAlertZone")
-          div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + error + '</div>'
-        }
-      });
-    }
-
-    function rejectFriendRequest(modalId)
-    {
-      var div = document.getElementById(modalId)
-      div = div.innerHTML
-      data = {user: div}
-      var div = document.getElementById("friendRequestsAlertZone")
-      div.innerHTML = ''
-      $.ajax({
-        type: 'put',
-        url: '../api/friends/reject_request/' + getUsername(),
-        data: JSON.stringify(data),
-        processData:false,
-        success:function(data){
-          if (data === "OK")
-          {
-            var div = document.getElementById("friendRequestsAlertZone")
-            div.innerHTML = '<div class="alert alert-success"><strong>Success!</strong> The request has been send!</div>'
-          }
-          else
-          {
-            var div = document.getElementById("friendRequestsAlertZone")
-            div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
-          }
-        },
-        failure:function(error){
-          var div = document.getElementById("friendRequestsAlertZone")
-          div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + error + '</div>'
-        }
-      });
-    }
-
+    
     function getSelectedPluginData()
     {
     	
@@ -482,6 +462,9 @@
 
       var div = document.getElementById("friendRequestsList")
       div.innerHTML = 'Loading...'
+
+      var div = document.getElementById("friendRequestsAlertZone")
+      div.innerHTML = ''
      $.ajax({
         type: 'get',
         url: '/api/friends/friend_requests/' + getUsername(),
@@ -513,11 +496,97 @@
         }) 
     }
 
+function acceptFriendRequest(modalId)
+    {
+      var div = document.getElementById(modalId)
+      div = div.innerHTML
+      data = {user: div}
+      var div = document.getElementById("friendRequestsAlertZone")
+      div.innerHTML = ''
+      $.ajax({
+        type: 'put',
+        url: '../api/friends/accept_request/' + getUsername(),
+        data: JSON.stringify(data),
+        processData:false,
+        success:function(data){
+            data = JSON.parse(data)
+          if (data == "OK")
+          {
+            var div = document.getElementById("friendRequestsAlertZone")
+            div.innerHTML = '<div class="alert alert-success"><strong>Success!</strong> The request has been accepted!</div>'
+            document.getElementById(modalId).style.visibility = "hidden";
+          }
+          else
+          {
+            var div = document.getElementById("friendRequestsAlertZone")
+            div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
+          }
+        },
+        failure:function(error){
+          var div = document.getElementById("friendRequestsAlertZone")
+          div.innerHTML = '<div class="alert alert-danger"><strong>Request Failed!</strong> Error: ' + error + '</div>'
+        }
+      });
+    }
+
+    function rejectFriendRequest(modalId)
+    {
+      var div = document.getElementById(modalId)
+      div = div.innerHTML
+      data = {user: div}
+      var div = document.getElementById("friendRequestsAlertZone")
+      div.innerHTML = ''
+      $.ajax({
+        type: 'put',
+        url: '../api/friends/reject_request/' + getUsername(),
+        data: JSON.stringify(data),
+        processData:false,
+        success:function(data){
+			data = JSON.parse(data)
+          if (data == "OK")
+          {
+            var div = document.getElementById("friendRequestsAlertZone")
+            div.innerHTML = '<div class="alert alert-success"><strong>Success!</strong> The request has been rejected!</div>'
+            document.getElementById(modalId).style.visibility = "hidden";
+          }
+          else
+          {
+            var div = document.getElementById("friendRequestsAlertZone")
+            div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
+          }
+        },
+        failure:function(error){
+          var div = document.getElementById("friendRequestsAlertZone")
+          div.innerHTML = '<div class="alert alert-danger"><strong>Request Failed!</strong> Error: ' + error + '</div>'
+        }
+      });
+    }
+
+ 	function removeFriend(modalId)
+    {
+      var div = document.getElementById(modalId)
+      div = div.innerHTML
+      data = {user: div}
+      $.ajax({
+        type: 'put',
+        url: '../api/friends/remove/' + getUsername(),
+        data: JSON.stringify(data),
+        processData:false,
+        success:function(data){
+			data = JSON.parse(data)
+          if (data == "OK")
+          {
+            document.getElementById(modalId).style.visibility = "hidden";
+          }
+        }
+      });
+     }
 
     function viewFriendsModal()
     {
       var div = document.getElementById("viewFriendsList")
       div.innerHTML = 'Loading...'
+
      $.ajax({
         type: 'get',
         url: '/api/friends/view/' + getUsername(),
@@ -529,9 +598,12 @@
             data = data['data']
             counter = 0
             for (x in data){              
-              result += '<div class="panel-group"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#viewFriendsModal' + counter + '">' + 
-              data[x].name + '</a></h4></div><div id="viewFriendsModal' + counter + '" class="panel-collapse collapse"><div class="panel-body">Email:' + data[x].email + ' <br>Message: ' + data[x].message + 
-              '</div></div></div><br>'
+              result += '<div class="panel-group"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#viewFriendsModal' + counter + '" ' +
+              ' id="idForViewFriend' + counter + '">' +
+              data[x].name + '</a></h4></div><div id="viewFriendsModal' + counter + '" class="panel-collapse collapse"><div class="panel-body">Email:' + data[x].email +  
+              '</div>' + 
+				'<button type="button" class="btn btn-default" data-toggle="collapse" href="#viewFriendsModal' + counter + '" onclick="removeFriend(\'idForViewFriend'+counter + '\')">Remove</button>'
+              + '</div></div><br>'
           counter += 1
           }
           var div = document.getElementById("viewFriendsList")
@@ -569,7 +641,8 @@ function sendFriendRequest(){
           data: JSON.stringify(data),
           processData:false,
           success:function(data){
-            if (data === "OK")
+            data = JSON.parse(data)
+            if (data == "OK")
             {
               var div = document.getElementById("addFriendsAlertZone")
               div.innerHTML = '<div class="alert alert-success"><strong>Success!</strong> The request has been send!</div>'
@@ -582,7 +655,7 @@ function sendFriendRequest(){
           },
           failure:function(error){
             var div = document.getElementById("addFriendsAlertZone")
-            div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + error + '</div>'
+            div.innerHTML = '<div class="alert alert-danger"><strong>Request Failed!</strong> Error: ' + error + '</div>'
           }
         });
       }
@@ -633,7 +706,7 @@ function sendFriendRequest(){
       formData.append('desc', description)
       var data = {name: pluginName, desc: description}
       var regexVerifier = new RegExp("^[A-Za-z0-9.@!#$%_]+$")
-      if (regexVerifier.test(pluginName) == false || regexVerifier.test(description) == false)
+      if (regexVerifier.test(pluginName) == false)
       {
         var div = document.getElementById("alertZone")
         div.innerHTML = '<div class="alert alert-warning"><strong>Warning!</strong> Invalid data in required fields!</div>'
@@ -712,6 +785,7 @@ function sendFriendRequest(){
       // failed.", it means you probably did not give permission for the browser to
       // locate you.
       function initMap(zoom_ = 17) {
+      	// sharinglocation();
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
           zoom: zoom_

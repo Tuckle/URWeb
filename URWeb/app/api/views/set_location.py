@@ -8,24 +8,37 @@ import re
 import os
 import pickle
 import zipfile
-
+from datetime import datetime
+from django.utils import timezone
 from URWeb.app.models.models import FriendsRequest
 from URWeb.app.models.models import User
 from URWeb.app.models.models import Friends
 
-class RejectRequest(generic.View):
+class SetLocation(generic.View):
+
 	def put(self, request, username):
+		
 		if not username:
 			response = dict()
 			return HttpResponse(json.dumps(response))
 		else:
+			
 			data = json.loads(request.body)
-			user = data['user']
-			print("Floricele2")
+			location = data['location']
+			
+			for item in User.objects.all().filter(username = username):
+			 	print(item.pos_lat, item.pos_timestamp)
+
 			try:
-				FriendsRequest.objects.all().filter(from_user = user).filter(to_user = username).delete()
+				tempUser = User.objects.all().filter(username = username).update(pos_lat = location['lat'], pos_lng = location['lng'], pos_timestamp = datetime.now())	
 				data = "OK"
 			except Exception as e:
 				data = str(e)
-			return HttpResponse(json.dumps(data))
+
+
+			
+			for item in User.objects.all().filter(username = username):
+			 	print(item.pos_lat, item.pos_timestamp)
+
+			return HttpResponse(json.dumps(data))		
 		
