@@ -1,16 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-class User(models.Model):
-	username = models.CharField(max_length = 50)
-	firstname = models.CharField(max_length = 50)
-	lastname = models.CharField(max_length = 50)
-	password = models.CharField(max_length = 32)
-	email = models.CharField(max_length = 30)
+class UrUser(models.Model):
+	user = models.OneToOneField(User, on_delete = models.CASCADE)
 	pos_lat = models.CharField(max_length = 30)
 	pos_lng = models.CharField(max_length = 30)
 	pos_timestamp = models.DateTimeField(auto_now = True)
 	class Meta:
-		db_table = "User"
+		db_table = "UrUser"
 
 class Friends(models.Model):
 	username1 = models.CharField(max_length = 50)
@@ -23,3 +22,12 @@ class FriendsRequest(models.Model):
 	to_user = models.CharField(max_length = 50)	
 	class Meta:
 		db_table = "FriendsRequest"
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UrUser.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
