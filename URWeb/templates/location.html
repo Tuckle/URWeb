@@ -73,7 +73,7 @@
                   <li><a href="#" data-toggle="modal" data-target="#viewPlugin" onclick="loadViewPlugins()">View Plugin</a></li>
                 </ul>
               </li>
-              <li><a href="#"><span class="glyphicon glyphicon-user" id="usernameValue">{{ user.username }}</span></a></li>
+              <li><a href="#"><span class="glyphicon glyphicon-user" id="usernameValue"></span>{{ user.username }}</a></li>
             </ul>
           </div>
         </div>
@@ -99,17 +99,17 @@
       <button type="submit" class="btn btn-default" onclick="getSelectedPluginData()">Select</button>
     </div>
   </div>
-  
+
   <div id = "plugin-data">
-    
+
   </div>
-  
-  
-  
+
+
+
   <!-- Modals -->
   <!-- ----------------- -->
   <!-- Modal -->
-  
+
   <div id="addPlugin" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -323,8 +323,8 @@
     </div>
 
     <!-- End of Modals -->
-    
-    
+
+
     <!-- Scripts -->
     <!-- ----------------- -->
     <script>
@@ -422,8 +422,7 @@
 
     function getUsername()
     {
-      var div = document.getElementById("usernameValue")
-      return div.innerHTML;
+      return "{{user.username}}";
     }
 
     
@@ -752,7 +751,7 @@
     $("#arctip").tooltip({
       placement: "top"
     });
-    
+
     function appendHtml(id, el, str) {
       var div = document.getElementById(id);
       div.innerHTML = str;
@@ -799,7 +798,7 @@
           zoom: zoom_
         });
         infoWindow = new google.maps.InfoWindow;
-        
+
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {

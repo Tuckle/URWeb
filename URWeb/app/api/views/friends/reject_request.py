@@ -16,8 +16,9 @@ from URWeb.app.models.models import Friends
 
 class RejectRequest(generic.View):
 	def put(self, request, username):
+
+		username = str(request.user)
 		
-		username = request.user
 		if not username:
 			response = dict()
 			return HttpResponse(json.dumps(response))

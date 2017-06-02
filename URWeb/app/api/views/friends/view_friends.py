@@ -16,24 +16,16 @@ import zipfile
 
 class ViewFriends(generic.View):
 	def get(self, request, username):
-		
-		username = request.user
+
+		username = str(request.user)
+		print("Ana are mere")
 		if not username:
 			response = dict()
 			return HttpResponse(json.dumps(response))
 		else:
-			# objects = User.objects.all()
-			# for items in objects:
-			# 	print(items.username)
-			# 	loc = Location.objects.all().filter(user_id = items.id)
-			# 	for loc_item in loc:
-			# 		print(loc_item.pos_timestamp)
 
 			data = dict()
-			# tempStuff = Friends.objects.all()
-			# for items in tempStuff:
-			# 	print(items.username1, items.username2)
-
+			
 			friendsList = Friends.objects.all().filter(username1 = username)
 			actualFriends = set()
 			for item in friendsList:
