@@ -12,7 +12,7 @@
 			    {% if user and not user.is_anonymous %}
 			        <a href="/myaccount">My Account</a>
                             {% else %}
-                                <a href="/login">Log in your account</a>
+                               	<a href="/login">Log in your account</a>
                             {% endif %}
                        </div>
                     </div> 
@@ -29,6 +29,9 @@
      				
                             {% else %}
                             <center>   I don’t think we’ve met before. </center>
+			    <p></p>
+			    <center> <button class='help' onclick="location.href='help'"> Help </button> </center> 
+
                             {% endif %}
                                 
                         </p>     
