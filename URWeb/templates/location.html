@@ -706,6 +706,7 @@ function sendFriendRequest(){
       formData.append('desc', description)
       var data = {name: pluginName, desc: description}
       var regexVerifier = new RegExp("^[A-Za-z0-9.@!#$%_]+$")
+      var requestLink = '/api/plugins/' + pluginName + '/upload/new_plugin'
       if (regexVerifier.test(pluginName) == false)
       {
         var div = document.getElementById("alertZone")
@@ -714,8 +715,11 @@ function sendFriendRequest(){
       else{
         $.ajax({
           type: 'post',
-          url: '../api/plugins/new_plugin/upload/new_plugin',
+          url: requestLink,
           data: formData,
+	  beforeSend: function(request) {
+	     request.setRequestHeader('description', description)
+	  },
           processData:false,
 	  contentType: false,
           success:function(data){
@@ -723,6 +727,8 @@ function sendFriendRequest(){
             {
               var div = document.getElementById("alertZone")
               div.innerHTML = '<div class="alert alert-success"><strong>Success!</strong> The file has been uploaded!</div>'
+	      setTimeout(function(){}, 2)
+	      location.reload()
             }
             else
             {
