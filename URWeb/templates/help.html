@@ -2,25 +2,67 @@
 
     {% block title %}Help{% endblock %}
     
-        {% block content %}    
-        <div id="homebox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
-            <div class="panel panel-info" >
-
-                    <div class="panel-heading">
-               <div class="panel-title">HELP PAGE</div>
-                    </div> 
-                       
-                    <form>
-		
-			<div class="form-group">
-				<ul id='list1' value='Options'>
-    				<li>General description</li>
-    				<li>Functionalities</li>
-				</ul>
-        		</div>
-                        
-		   </form>
+        {% block content %}
+        <style>
   
-       	   </div>
-       </div> 
-    {% endblock %}
+          body {
+              position: relative;
+          }
+          ul.nav-pills {
+              top: 200px;
+              position: fixed;
+          }
+          div.col-sm-9 div {
+              height: 400px;
+              font-size: 20px;
+          }
+          #section1 {color: #fff; background-color: #428bca;}
+          #section2 {color: #fff; background-color: #428bca;}
+          #section3 {color: #fff; background-color: #428bca;}
+          #section41 {color: #fff; background-color: #428bca;}
+          #section42 {color: #fff; background-color: #428bca;}
+          
+          @media screen and (max-width: 810px) {
+            #section1, #section2, #section3, #section41, #section42  {
+                margin-left: 150px;
+            }
+          }
+        </style>
+    
+
+            <div class="container" style="height:1500px">
+                <div class="row">
+                    <div data-spy="scroll" data-target="#myScrollspy" data-offset="20">
+                        <nav class="col-sm-3" id="myScrollspy">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li class="active"><a href="#section1">General Description</a></li>
+                                <li><a href="#section2">Use cases</a></li>
+                                <li><a href="#section3">Related functionalities</a></li>
+                            </ul>
+                        </nav>
+                    
+                        <div class="col-sm-9" style="width: 550px" id="mysections">
+                            <div id="homebox" style="margin: 50px auto;" class="mainbox col-md-40 col-md-offset-3 col-sm-40 col-sm-offset-2">                    
+                                <div class="panel panel-info" style="height:1300px">
+                                    <div id="section1">    
+                                        <center><h2>Description</h2></center>
+                                        <p>This application is supposed to provide the necessary information regarding the places.</p>
+                                    </div>
+                                    <div id="section2"> 
+                                        <h2>Section 2</h2>
+                                        <p>Try to scroll this section and look at the navigation list while scrolling!</p>
+                                    </div>        
+                                    <div id="section3">         
+                                        <h1>Section 3</h1>
+                                        <p>Try to scroll this section and look at the navigation list while scrolling!</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+{% endblock %}
