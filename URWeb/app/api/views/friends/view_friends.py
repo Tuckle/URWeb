@@ -18,7 +18,7 @@ class ViewFriends(generic.View):
 	def get(self, request, username):
 
 		username = str(request.user)
-		print("Ana are mere")
+		
 		if not username:
 			response = dict()
 			return HttpResponse(json.dumps(response))
