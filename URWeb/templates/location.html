@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Geolocation</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-      <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<head>
+  <title>Geolocation</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
 
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-        <script> 
-        var map, infoWindow;
-    	var origin = {lat: -34.397, lng: 150.644};
-	    var origin2;
-        </script>
-    <style>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+  <script> 
+    var map, infoWindow;
+    var origin = {lat: -34.397, lng: 150.644};
+    var origin2;
+  </script>
+  <style>
       /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
+      * element that contains the map. */
       #map {
         height: 100%;
       }
@@ -36,7 +36,7 @@
   </head>
   <body>
 
-      <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse">
       <div class="container-fluid">
 <!--
         <div class="navbar-header">
@@ -47,84 +47,84 @@
           </button>
           <a class="navbar-brand" href="#">URWeb</a>
         </div>
--->
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav">
-<!--            <li class="active"><a href="#">Back</a></li>-->
-              <button onclick="location.href='.'" class="btn navbar-btn">Back</button>
-               <input type="checkbox" data-toggle="toggle" data-on="Sharing Location - Active" data-off="Sharing Location - Disabled"  data-width="250" navbar-center id="sharingLocationButton">
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
+      -->
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <!--            <li class="active"><a href="#">Back</a></li>-->
+          <button onclick="location.href='.'" class="btn navbar-btn">Back</button>
+          <input type="checkbox" data-toggle="toggle" data-on="Sharing Location - Active" data-off="Sharing Location - Disabled"  data-width="250" navbar-center id="sharingLocationButton">
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
 
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Friends
+              <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#" data-toggle="modal" data-target="#viewFriends" onclick="viewFriendsModal()">View Friends</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#friendRequests" onclick="friendRequestsModal()">Friend Requests</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#addFriends" onclick="addFriendsModal()">Add Friends</a></li>
+              </ul>
+            </li>
             <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Friends
-                <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#" data-toggle="modal" data-target="#viewFriends" onclick="viewFriendsModal()">View Friends</a></li>
-                  <li><a href="#" data-toggle="modal" data-target="#friendRequests" onclick="friendRequestsModal()">Friend Requests</a></li>
-                  <li><a href="#" data-toggle="modal" data-target="#addFriends" onclick="addFriendsModal()">Add Friends</a></li>
-                </ul>
-              </li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Plugins
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Plugins
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="#" data-toggle="modal" data-target="#addPlugin" onclick="addPluginModalLoad()">Add Plugin</a></li>
                   <li><a href="#" data-toggle="modal" data-target="#viewPlugin" onclick="loadViewPlugins()">View Plugin</a></li>
                 </ul>
               </li>
-	    <li><a href="#"><span class="glyphicon glyphicon-user" id="usernameValue">{{ user.username }}</span></a></li>
-          </ul>
+              <li><a href="#"><span class="glyphicon glyphicon-user" id="usernameValue">{{ user.username }}</span></a></li>
+            </ul>
+          </div>
         </div>
+      </nav>
+      <div id="map" style="max-height: 80%;"></div>
+      <div id="infowindow-content" class="hidden">
+        <img id="place-icon" src="" height="16" width="16"><br>
+        <span id="place-name"  class="title"></span><br>
+        <span id="place-address"></span>
       </div>
-    </nav>
-    <div id="map" style="max-height: 80%;"></div>
-    <div id="infowindow-content" class="hidden">
-      <img id="place-icon" src="" height="16" width="16"><br>
-      <span id="place-name"  class="title"></span><br>
-      <span id="place-address"></span>
-    </div>
 <!--
     <ul class="list-group" style="max-height: 80%; max-width: 25%; /*margin-left: auto; margin-right: 0; top: -15px;*/">
         <li class="list-group-item">Pisi</li>
     </ul>
--->
-     <div class="form form-inline text-right" onload="getListOfPlugins()">
-      <div class="form-group">
-        <label for="sel1">Plugin:&nbsp;</label>
-        <select class="form-control" id="selection1">
-        </select>
-      </div>
-      <div class="form-group">
-          <button type="submit" class="btn btn-default" onclick="getSelectedPluginData()">Select</button>
-         </div>
-      </div>
-    
-    <div id = "plugin-data">
-      
+  -->
+  <div class="form form-inline text-right" onload="getListOfPlugins()">
+    <div class="form-group">
+      <label for="sel1">Plugin:&nbsp;</label>
+      <select class="form-control" id="selection1">
+      </select>
     </div>
-      
-      
+    <div class="form-group">
+      <button type="submit" class="btn btn-default" onclick="getSelectedPluginData()">Select</button>
+    </div>
+  </div>
+  
+  <div id = "plugin-data">
     
-    <!-- Modals -->
-    <!-- ----------------- -->
-    <!-- Modal -->
-    
-    <div id="addPlugin" class="modal fade" role="dialog">
-      <div class="modal-dialog">
+  </div>
+  
+  
+  
+  <!-- Modals -->
+  <!-- ----------------- -->
+  <!-- Modal -->
+  
+  <div id="addPlugin" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Add Plugin</h4>
-          </div>
-          <div id="alertZone">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Plugin</h4>
+        </div>
+        <div id="alertZone">
             <!-- <div class="alert alert-success">
                 <strong>Success!</strong> The file has been uploaded!
-            </div> -->
-          </div>
-          <div class="modal-body">
+              </div> -->
+            </div>
+            <div class="modal-body">
              <form class="form-horizontal">
               <div class="form-group">
                 <label class="control-label col-sm-2" for="plname">Plugin:</label>
@@ -138,19 +138,19 @@
                   <input class="form-control" id="pldesc" placeholder="Enter plugin description">
                 </div>
               </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="brs">Archive:</label>
-                    <div class="col-sm-10">
-                    <span class="btn btn-default btn-file" id="brs">
-                        <input type="file" name="inputArchive" id="file_input">
-                    </span>
-                    <span id="arctip" title="Upload a zip archive which contains a .py file and an optional .html file" data-html="true" rel="tooltip" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                    </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="brs">Archive:</label>
+                <div class="col-sm-10">
+                  <span class="btn btn-default btn-file" id="brs">
+                    <input type="file" name="inputArchive" id="file_input">
+                  </span>
+                  <span id="arctip" title="Upload a zip archive which contains a .py file and an optional .html file" data-html="true" rel="tooltip" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                 </div>
+              </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                <!-- HERE PUT DATA AND VERIFY IT -->
-                 <button type="button" class="btn btn-primary pull-right" onclick="submitPlugin()">Submit</button>
+                  <!-- HERE PUT DATA AND VERIFY IT -->
+                  <button type="button" class="btn btn-primary pull-right" onclick="submitPlugin()">Submit</button>
                 </div>
               </div>
             </form>
@@ -177,20 +177,20 @@
           </div>
           <div class="modal-body">
             <div class="list-group" id="pluginsViewList">
-                <!-- info -->
-                 <div class="panel-group">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#collapse1">View custom nearby places</a>
-                      </h4>
-                    </div>
-                    <div id="collapse1" class="panel-collapse collapse">
-                      <div class="panel-body">Description: Allows the user to select options regarding the type of nearby places to view on map and filters for those points of interest</div>
-                    </div>
+              <!-- info -->
+              <div class="panel-group">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" href="#collapse1">View custom nearby places</a>
+                    </h4>
+                  </div>
+                  <div id="collapse1" class="panel-collapse collapse">
+                    <div class="panel-body">Description: Allows the user to select options regarding the type of nearby places to view on map and filters for those points of interest</div>
                   </div>
                 </div>
-                <!-- info -->
+              </div>
+              <!-- info -->
             </div>
           </div>
           <div class="modal-footer">
@@ -212,22 +212,22 @@
           </div>
           <div class="modal-body" style="overflow:auto;height: auto">
             <div class="list-group" id="viewFriendsList">
-                <!-- info -->
-                 <div class="panel-group">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#viewFriendsollapse1" id="idForViewFriend1">Test</a>
-                      </h4>
-                    </div>
-                    <div id="viewFriendsollapse1" class="panel-collapse collapse">
-                      <div class="panel-body">Email: test@test.com</div>                      
-                      <button type="button" class="btn btn-default" data-toggle="collapse" href="#friendRequestscollapse1" onclick="removeFriend('idForViewFriend1')">Remove</button>
-                    </div>
+              <!-- info -->
+              <div class="panel-group">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" href="#viewFriendsollapse1" id="idForViewFriend1">Test</a>
+                    </h4>
                   </div>
+                  <div id="viewFriendsollapse1" class="panel-collapse collapse">
+                    <div class="panel-body">Email: test@test.com</div>                      
+                    <button type="button" class="btn btn-default" data-toggle="collapse" href="#friendRequestscollapse1" onclick="removeFriend('idForViewFriend1')">Remove</button>
+                  </div>
+                </div>
                 <!-- info -->
+              </div>
             </div>
-          </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -237,7 +237,7 @@
       </div>
     </div>
 
-  <div id="friendRequests" class="modal fade" role="dialog">
+    <div id="friendRequests" class="modal fade" role="dialog">
       <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -248,29 +248,29 @@
             <h4 class="modal-title">Friend Requests</h4>
           </div>
           <div class="modal-body" style="overflow:auto;height: auto">
-          <div id="friendRequestsAlertZone">
+            <div id="friendRequestsAlertZone">
             <!-- <div class="alert alert-success">
                 <strong>Success!</strong> The file has been uploaded!
-            </div> -->
-          </div>
-            <div class="list-group" id="friendRequestsList">
-                <!-- info -->
-                 <div class="panel-group">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#friendRequestscollapse1" id="idForFriendRequestList1">Test</a>
-                      </h4>
-                    </div>
-                    <div id="friendRequestscollapse1" class="panel-collapse collapse">
-                      <div class="panel-body">Email: test@test.com Message: Ana are mere</div>
-                      <button type="button" class="btn btn-default" data-toggle="collapse" href="#friendRequestscollapse1" onclick="acceptFriendRequest('idForFriendRequestList1')">Accept</button>
-                      <button type="button" class="btn btn-default" data-toggle="collapse" href="#friendRequestscollapse1" onclick="rejectFriendRequest('idForFriendRequestList1')">Reject</button>
-                    </div>
-                  </div>
-                <!-- info -->
+              </div> -->
             </div>
-          </div>
+            <div class="list-group" id="friendRequestsList">
+              <!-- info -->
+              <div class="panel-group">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" href="#friendRequestscollapse1" id="idForFriendRequestList1">Test</a>
+                    </h4>
+                  </div>
+                  <div id="friendRequestscollapse1" class="panel-collapse collapse">
+                    <div class="panel-body">Email: test@test.com Message: Ana are mere</div>
+                    <button type="button" class="btn btn-default" data-toggle="collapse" href="#friendRequestscollapse1" onclick="acceptFriendRequest('idForFriendRequestList1')">Accept</button>
+                    <button type="button" class="btn btn-default" data-toggle="collapse" href="#friendRequestscollapse1" onclick="rejectFriendRequest('idForFriendRequestList1')">Reject</button>
+                  </div>
+                </div>
+                <!-- info -->
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -290,12 +290,12 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Add Friend</h4>
           </div>
-           <div id="addFriendsAlertZone">
+          <div id="addFriendsAlertZone">
             <!-- <div class="alert alert-success">
                 <strong>Success!</strong> The file has been uploaded!
-            </div> -->
-          </div>
-          <div class="modal-body">
+              </div> -->
+            </div>
+            <div class="modal-body">
              <form class="form-horizontal">
               <div class="form-group">
                 <label class="control-label col-sm-2" for="emAddress">Email address:</label>
@@ -306,8 +306,8 @@
               
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                <!-- HERE PUT DATA AND VERIFY IT -->
-                 <button type="button" class="btn btn-primary pull-right" onclick="sendFriendRequest()">Send Request</button>
+                  <!-- HERE PUT DATA AND VERIFY IT -->
+                  <button type="button" class="btn btn-primary pull-right" onclick="sendFriendRequest()">Send Request</button>
                 </div>
               </div>
             </form>
@@ -323,46 +323,46 @@
     </div>
 
     <!-- End of Modals -->
-      
-      
+    
+    
     <!-- Scripts -->
     <!-- ----------------- -->
     <script>
-	$('#sharingLocationButton').change(async function() {
-	  	while ($(this).prop('checked') == true)
-		{
- 			navigator.geolocation.getCurrentPosition(function(position) {
-            pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
+     $('#sharingLocationButton').change(async function() {
+      while ($(this).prop('checked') == true)
+      {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
  			// console.log(pos)
  			data = {location : pos}
  			$.ajax({
-	      		type: 'put',
-	      		url: '../api/set_location/' + getUsername(),
-	          	data: JSON.stringify(data),
-	          	processData:false,
-        	});
+         type: 'put',
+         url: '../api/set_location/' + getUsername(),
+         data: JSON.stringify(data),
+         processData:false,
+       });
 
- 			}
-            )
-  			await sleep(10000);
-  		}
-	})
+    }
+    )
+        await sleep(10000);
+      }
+    })
 
-    function sleep(ms) {
-  		return new Promise(resolve => setTimeout(resolve, ms));
-	}
+     function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
-	async function sharinglocation() {
-		while (true)
-		{
- 			console.log('Taking a break...');
-  			await sleep(30000);
-  			console.log('30 second later');
-  		}
-	}
+    async function sharinglocation() {
+      while (true)
+      {
+        console.log('Taking a break...');
+        await sleep(30000);
+        console.log('30 second later');
+      }
+    }
 
     function setUsername(usernameInput)
     {
@@ -380,10 +380,10 @@
           data = JSON.parse(data)
           data = data['data']
           for (x in data){
-				result += '<option>' + data[x].name + '</option>'
-          	}
-    		var div = document.getElementById("selection1")
-    		div.innerHTML = result
+            result += '<option>' + data[x].name + '</option>'
+          }
+          var div = document.getElementById("selection1")
+          div.innerHTML = result
 
         },
         failure:function(data)
@@ -394,31 +394,31 @@
       })
     })
 
-	function nodeScriptReplace(node) {
-        if ( nodeScriptIs(node) === true ) {
-                node.parentNode.replaceChild( nodeScriptClone(node) , node );
+    function nodeScriptReplace(node) {
+      if ( nodeScriptIs(node) === true ) {
+        node.parentNode.replaceChild( nodeScriptClone(node) , node );
+      }
+      else {
+        var i        = 0;
+        var children = node.childNodes;
+        while ( i < children.length ) {
+          nodeScriptReplace( children[i++] );
         }
-        else {
-                var i        = 0;
-                var children = node.childNodes;
-                while ( i < children.length ) {
-                        nodeScriptReplace( children[i++] );
-                }
-        }
+      }
 
-        return node;
-	}
-	function nodeScriptIs(node) {
-        return node.tagName === 'SCRIPT';
-	}
-	function nodeScriptClone(node){
-        var script  = document.createElement("script");
-        script.text = node.innerHTML;
-        for( var i = node.attributes.length-1; i >= 0; i-- ) {
-                script.setAttribute( node.attributes[i].name, node.attributes[i].value );
-        }
-        return script;
-	}
+      return node;
+    }
+    function nodeScriptIs(node) {
+      return node.tagName === 'SCRIPT';
+    }
+    function nodeScriptClone(node){
+      var script  = document.createElement("script");
+      script.text = node.innerHTML;
+      for( var i = node.attributes.length-1; i >= 0; i-- ) {
+        script.setAttribute( node.attributes[i].name, node.attributes[i].value );
+      }
+      return script;
+    }
 
     function getUsername()
     {
@@ -430,31 +430,31 @@
     function getSelectedPluginData()
     {
     	
-		var div = document.getElementById("plugin-data")
-		div.innerHTML = ''
-    	$.ajax({
-    		type: 'get',
-    		url: '/api/plugins/' + document.getElementById("selection1").value,
-    		processData:false,
-    		success: function(data){
-    			data = JSON.parse(data)
-    			if (!data['result']){
-    				var div = document.getElementById("plugin-data")
-	          		div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data['msg'] + '</div>'
-	          	}
-	          	else
-	          	{
-	          		var div = document.getElementById("plugin-data")
-	          		div.name = document.getElementById("selection1").value
-	          		div.innerHTML = data['html']
-	          		nodeScriptReplace(document.getElementById("plugin-data"));
-	          	}
-    		},
-    		failure: function(data){
-    			var div = document.getElementById("plugin-data")
-	          	div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
-    		}
-    	})
+      var div = document.getElementById("plugin-data")
+      div.innerHTML = ''
+      $.ajax({
+        type: 'get',
+        url: '/api/plugins/' + document.getElementById("selection1").value,
+        processData:false,
+        success: function(data){
+         data = JSON.parse(data)
+         if (!data['result']){
+          var div = document.getElementById("plugin-data")
+          div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data['msg'] + '</div>'
+        }
+        else
+        {
+         var div = document.getElementById("plugin-data")
+         div.name = document.getElementById("selection1").value
+         div.innerHTML = data['html']
+         nodeScriptReplace(document.getElementById("plugin-data"));
+       }
+     },
+     failure: function(data){
+       var div = document.getElementById("plugin-data")
+       div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
+     }
+   })
     }
 
     function friendRequestsModal()
@@ -465,38 +465,38 @@
 
       var div = document.getElementById("friendRequestsAlertZone")
       div.innerHTML = ''
-     $.ajax({
+      $.ajax({
         type: 'get',
         url: '/api/friends/friend_requests/' + getUsername(),
-          processData:false,
-          success:function(data)
-          {
-            var result = '';
-            data = JSON.parse(data)
-            data = data['data']
-            counter = 0
-            for (x in data){              
-              result += '<div class="panel-group"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#friendsRequestsModal' + counter + '"' 
-              + ' id="idForFriendRequestList' + counter + '">' + 
-              data[x].name + '</a></h4></div><div id="friendsRequestsModal' + counter + '" class="panel-collapse collapse"><div class="panel-body">Email:' + data[x].email + '</div>'+
-              '<button type="button" class="btn btn-default" data-toggle="collapse" href="#friendsRequestsModal' + counter + '"  onclick="acceptFriendRequest(\'idForFriendRequestList' + counter + '\')">Accept</button>' + 
-              '<button type="button" class="btn btn-default" data-toggle="collapse" href="#friendsRequestsModal' + counter + '" onclick="rejectFriendRequest(\'idForFriendRequestList'+counter + '\')">Reject</button>' + 
-              '</div></div><br>'
-          counter += 1
+        processData:false,
+        success:function(data)
+        {
+          var result = '';
+          data = JSON.parse(data)
+          data = data['data']
+          counter = 0
+          for (x in data){              
+            result += '<div class="panel-group"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#friendsRequestsModal' + counter + '"' 
+            + ' id="idForFriendRequestList' + counter + '">' + 
+            data[x].name + '</a></h4></div><div id="friendsRequestsModal' + counter + '" class="panel-collapse collapse"><div class="panel-body">Email:' + data[x].email + '</div>'+
+            '<button type="button" class="btn btn-default" data-toggle="collapse" href="#friendsRequestsModal' + counter + '"  onclick="acceptFriendRequest(\'idForFriendRequestList' + counter + '\')">Accept</button>' + 
+            '<button type="button" class="btn btn-default" data-toggle="collapse" href="#friendsRequestsModal' + counter + '" onclick="rejectFriendRequest(\'idForFriendRequestList'+counter + '\')">Reject</button>' + 
+            '</div></div><br>'
+            counter += 1
           }
           var div = document.getElementById("friendRequestsList")
-            div.innerHTML = result
-          },
-          failure:function(data)
-          {
-            var div = document.getElementById("friendRequestsList")
-            div.innerHTML = 'Error'
-          }
+          div.innerHTML = result
+        },
+        failure:function(data)
+        {
+          var div = document.getElementById("friendRequestsList")
+          div.innerHTML = 'Error'
+        }
 
-        }) 
+      }) 
     }
 
-function acceptFriendRequest(modalId)
+    function acceptFriendRequest(modalId)
     {
       var div = document.getElementById(modalId)
       div = div.innerHTML
@@ -509,7 +509,7 @@ function acceptFriendRequest(modalId)
         data: JSON.stringify(data),
         processData:false,
         success:function(data){
-            data = JSON.parse(data)
+          data = JSON.parse(data)
           if (data == "OK")
           {
             var div = document.getElementById("friendRequestsAlertZone")
@@ -520,6 +520,7 @@ function acceptFriendRequest(modalId)
           {
             var div = document.getElementById("friendRequestsAlertZone")
             div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
+            document.getElementById(modalId).style.visibility = "hidden";
           }
         },
         failure:function(error){
@@ -542,27 +543,28 @@ function acceptFriendRequest(modalId)
         data: JSON.stringify(data),
         processData:false,
         success:function(data){
-			data = JSON.parse(data)
-          if (data == "OK")
-          {
-            var div = document.getElementById("friendRequestsAlertZone")
-            div.innerHTML = '<div class="alert alert-success"><strong>Success!</strong> The request has been rejected!</div>'
-            document.getElementById(modalId).style.visibility = "hidden";
-          }
-          else
-          {
-            var div = document.getElementById("friendRequestsAlertZone")
-            div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
-          }
-        },
-        failure:function(error){
+         data = JSON.parse(data)
+         if (data == "OK")
+         {
           var div = document.getElementById("friendRequestsAlertZone")
-          div.innerHTML = '<div class="alert alert-danger"><strong>Request Failed!</strong> Error: ' + error + '</div>'
+          div.innerHTML = '<div class="alert alert-success"><strong>Success!</strong> The request has been rejected!</div>'
+          document.getElementById(modalId).style.visibility = "hidden";
         }
-      });
+        else
+        {
+          var div = document.getElementById("friendRequestsAlertZone")
+          div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
+          document.getElementById(modalId).style.visibility = "hidden";
+        }
+      },
+      failure:function(error){
+        var div = document.getElementById("friendRequestsAlertZone")
+        div.innerHTML = '<div class="alert alert-danger"><strong>Request Failed!</strong> Error: ' + error + '</div>'
+      }
+    });
     }
 
- 	function removeFriend(modalId)
+    function removeFriend(modalId)
     {
       var div = document.getElementById(modalId)
       div = div.innerHTML
@@ -573,49 +575,49 @@ function acceptFriendRequest(modalId)
         data: JSON.stringify(data),
         processData:false,
         success:function(data){
-			data = JSON.parse(data)
-          if (data == "OK")
-          {
-            document.getElementById(modalId).style.visibility = "hidden";
-          }
+         data = JSON.parse(data)
+         if (data == "OK")
+         {
+          document.getElementById(modalId).style.visibility = "hidden";
         }
-      });
-     }
+      }
+    });
+    }
 
     function viewFriendsModal()
     {
       var div = document.getElementById("viewFriendsList")
       div.innerHTML = 'Loading...'
 
-     $.ajax({
+      $.ajax({
         type: 'get',
         url: '/api/friends/view/' + getUsername(),
-          processData:false,
-          success:function(data)
-          {
-            var result = '';
-            data = JSON.parse(data)
-            data = data['data']
-            counter = 0
-            for (x in data){              
-              result += '<div class="panel-group"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#viewFriendsModal' + counter + '" ' +
-              ' id="idForViewFriend' + counter + '">' +
-              data[x].name + '</a></h4></div><div id="viewFriendsModal' + counter + '" class="panel-collapse collapse"><div class="panel-body">Email:' + data[x].email +  
-              '</div>' + 
-				'<button type="button" class="btn btn-default" data-toggle="collapse" href="#viewFriendsModal' + counter + '" onclick="removeFriend(\'idForViewFriend'+counter + '\')">Remove</button>'
-              + '</div></div><br>'
-          counter += 1
+        processData:false,
+        success:function(data)
+        {
+          var result = '';
+          data = JSON.parse(data)
+          data = data['data']
+          counter = 0
+          for (x in data){              
+            result += '<div class="panel-group"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#viewFriendsModal' + counter + '" ' +
+            ' id="idForViewFriend' + counter + '">' +
+            data[x].name + '</a></h4></div><div id="viewFriendsModal' + counter + '" class="panel-collapse collapse"><div class="panel-body">Email:' + data[x].email +  
+            '</div>' + 
+            '<button type="button" class="btn btn-default" data-toggle="collapse" href="#viewFriendsModal' + counter + '" onclick="removeFriend(\'idForViewFriend'+counter + '\')">Remove</button>'
+            + '</div></div><br>'
+            counter += 1
           }
           var div = document.getElementById("viewFriendsList")
-            div.innerHTML = result
-          },
-          failure:function(data)
-          {
-            var div = document.getElementById("viewFriendsList")
-            div.innerHTML = 'Error'
-          }
+          div.innerHTML = result
+        },
+        failure:function(data)
+        {
+          var div = document.getElementById("viewFriendsList")
+          div.innerHTML = 'Error'
+        }
 
-        }) 
+      }) 
     }
     function addFriendsModal()
     {
@@ -623,7 +625,7 @@ function acceptFriendRequest(modalId)
       div.innerHTML = ''
     }
 
-function sendFriendRequest(){  
+    function sendFriendRequest(){  
       var div = document.getElementById("addFriendsAlertZone")
       div.innerHTML = ''
       var emailAddress = document.getElementById("emAddress").value
@@ -666,28 +668,28 @@ function sendFriendRequest(){
     	$.ajax({
     		type: 'get',
     		url: '/api/plugins',
-	        processData:false,
-	        success:function(data)
-	        {
-	        	var result = '';
-	          data = JSON.parse(data)
-	          data = data['data']
-	          counter = 0
-	          for (x in data){	          	
-	          	result += '<div class="panel-group"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse' + counter + '">' + 
-          		data[x].name + '</a></h4></div><div id="collapse' + counter + '" class="panel-collapse collapse"><div class="panel-body">Description:' + data[x].description + '</div></div></div><br>'
-    			counter += 1
-	    		}
-    			var div = document.getElementById("pluginsViewList")
-	          div.innerHTML = result
-	        },
-	        failure:function(data)
-	        {
-	          var div = document.getElementById("pluginsViewList")
-	          div.innerHTML = 'Error'
-	        }
+       processData:false,
+       success:function(data)
+       {
+        var result = '';
+        data = JSON.parse(data)
+        data = data['data']
+        counter = 0
+        for (x in data){	          	
+          result += '<div class="panel-group"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse' + counter + '">' + 
+          data[x].name + '</a></h4></div><div id="collapse' + counter + '" class="panel-collapse collapse"><div class="panel-body">Description:' + data[x].description + '</div></div></div><br>'
+          counter += 1
+        }
+        var div = document.getElementById("pluginsViewList")
+        div.innerHTML = result
+      },
+      failure:function(data)
+      {
+       var div = document.getElementById("pluginsViewList")
+       div.innerHTML = 'Error'
+     }
 
-	    	})
+   })
     }
 
     function addPluginModalLoad()
@@ -706,6 +708,7 @@ function sendFriendRequest(){
       formData.append('desc', description)
       var data = {name: pluginName, desc: description}
       var regexVerifier = new RegExp("^[A-Za-z0-9.@!#$%_]+$")
+      var requestLink = '/api/plugins/' + pluginName + '/upload/new_plugin'
       if (regexVerifier.test(pluginName) == false)
       {
         var div = document.getElementById("alertZone")
@@ -714,15 +717,20 @@ function sendFriendRequest(){
       else{
         $.ajax({
           type: 'post',
-          url: '../api/plugins/new_plugin/upload/new_plugin',
+          url: requestLink,
           data: formData,
+          beforeSend: function(request) {
+            request.setRequestHeader('description', description)
+          },
           processData:false,
-	  contentType: false,
+          contentType: false,
           success:function(data){
             if (data === "OK")
             {
               var div = document.getElementById("alertZone")
               div.innerHTML = '<div class="alert alert-success"><strong>Success!</strong> The file has been uploaded!</div>'
+              setTimeout(function(){}, 2)
+              location.reload()
             }
             else
             {
@@ -742,12 +750,12 @@ function sendFriendRequest(){
     //   keyboard: false
     // })
     $("#arctip").tooltip({
-        placement: "top"
+      placement: "top"
     });
-        
+    
     function appendHtml(id, el, str) {
-  var div = document.getElementById(id);
-  div.innerHTML = str;
+      var div = document.getElementById(id);
+      div.innerHTML = str;
 }    // var origin2 = new Object();
     // origin2.lat_ = origin['lat'];
 
@@ -791,7 +799,7 @@ function sendFriendRequest(){
           zoom: zoom_
         });
         infoWindow = new google.maps.InfoWindow;
-      	
+        
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
@@ -802,7 +810,7 @@ function sendFriendRequest(){
             origin.lat = pos.lat;
             origin.lng = pos.lng;
             map.addListener('dblclick', function(event) {
-                addMarker(event.latLng);
+              addMarker(event.latLng);
             });
             
             infoWindow.setPosition(pos);
@@ -826,7 +834,7 @@ function sendFriendRequest(){
         markers.push(marker);
       }
 
-		var ClickEventHandler = function(map, origin) {
+      var ClickEventHandler = function(map, origin) {
         this.origin = origin;
         this.map = map;
         this.directionsService = new google.maps.DirectionsService;
@@ -885,7 +893,7 @@ function sendFriendRequest(){
             me.infowindowContent.children['place-icon'].src = place.icon;
             me.infowindowContent.children['place-name'].textContent = place.name;
             me.infowindowContent.children['place-address'].textContent =
-                place.formatted_address;
+            place.formatted_address;
 
             me.infowindow.open(me.map);
           }
@@ -893,28 +901,28 @@ function sendFriendRequest(){
       };
 
       function refresh() {
-          var integer = parseInt(document.getElementById('zoom').value); 
+        var integer = parseInt(document.getElementById('zoom').value); 
 //          console.log(document.getElementById('zoom').value);
 //          console.log(integer);
-          if(!integer) {
-              integer = 17;
-          }
+if(!integer) {
+  integer = 17;
+}
 //          initMap(integer);
-          map.setZoom(integer);
-      }
+map.setZoom(integer);
+}
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
-      }
-    </script>
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+    'Error: The Geolocation service failed.' :
+    'Error: Your browser doesn\'t support geolocation.');
+  infoWindow.open(map);
+}
+</script>
     <!-- <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXYDYmpNXAo01aw71oMT6KJXoI1aTTyvg&libraries=places&callback=initMap">
-    </script> -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXYDYmpNXAo01aw71oMT6KJXoI1aTTyvg&libraries=places&callback=initMap"
-        async defer></script>
-  </body>
+  </script> -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXYDYmpNXAo01aw71oMT6KJXoI1aTTyvg&libraries=places&callback=initMap"
+  async defer></script>
+</body>
 </html>

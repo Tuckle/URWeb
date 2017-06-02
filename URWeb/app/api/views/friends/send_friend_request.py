@@ -18,6 +18,7 @@ class SendFriendRequest(generic.View):
 
 	def put(self, request, username):
 		
+		username = request.user
 		data = json.loads(request.body)
 		email = data['email']
 
@@ -50,7 +51,6 @@ class SendFriendRequest(generic.View):
 				for item in friendsList:
 					actualFriends.add(item.username1)
 				
-
 				if user.username in actualFriends:
 					data = 'You are already friends. The request has been discarded!'
 					return HttpResponse(json.dumps(data))		
@@ -61,7 +61,7 @@ class SendFriendRequest(generic.View):
 
 				currentFriendsRequest = FriendsRequest.objects.all().filter(from_user = username)
 				for items in currentFriendsRequest:
-					if user == items.to_user:
+					if user.username == items.to_user:
 						data = 'You have already send a requests. The request has been discarded!'
 						return HttpResponse(json.dumps(data))	
 

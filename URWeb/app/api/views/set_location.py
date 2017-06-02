@@ -20,6 +20,8 @@ class SetLocation(generic.View):
 
 	def put(self, request, username):
 		
+		username = request.user
+
 		if not username:
 			response = dict()
 			return HttpResponse(json.dumps(response))

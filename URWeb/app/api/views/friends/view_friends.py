@@ -16,6 +16,8 @@ import zipfile
 
 class ViewFriends(generic.View):
 	def get(self, request, username):
+		
+		username = request.user
 		if not username:
 			response = dict()
 			return HttpResponse(json.dumps(response))

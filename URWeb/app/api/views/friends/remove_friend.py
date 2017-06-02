@@ -18,6 +18,8 @@ class RemoveFriend(generic.View):
 
 	def put(self, request, username):
 		
+		username = request.user
+		
 		data = json.loads(request.body)
 		user = data['user']
 
