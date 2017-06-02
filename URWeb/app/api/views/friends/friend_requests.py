@@ -16,6 +16,8 @@ from URWeb.app.models.models import Friends
 
 class FriendRequests(generic.View):
 	def get(self, request, username):
+		
+		username = request.user
 		if not username:
 			response = dict()
 			return HttpResponse(json.dumps(response))

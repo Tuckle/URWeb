@@ -16,6 +16,8 @@ from URWeb.app.models.models import Friends
 
 class RejectRequest(generic.View):
 	def put(self, request, username):
+		
+		username = request.user
 		if not username:
 			response = dict()
 			return HttpResponse(json.dumps(response))
@@ -39,7 +41,7 @@ class RejectRequest(generic.View):
 				except Exception as e:
 					data = str(e)
 				return HttpResponse(json.dumps(data))
-			
+
 			try:
 				FriendsRequest.objects.all().filter(from_user = user).filter(to_user = username).delete()
 				data = "OK"

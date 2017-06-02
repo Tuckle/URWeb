@@ -22,15 +22,16 @@ from .views.friends.accept_request import AcceptRequest
 from .views.friends.reject_request import RejectRequest
 from .views.friends.remove_friend import RemoveFriend
 from .views.set_location import SetLocation
+from django.contrib.auth.decorators import login_required
 
 api_urls = [
-    url(r'^/plugins(?:/(?P<name>\w+))?(?:/(?P<format>\w+))?$', Plugins.as_view(), name='plugins'),
-    url(r'^/plugins/(?P<name>\w+)/upload/\w+', UploadPlugin.as_view(), name='upload_plugin'),
-    url(r'^/friends/view(?:/(?P<username>\w+))?$', ViewFriends.as_view(),name = 'friends'),
-    url(r'^/friends/friend_requests(?:/(?P<username>\w+))?$', FriendRequests.as_view(), name = 'friend_requests'),
-    url(r'^/friends/send_request(?:/(?P<username>\w+))?$', SendFriendRequest.as_view(), name = 'send_request'),
-    url(r'^/friends/reject_request(?:/(?P<username>\w+))?$', RejectRequest.as_view(), name = 'accept_request'),
-    url(r'^/friends/accept_request(?:/(?P<username>\w+))?$', AcceptRequest.as_view(), name = 'reject_request'),
-    url(r'^/friends/remove(?:/(?P<username>\w+))?$', RemoveFriend.as_view(), name = 'remove_friend'),
-    url(r'^/set_location(?:/(?P<username>\w+))?$', SetLocation.as_view(), name = 'set_location')
+    url(r'^/plugins(?:/(?P<name>\w+))?(?:/(?P<format>\w+))?$', login_required(Plugins.as_view()), name='plugins'),
+    url(r'^/plugins/(?P<name>\w+)/upload/\w+', login_required(UploadPlugin.as_view()), name='upload_plugin'),
+    url(r'^/friends/view(?:/(?P<username>\w+))?$', login_required(ViewFriends.as_view()),name = 'friends'),
+    url(r'^/friends/friend_requests(?:/(?P<username>\w+))?$', login_required(FriendRequests.as_view()), name = 'friend_requests'),
+    url(r'^/friends/send_request(?:/(?P<username>\w+))?$', login_required(SendFriendRequest.as_view()), name = 'send_request'),
+    url(r'^/friends/reject_request(?:/(?P<username>\w+))?$', login_required(RejectRequest.as_view()), name = 'accept_request'),
+    url(r'^/friends/accept_request(?:/(?P<username>\w+))?$', login_required(AcceptRequest.as_view()), name = 'reject_request'),
+    url(r'^/friends/remove(?:/(?P<username>\w+))?$', login_required(RemoveFriend.as_view()), name = 'remove_friend'),
+    url(r'^/set_location(?:/(?P<username>\w+))?$', login_required(SetLocation.as_view()), name = 'set_location')
 ]

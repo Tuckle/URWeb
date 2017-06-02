@@ -73,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'social.apps.django_app.context_processors.backends',
                 'social.apps.django_app.context_processors.login_redirect',
+		'django.template.context_processors.request',
             ],
         },
     },
