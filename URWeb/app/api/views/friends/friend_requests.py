@@ -10,7 +10,8 @@ import pickle
 import zipfile
 
 from URWeb.app.models.models import FriendsRequest
-from URWeb.app.models.models import User
+from URWeb.app.models.models import Location
+from django.contrib.auth.models import User
 from URWeb.app.models.models import Friends
 
 class FriendRequests(generic.View):

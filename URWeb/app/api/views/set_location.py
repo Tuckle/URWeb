@@ -10,8 +10,10 @@ import pickle
 import zipfile
 from datetime import datetime
 from django.utils import timezone
+
 from URWeb.app.models.models import FriendsRequest
-from URWeb.app.models.models import User
+from URWeb.app.models.models import Location
+from django.contrib.auth.models import User
 from URWeb.app.models.models import Friends
 
 class SetLocation(generic.View):
@@ -26,19 +28,19 @@ class SetLocation(generic.View):
 			data = json.loads(request.body)
 			location = data['location']
 			
-			for item in User.objects.all().filter(username = username):
-			 	print(item.pos_lat, item.pos_timestamp)
-
 			try:
-				tempUser = User.objects.all().filter(username = username).update(pos_lat = location['lat'], pos_lng = location['lng'], pos_timestamp = datetime.now())	
+				tempUser = User.objects.get(username = username)
+				# print("UserId: {}".format(tempUser.id))
+				updateLocation = Location.objects.all().filter(user_id = tempUser.id).update(pos_lat = location['lat'], pos_lng = location['lng'], pos_timestamp = datetime.now())	
 				data = "OK"
 			except Exception as e:
 				data = str(e)
 
-
+			# print("Data value: {}".format(data))
 			
 			for item in User.objects.all().filter(username = username):
-			 	print(item.pos_lat, item.pos_timestamp)
+				location = Location.objects.get(user_id = item.id)
+				print(location.pos_lat, location.pos_lng, location.pos_timestamp)
 
 			return HttpResponse(json.dumps(data))		
 		
