@@ -182,7 +182,7 @@ class UploadPlugin(generic.View):
 		class_regex = re.compile('^def\s+Plugin\s*(\(|:).*')
 		func_regex = re.compile('^\s+def\s+run\s*\(\s*self.*')
 
-		path_to_plugin = os.path.join(self.PLUGINS_CONSTANTS.PLUGINS_MODULES_PATH, plugin_name)
+		path_to_plugin = os.path.join(self.PLUGIN_CONSTANTS.PLUGINS_MODULES_PATH, plugin_name)
 		path_to_html = os.path.join(path_to_plugin, plugin_name + '.html')
 		path_to_script = os.path.join(path_to_plugin, plugin_name + '.py')
 		if not os.path.exists(path_to_html) or not os.path.exists(path_to_script):
