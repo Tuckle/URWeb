@@ -520,6 +520,7 @@ function acceptFriendRequest(modalId)
           {
             var div = document.getElementById("friendRequestsAlertZone")
             div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
+            document.getElementById(modalId).style.visibility = "hidden";
           }
         },
         failure:function(error){
@@ -553,6 +554,7 @@ function acceptFriendRequest(modalId)
           {
             var div = document.getElementById("friendRequestsAlertZone")
             div.innerHTML = '<div class="alert alert-danger"><strong>Something Failed!</strong> Error: ' + data + '</div>'
+            document.getElementById(modalId).style.visibility = "hidden";
           }
         },
         failure:function(error){

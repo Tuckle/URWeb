@@ -22,7 +22,24 @@ class RejectRequest(generic.View):
 		else:
 			data = json.loads(request.body)
 			user = data['user']
-			print("Floricele2")
+
+			friendsList = Friends.objects.all().filter(username1 = username)
+			actualFriends = set()
+			for item in friendsList:
+				actualFriends.add(item.username2)
+
+			friendsList = Friends.objects.all().filter(username2 = username)			
+			for item in friendsList:
+				actualFriends.add(item.username1)
+				
+			if user in actualFriends:
+				try:
+					FriendsRequest.objects.all().filter(from_user = user).filter(to_user = username).delete()
+					data = 'You are already friends. The request has been discarded!'
+				except Exception as e:
+					data = str(e)
+				return HttpResponse(json.dumps(data))
+			
 			try:
 				FriendsRequest.objects.all().filter(from_user = user).filter(to_user = username).delete()
 				data = "OK"
