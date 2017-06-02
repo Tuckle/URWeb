@@ -145,8 +145,9 @@ class UploadPlugin(generic.View):
 	ERROR = 'Failed to save file'
 
 	def post(self, request, name):
+		description = request.META.get('HTTP_DESCRIPTION')
 		if request.FILES and request.FILES.get('file_upload'):
-			file_uploaded = self.save_and_process_file(request.FILES)
+			file_uploaded = self.save_and_process_file(name, description, request.FILES)
 			if not file_uploaded:
 				if not self.ERROR:
 					self.ERROR = 'Failed to save file'
@@ -178,18 +179,8 @@ class UploadPlugin(generic.View):
 		return True
 
 	def check_plugin(self, plugin_name):
-		plugin_path = os.path.join(self.PLUGIN_CONSTANTS.PLUGINS_MODULES_PATH, plugin_name, plugin_name + ".py")
-		exec('from .modules.{}.{} import Plugin'.format(plugin_name, plugin_name))
-		result = ''
-		try:
-			result = locals()
-			exec("result = Plugin().run({}, {})".format(request.body, 'json'), globals(), result)
-			result = result['result']
-		except Exception as e:
-			exception_msg = "No module named Main found\n{}".format(e)
-			print(exception_msg)
-			self.ERROR = exception_msg
-			return False
+		class_regex = re.compile('^def\s+Plugin\s*(\(|:)')
+		func_regex = re.compile('')
 		return True
 
 	def add_plugin_to_list(self, plugin_name, plugin_path, description):
@@ -201,10 +192,10 @@ class UploadPlugin(generic.View):
 		plugins_data.append(new_plugin)
 		self.PLUGIN_CONSTANTS.save_plugins_list(plugins_data)
 
-	def save_and_process_file(self, file_dict):
+	def save_and_process_file(self, plugin_name, plugin_description, file_dict):
 		file_data = file_dict.get('file_upload')
-		plugin_name = file_dict.get('name')
-		plugin_description = file_dict.get('desc')
+		#plugin_name = file_dict.get('name')
+		#plugin_description = file_dict.get('desc')
 
 		fname, fext = os.path.splitext(file_data.name) 
 		if not plugin_name:
@@ -217,14 +208,14 @@ class UploadPlugin(generic.View):
 		if not self.download_file(file_data, zip_path):
 			return False
 
-		save_to = os.path.join(self.PLUGIN_CONSTANTS.PLUGINS_MODULES_PATH, fname)
+		save_to = os.path.join(self.PLUGIN_CONSTANTS.PLUGINS_MODULES_PATH, plugin_name)
 		if not self.unzip_file(zip_path, save_to):
 			return False
 		os.remove(zip_path)
 		
-		#if not check_plugin(fname):
-		#	shutil.rmtree(save_to)
-		#	return False
+		if not check_plugin(fname):
+			shutil.rmtree(save_to)
+			return False
 
 		self.add_plugin_to_list(plugin_name, save_to, plugin_description)	
 
