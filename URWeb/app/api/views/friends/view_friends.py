@@ -4,7 +4,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from URWeb.app.models.models import FriendsRequest
-from URWeb.app.models.models import User
+from URWeb.app.models.models import Location
+from django.contrib.auth.models import User
 from URWeb.app.models.models import Friends
 
 import json
@@ -19,6 +20,10 @@ class ViewFriends(generic.View):
 			response = dict()
 			return HttpResponse(json.dumps(response))
 		else:
+			objects = User.objects.all()
+			for items in objects:
+				print(items.username)
+
 			data = dict()
 			tempStuff = Friends.objects.all()
 			for items in tempStuff:
