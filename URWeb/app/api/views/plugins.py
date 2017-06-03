@@ -2,6 +2,8 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
+from URWeb.app.models.models import Plugins as PluginDB
+
 import json
 import re
 import os
@@ -33,6 +35,12 @@ class Plugins(generic.View):
 	pluginsPathList = r'URWeb\app\api\views\pluginsList'
 	pluginsModulesPath = r'URWeb\app\api\views\modules'
 	dictObject = None
+	plugin_template = {
+		'username': '',
+		'name': '',
+		'path': '',
+		'description': ''
+	}
 
 	def saveDict(self):
 		if self.dictObject:
@@ -56,23 +64,39 @@ class Plugins(generic.View):
 		
 		
 	def get(self, request, name, format):
+		self.loadDict()
+		for item in self.dictObject:
+			new_plugin = PluginDB(username='admin', name=item['name'], path=item['path'], description=item['description'])
+			new_plugin.save()
+				
 		if not name:
-			if not self.dictObject:
-				self.loadDict()
-			response = dict()
-			response['data'] = self.dictObject
+			#if not self.dictObject:
+			#	self.loadDict()
+			#response = dict()
+			#response['data'] = self.dictObject
+			plugin_data = PluginDB.objects.all()			
+			respone = {
+				'data': [
+				{
+				'username'; item.username,
+				'name': item.name,
+				'path': item.path,
+				'description': item.description
+			} for item in plugin_data]}
+
 			return HttpResponse(json.dumps(response))
 		else:
-			data = dict()
-			value = False
-			if not self.dictObject:
-				self.loadDict()
-			for items in self.dictObject:
-				if items['name'] == name:
-					value = True
-					path = items['path']
-					break
-			if value == False:
+			#data = dict()
+			#value = False
+			#if not self.dictObject:
+			#	self.loadDict()
+			#for items in self.dictObject:
+			#	if items['name'] == name:
+			#		value = True
+			#		path = items['path']
+			#		break
+			plugin_data = PluginDB.objects.all().filter(name=name)
+			if not plugin_data:
 				data['result'] = False
 				data['msg'] = 'The selected plugin could not be found'
 			else:
@@ -129,7 +153,7 @@ class Plugins(generic.View):
 					path = items['path']
 					break
 			pathToPlugin = os.path.join(self.pluginsModulesPath, path, path + ".py")
-			exec('from .modules.{}.{} import Plugin'.format(path, path))
+			exec('from .modules.{}.{} import Plugin'.format(name, name))
 			result = ''
 			try:
 				result = locals()
@@ -146,12 +170,19 @@ class UploadPlugin(generic.View):
 
 	def post(self, request, name):
 		description = request.META.get('HTTP_DESCRIPTION')
+		
+		# check if plugin exists in db
+		plugin_exists = PluginDB.objects.all().filter(name=name)
+		
 		if request.FILES and request.FILES.get('file_upload'):
 			file_uploaded = self.save_and_process_file(name, description, request.FILES)
 			if not file_uploaded:
 				if not self.ERROR:
 					self.ERROR = 'Failed to save file'
 				return HttpResponse(self.ERROR)
+		plugin_path = os.path.join(self.PLUGIN_CONSTANTS.PLUGIN_MODULES_PATH, name)
+		new_plugin = PluginDB(username=str(request.user), name=name, path=plugin_path, description=description)
+		new_plugin.save()
 		return HttpResponse('OK')
 	
 	def unzip_file(self, file_path, to_dir):
@@ -179,8 +210,8 @@ class UploadPlugin(generic.View):
 		return True
 
 	def check_plugin(self, plugin_name):
-		class_regex = re.compile('^class\s+Plugin\s*(\(|:).*')
-		func_regex = re.compile('^\s+def\s+run\s*\(\s*self.*')
+		class_regex = re.compile('^class\s+Plugin\s*(\(|:).*$')
+		func_regex = re.compile('^\s+def\s+run\s*\(\s*self.*$')
 
 		path_to_plugin = os.path.join(self.PLUGIN_CONSTANTS.PLUGINS_MODULES_PATH, plugin_name)
 		path_to_html = os.path.join(path_to_plugin, plugin_name + '.html')
