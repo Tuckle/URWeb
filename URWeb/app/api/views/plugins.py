@@ -78,7 +78,7 @@ class Plugins(generic.View):
 			respone = {
 				'data': [
 				{
-				'username'; item.username,
+				'username': item.username,
 				'name': item.name,
 				'path': item.path,
 				'description': item.description
