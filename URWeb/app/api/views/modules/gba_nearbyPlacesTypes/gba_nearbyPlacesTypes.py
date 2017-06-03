@@ -87,9 +87,9 @@ class Plugin():
 		data += '''</ul>''' 
 		return data
 
-	def run(self, requestBody, format):
+	def run(self, request_body, format):
 		apiKey = "AIzaSyDXYDYmpNXAo01aw71oMT6KJXoI1aTTyvg"
-		data = json.loads(requestBody)
+		data = json.loads(request_body)
 		vlat = "-33.8670522"
 		vlng = "151.1957362"
 		radius = 500

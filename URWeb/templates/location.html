@@ -825,6 +825,15 @@
         }
         var clickHandler = new ClickEventHandler(map, origin);	
       }
+      markers = []
+      function addMarkerTer(location, label){
+        var marker = new google.maps.Marker({
+          position: location,
+          label: label,
+          map: map
+        });
+        markers.push(marker);
+      }
       function addMarker(location) {
         var marker = new google.maps.Marker({
           position: location,
