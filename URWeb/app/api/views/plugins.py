@@ -65,17 +65,14 @@ class Plugins(generic.View):
 		
 	def get(self, request, name, format):
 		self.loadDict()
-		for item in self.dictObject:
-			new_plugin = PluginDB(username='admin', name=item['name'], path=item['path'], description=item['description'])
-			new_plugin.save()
-				
+			
 		if not name:
 			#if not self.dictObject:
 			#	self.loadDict()
 			#response = dict()
 			#response['data'] = self.dictObject
 			plugin_data = PluginDB.objects.all()			
-			respone = {
+			response = {
 				'data': [
 				{
 				'username': item.username,
