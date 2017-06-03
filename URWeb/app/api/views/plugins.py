@@ -83,7 +83,7 @@ class Plugins(generic.View):
 
 			return HttpResponse(json.dumps(response))
 		else:
-			#data = dict()
+			data = dict()
 			#value = False
 			#if not self.dictObject:
 			#	self.loadDict()
@@ -98,7 +98,7 @@ class Plugins(generic.View):
 				data['msg'] = 'The selected plugin could not be found'
 			else:
 				data['result'] = True
-				pathToPlugin = os.path.join(self.pluginsModulesPath, path, path + ".html")
+				pathToPlugin = os.path.join(self.pluginsModulesPath, name, name + ".html")
 				file = open(pathToPlugin, "r")
 				content = file.read()
 				file.close()
@@ -144,11 +144,12 @@ class Plugins(generic.View):
 			value = False
 			if not self.dictObject:
 				self.loadDict()
-			for items in self.dictObject:
-				if items['name'] == name:
-					value = True
-					path = items['path']
-					break
+			#for items in self.dictObject:
+			#	if items['name'] == name:
+			#		value = True
+			#		path = items['path']
+			#		break
+			path = PluginDB.objects.all().filter(name=name).get('name')
 			pathToPlugin = os.path.join(self.pluginsModulesPath, path, path + ".py")
 			exec('from .modules.{}.{} import Plugin'.format(name, name))
 			result = ''
@@ -158,7 +159,30 @@ class Plugins(generic.View):
 				result = result['result']
 			except Exception as e:
 				print("No module named Main found\n{}".format(e))
-			return HttpResponse(result)
+		return HttpResponse(result)
+
+	def delete(self, request, name, format):
+		if not name:
+			return HttpResponseNotFound('No plugin name given')
+		try:
+			username = str(request.user)
+			data = PluginDB.objects.all().filter(name=name)
+			if not data:
+				return HttpResponseNotFound('Plugin name not found in database')
+			data = data.filter(username=username)
+			if not data and username != 'admin':
+				return HttpResponseNotFound('User has no privileges to delete this plugin')
+			path_to_plugin = os.path.join(self.pluginsModulesPath, name)
+			try:
+				shutil.rmtree(path_to_plugin)
+			except Exception as e:
+				print("Failed to remove plugin from modules folder")
+			PluginDB.objects.all().filter(name=name).delete()
+			
+		except Exception as ex:
+			print(str(ex))
+			return HttpResponseNotFound(str(ex))
+		return HttpResponse("OK")
 
 
 class UploadPlugin(generic.View):
@@ -177,7 +201,7 @@ class UploadPlugin(generic.View):
 				if not self.ERROR:
 					self.ERROR = 'Failed to save file'
 				return HttpResponse(self.ERROR)
-		plugin_path = os.path.join(self.PLUGIN_CONSTANTS.PLUGIN_MODULES_PATH, name)
+		plugin_path = os.path.join(self.PLUGIN_CONSTANTS.PLUGINS_MODULES_PATH, name)
 		new_plugin = PluginDB(username=str(request.user), name=name, path=plugin_path, description=description)
 		new_plugin.save()
 		return HttpResponse('OK')
