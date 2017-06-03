@@ -140,9 +140,9 @@ USE_TZ = False
 
 # default static files settings for PythonAnywhere.
 # see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
-MEDIA_ROOT = u'D:\\work\\Facultate\\WEB\\PROJECT\\URWeb\\URWeb\\media'
+MEDIA_ROOT = u'D:\\work\\Facultate\\WEB\\PROJECT_NEW\\URWeb\\URWeb\\media'
 MEDIA_URL = '/media/'
-STATIC_ROOT = u'D:\\work\\Facultate\\WEB\\PROJECT\\URWeb\\static'
+STATIC_ROOT = u'D:\\work\\Facultate\\WEB\\PROJECT_NEW\\URWeb\\static\\'
 STATIC_URL = '/static/'
 
 APPEND_SLASH = False

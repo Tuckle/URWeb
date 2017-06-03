@@ -11,8 +11,10 @@
                        <div style="float:right; font-size: 80%; position: relative; top:-10px">
 			    {% if user and not user.is_anonymous %}
 			        <a href="/myaccount">My Account</a>
+				<a href="/report">Check report</a>
                             {% else %}
                                	<a href="/login">Log in your account</a>
+				<a href="/report" style="margin-left: 10px"> Check report</a>
                             {% endif %}
                        </div>
                     </div> 
@@ -31,7 +33,7 @@
                             <center>   I don’t think we’ve met before. </center>
 			    <p></p>
 			    <center> <button class='help' onclick="location.href='help'"> Help </button> </center> 
-
+			   			
                             {% endif %}
                                 
                         </p>     

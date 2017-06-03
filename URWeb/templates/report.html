@@ -1,0 +1,188 @@
+{% load static %}
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title></title>
+	
+	<link rel="stylesheet" href={% static "styles/scholary.css" %} />
+	<link rel="stylesheet" href="/static/styles/anexeScholarly.css"/>
+	<style>
+	pre
+	{
+		font-family: Courier, 'New Courier', monospace;
+		line-height: 1.2;
+		font-size: 12px;
+		
+		white-space: pre-wrap;
+		white-space: -moz-pre-wrap;
+		white-space: -o-pre-wrap;
+		word-wrap: break-word;
+	}
+
+	p {
+		text-align: justify
+	  }
+
+	li {
+		text-align: justify
+	}
+
+	</style>
+</head>
+<body schema="http://schema.org/" xsd="http://www.w3.org/2001/XMLSchema" sa="https://ns.science.ai/" >
+	<article typeof="schema:ScholarlyArticle" resource="#">
+		<h1>U R Web</h1>
+		<section>
+			<ol>
+			  <!-- The first author, Gheorghe Balan -->
+			  <li property="schema:author" typeof="sa:ContributorRole">
+				<a property="schema:author" href="https://github.com/balangheorghe" typeof="schema:Person">
+				  <span property="schema:givenName">Gheorghe</span>
+				  <span property="schema:familyName">Balan</span>
+				</a>
+				<a href="#scienceai" property="sa:roleAffiliation" resource="https://github.com/balangheorghe">a</a>
+				<sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
+				  <a property="schema:email" href="mailto:balangheorghe1997@gmail.com" title="corresponding author">✉</a>
+				</sup>
+			  </li>
+			  <!-- The second author, Iulian Bute -->
+			  <li property="schema:author" typeof="sa:ContributorRole">
+				<a property="schema:author" href="https://github.com/iulianbute" typeof="schema:Person">
+				  <span property="schema:givenName">Iulian</span>
+				  <span property="schema:familyName">Bute</span>
+				</a>
+				<a href="#scienceai" property="sa:roleAffiliation" resource="https://github.com/iulianbute">a</a>
+				<sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
+				  <a property="schema:email" href="mailto:Iulian.bute@gmail.com" title="corresponding author">✉</a>
+				</sup>
+			  </li>
+			  <!-- The third author, Adrian Piriu -->
+			  <li property="schema:author" typeof="sa:ContributorRole">
+				<a property="schema:author" href="https://github.com/Tuckle" typeof="schema:Person">
+				  <span property="schema:givenName">Adrian</span>
+				  <span property="schema:familyName">Piriu</span>
+				</a>
+				<a href="#scienceai" property="sa:roleAffiliation" resource="https://github.com/Tuckle">a</a>
+				<sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
+				  <a property="schema:email" href="mailto:adi.piriu5113@yahoo.com" title="corresponding author">✉</a>
+				</sup>
+			  </li>
+			  <!-- The fourth author, Ingrid Stoleru -->
+			  <li property="schema:author" typeof="sa:ContributorRole">
+				<a property="schema:author" href="https://github.com/ingridstoleru" typeof="schema:Person">
+				  <span property="schema:givenName">Ingrid</span>
+				  <span property="schema:familyName">Stoleru</span>
+				</a>
+				<a href="#scienceai" property="sa:roleAffiliation" resource="https://github.com/ingridstoleru">a</a>
+				<sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
+				  <a property="schema:email" href="mailto:ingridstoleru@gmail.com" title="corresponding author">✉</a>
+				</sup>
+			  </li>
+			
+			</ol>
+			<!-- The affiliation list -->
+			<ol>
+			  <li id="scienceai">
+				<a href="https://www.info.uaic.ro/bin/Main/" typeof="schema:Corporation">
+				  <span property="schema:name">Faculty of Informatics, UAIC</span>
+				</a>
+			  </li>
+			</ol>
+		</section>
+		<section typeof="sa:Abstract">
+			<h2>Introduction</h2>
+			<p>The U R Web project is meant to help in identifying the points of interest within a specified area. It provides basic functionalities of retrieving information related to the points of interest in the nearby, as well as related to taxis or current friends. Based on the information retrieved through Google APIs, there is done a characterization of a specified point of interest or of all the POIs in a specified area of interest. With different levels of scopes available, a client is provided with a customized way of retrieving relevant data about establishments and locations.</p>
+		</section>
+		<section typeof="sa:MaterialsAndMethods">
+			<h2>Materials And Methods</h2>
+			<p>For the authentication stage, consisting in the sign up, log in and reset password functionalities there are used the main functions from the Django authentication system. The application also provides social authentication, through Google and Twitter. The functionality mentioned before uses the Django Social Auth content, consisting in Google OAuth and Twitter OAuth. In order to retrieve a particular requested POI there are used the Google Places and Google Maps APIs. The requests which are sent contain specific parameters, such as the longitude and the latitude, as well as the radius. These define the position of the requested POI and the maximum area in which the search whould be developed. The result of the search consists in a json which contains information about POIs which meet the requirement. The information contains contact data, working programe, as well as reviews.
+			---> todo: specifications about the rest of the technologies used in the further plugins;		
+			</p>
+		</section>
+		<section>
+			<h2>Challenges</h2>
+			--> todo: add detailed info at your own plugins here; how did you projected this?
+			<section>
+				<h3>Friends management</h3>
+				<p>The application provides the user with the ability of checking the current friends request, as well as adding a new friend and removing an already existing friend. Once there is enabled the location, the user will be able to see the location of his friends on the map. The location of each friend is represented on the map with a pin, on which there is mentioned the corresponding name of the friend. The adding of a friend is done through the email address of that particular friend.</p>
+			</section>
+			<section>
+				<h3>Retrieving location of friends</h3>
+				<p>The user is able to see the location of his friend if and only if he enables the location. As mentioned above, each location of a friend will be marked on the map by a pin which shows the corresponding name.</p>
+			</section>
+			<section>
+				<h3>Find nearby points of interest</h3>
+				<p>The user can see the nearby points of interest. For this, there is needed the plugin with the same name. The first input parameter consists in the radius which determines the distance on which there is done the search. This value has to be greater than 5 meters and lower than 2000 meters. The language in which the information is shown needs to be selected. The last parameter for the search consists in the type of point of interest which the user is interested in. On the basis of these parameters there is made a request which is sent to the Google API. The result consists in a json, containing a list of entries which fulfill the requirements. Furthermore, the results can be filtered by proeminence or by the characteristic of being open at the current time of search. Each entry in the result contains reviews, the description and contact information, data which is incorporated in the json response.
+			</section>
+			<section>
+				<h3>Find nearby types of points of interest</h3>
+				<p>The user can also see the available types of points of interes in a specific area, on the basis of the provided radius. The parameters neeed for the search consist in the radius and the language. As in the previous example, the radius has to be greater than 5 and lower than 2000. The user can opt for showing only the types which correspond to the opened points of interest. On the basis on the input parameters, there is constructed a request which is sent to Google Places API. The response data is retrieved as a json and the types which need to be returned are obtained by parsing the current file.</p>
+			</section>
+			<section>
+				<h3>Find a particular point of interest</h3>
+				<p>The user can find a specific location by name, with the help of the plugin name "findLocationByName". The parameters needed consist in the name of the point of interest as well as the type of it. As before, the radius needs to be mentioned, in order to define the area of search. The value of the radius has to belong to the interval (5, 2000). Finally, the language in which the response is provided needs to be specified. The request made with the help of the input parameters is sent to Google Places API and the response consists in a json which contains the list of entries which match the requirements of the user. Each entry will contain the address, the available time and reviews, if existing. This information is returned after parsing the json response.
+				</p>
+			</section>
+  			<section>
+				<h3>Find nearby taxi companies</h3>
+				<p>The user can also see all the available taxi companies, in order to move easier from one point to another. As in the previous example, there needs to be provided the radius having values between 5 and 2000 meters, as well as the language in which the information will be shown. The request is constructed, containing a constraint of type, which will be set as "taxiStand". The answer consists in a json containing the entries which meet the requirements. The answer is parsed and the result is shown in a beautified manner on the interface side. </p>
+			</section>
+		</section>
+		<section>
+			<h2>Client Side application</h2>
+			<p>On the client side, the application needs to be able to send requests to the server.</p>
+			<!-- <figure>
+				<img src="viewer_level_1.png" />
+				<caption>Whole scope view of the hash, simmilarities with some predefined big categories</caption>
+			</figure>
+			-->
+		</section>
+
+
+		<section>
+			<h2>Implementation details</h2>
+			<section>
+				<h3>Authentication</h3>
+				At the level of authentication there have been used the main function available in the authentication system provided by Django.
+			</section>
+
+			<section>
+				<h3>QR Codes</h3>
+	    	</section>
+
+	   		<section>
+				<h3>Beacons</h3>
+	    	</section>
+
+	    	<section>
+				<h3>Find taxis nearby</h3>
+	    	</section>
+
+	    	<section>
+				<h3>Load plugins</h3>
+	    	</section>
+
+	    	---> todo: a se continua cu detalii despre implementarea celorlalte pluginuri;
+
+			<section>
+				<h3>Tooling</h3>
+				<p>The toolset chosen for the job is straight forward:</p>
+	             <ul>
+	             	<li>Frontend: HTML, CSS, Bootstrap. These techonologies have been used in order to render the forms 
+	             		and to define the conceptual design of the pages.</li>
+	             	<li>Backend: Django. This high level framework has been used as it provides a variety of functions useful at the level of authentication and data management. It provides cross site scripting, cross site request forgery, SQL injection and clickjacking protection. What is more, it provides predefined models, which makes it easier to model the information stored in the database.</li>
+					<li>Database:</li> --> to be done; specificatii despre baza de date, cum a fost folosita; 
+				</ul>
+			</section>
+		</section>
+
+		<section typeof="sa:Conclusion">
+			<h2>Conclusion</h2>
+			<p>The application is provided to any user who is interested in retrieving through a customized service further information about the points of interest in the nearby. Also, it provides the user with a particular way of managing the friends and checking the locations of them, in order to make the computation of the routes an easier task.</p>
+		</section>
+	</article>
+    
+</body>
+</html>

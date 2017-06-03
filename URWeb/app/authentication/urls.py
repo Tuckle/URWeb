@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 #from .views.signup import SignupView
 from .views.myaccount import MyAccountView
+from .views.report import ReportView
 from .views.help import HelpView
 #from .views.forgotpassword import ForgotPasswordView
 from django.conf.urls import include
@@ -31,6 +32,7 @@ auth_urls = [
     #url(r'^signup', SignupView.as_view(template_name="signup.html"), name='signup'),
     url(r'^myaccount', MyAccountView.as_view(template_name='myaccount.html'), name='myaccount'), 
     url(r'^help', HelpView.as_view(template_name='help.html'), name='help'),
+    url(r'^report', ReportView.as_view(template_name='report.html'), name='report'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})', auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^password_reset/done', auth_views.password_reset_done, name='password_reset_done'),
     url(r'^password_reset', auth_views.password_reset, name='password_reset'),
