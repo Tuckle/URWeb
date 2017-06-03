@@ -179,7 +179,7 @@ class UploadPlugin(generic.View):
 		return True
 
 	def check_plugin(self, plugin_name):
-		class_regex = re.compile('^def\s+Plugin\s*(\(|:).*')
+		class_regex = re.compile('^class\s+Plugin\s*(\(|:).*')
 		func_regex = re.compile('^\s+def\s+run\s*\(\s*self.*')
 
 		path_to_plugin = os.path.join(self.PLUGIN_CONSTANTS.PLUGINS_MODULES_PATH, plugin_name)
@@ -234,9 +234,9 @@ class UploadPlugin(generic.View):
 			return False
 		os.remove(zip_path)
 		
-		if not self.check_plugin(plugin_name):
-			shutil.rmtree(save_to)
-			return False
+#		if not self.check_plugin(plugin_name):
+#			shutil.rmtree(save_to)
+#			return False
 
 		self.add_plugin_to_list(plugin_name, save_to, plugin_description)	
 

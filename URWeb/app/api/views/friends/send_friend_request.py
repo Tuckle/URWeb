@@ -18,20 +18,9 @@ class SendFriendRequest(generic.View):
 
 	def put(self, request, username):
 		
-		username = request.user
+		username = str(request.user)
 		data = json.loads(request.body)
 		email = data['email']
-
-		# tempUser = User(username = 'Gigi', firstname = 'Gheorghe', lastname = 'Balan', password = '00000000000000000000000000000000', email = 'gbalan@yahoo.com', pos_lat = '00,00', pos_lng = '00,00')
-		# tempUser.save()
-		# tempUser = User(username = 'Uli', firstname = 'Iulian', lastname = 'Bute', password = '00000000000000000000000000000001', email = 'ibute@yahoo.com', pos_lat = '00,00', pos_lng = '00,00')
-		# tempUser.save()
-		# tempUser = User(username = 'Adi', firstname = 'Adrian', lastname = 'Piriu', password = '00000000000000000000000000000002', email = 'apiriu@yahoo.com', pos_lat = '00,00', pos_lng = '00,00')
-		# tempUser.save()
-		# tempUser = User(username = 'PreaNesuferita', firstname = 'Ingrid', lastname = 'Stoleru', password = '00000000000000000000000000000003', email = 'istoleru@yahoo.com', pos_lat = '00,00', pos_lng = '00,00')
-		# tempUser.save()
-
-
 
 		if not username:
 			response = dict()

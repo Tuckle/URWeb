@@ -9,60 +9,173 @@
               position: relative;
           }
           ul.nav-pills {
-              top: 200px;
+              top: 400px;
               position: fixed;
           }
           div.col-sm-9 div {
-              height: 400px;
+              height: 300px;
               font-size: 20px;
+              margin-left: 40px;
+              margin-right: 40px;
           }
-          #section1 {color: #fff; background-color: #428bca;}
-          #section2 {color: #fff; background-color: #428bca;}
-          #section3 {color: #fff; background-color: #428bca;}
-          #section41 {color: #fff; background-color: #428bca;}
-          #section42 {color: #fff; background-color: #428bca;}
+          p {
+             font-size: 70%;
+             margin-left: 40px;
+             margin-right: 40px;
+          }
+
+         lis {
+             display: list-item;
+             font-size: 90%;
+             margin-left: 60px;
+             margin-right: 40px;
+         }
+
+          .my-tag {
+            color: white;
+          }
+
+          div {
+               text-align: justify;
+               text-justify: inter-word;
+          }
+
+          #authentication {color: #000000; background-color: #bce8f1;}
+          #login {color: #000000; background-color: #bce8f1;}
+          #myaccount {color: #000000; background-color: #bce8f1;}
+          #friends {color: #000000; background-color: #bce8f1;}
+          #plugins {color: #000000; background-color: #bce8f1;}
+          #seeNearbyPlaces {color: #000000; background-color: #bce8f1;}
+          #seeNearbyPlacesTypes {color: #000000; background-color: #bce8f1;}
+          #searchLocationByName {color: #000000; background-color: #bce8f1;}
+          #searchTaxis {color: #000000; background-color: #bce8f1;}
+          #seeFriends {color: #000000; background-color: #bce8f1;}
+           
           
           @media screen and (max-width: 810px) {
-            #section1, #section2, #section3, #section41, #section42  {
+            #authentication, #login, #myaccount, #friends, #plugins, #seeNearbyPlaces, #seeNearbyPlacesTypes, #searchLocationByName, #searchTaxis, #seeFriends, #seeRoutes {
                 margin-left: 150px;
             }
           }
         </style>
-    
-
-            <div class="container" style="height:1500px">
+                   
+            <div class="container">
                 <div class="row">
-                    <div data-spy="scroll" data-target="#myScrollspy" data-offset="20">
+		     <div data-spy="scroll" data-target="#myScrollspy">
                         <nav class="col-sm-3" id="myScrollspy">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li class="active"><a href="#section1">General Description</a></li>
-                                <li><a href="#section2">Use cases</a></li>
-                                <li><a href="#section3">Related functionalities</a></li>
+                            <ul class="nav nav-pills nav-stacked bg-faded">
+                                <li class="active"><a href="#authentication">Authentication</a></li>
+                                <li><a class = "my-tag" href="#login">Login</a></li>
+                                <li><a class = "my-tag" href="#myaccount">My account</a></li>
+                                <li><a class = "my-tag" href="#friends">Friends</a></li>
+                                <li><a class = "my-tag" href="#plguins">Plugins</a></li>
+                                <li><a class = "my-tag" href="#seeNearbyPlaces">Find nearby POIs</a></li>
+                                <li><a class = "my-tag" href="#seeNearbyPlacesTypes">Find nearby POIs types</a></li>
+                                <li><a class = "my-tag" href="#searchLocationByName">Find locations by names</a></li>
+                                <li><a class = "my-tag" href="#searchTaxis">Find taxis</a></li>
+                                <li><a class = "my-tag" href="#seeFriends">Check friends locations</a></li>
                             </ul>
                         </nav>
-                    
-                        <div class="col-sm-9" style="width: 550px" id="mysections">
-                            <div id="homebox" style="margin: 50px auto;" class="mainbox col-md-40 col-md-offset-3 col-sm-40 col-sm-offset-2">                    
-                                <div class="panel panel-info" style="height:1300px">
-                                    <div id="section1">    
-                                        <center><h2>Description</h2></center>
-                                        <p>This application is supposed to provide the necessary information regarding the places.</p>
-                                    </div>
-                                    <div id="section2"> 
-                                        <h2>Section 2</h2>
-                                        <p>Try to scroll this section and look at the navigation list while scrolling!</p>
-                                    </div>        
-                                    <div id="section3">         
-                                        <h1>Section 3</h1>
-                                        <p>Try to scroll this section and look at the navigation list while scrolling!</p>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
+            
+                   
+		         <div class="col-sm-9" style="width: 700px" id="mysections">
+		             <div id="homebox" style="margin: 50px auto;" class="mainbox col-md-40 col-md-offset-3 col-sm-40 col-sm-offset-6">                    
+                                <div class="panel panel-info" style="height:3000px">
+                                    <div class="panel-heading" style="height:40px; width:100%; margin-left: 0px; margin-right: 0px;">Help</div>
+                                
+				    <div id="introduction" style="height:6%"> 
+                                        <p></p>
+                                        <center><b>Welcome!</b></center>
+                                        <p></p>
+                                        <p>This application is meant to provide you with required information about the points of interest in the nearby area.
+                                           You can check the route on map and see your friends locations in order to get to them easier.</p>
+                    					<p></p>
+                    					<p>Take your time to scroll down in order to find further information about the related functionalities.</p>
                     </div>
+				
+				    <div id="authentication" style="height:8%">
+                            <p></p>    
+                            <center><b>Authentication</b></center>
+                             <p></p>
+					        <p>In order to access the location functionalities, you need to log into an existing account or create a new one. In case you don't have an account and you don't want to log in via the related social accounts, you can create a new account, by clicking the SignUp button, which can be found in the bottom of the home page. The home page is the first page of the application. You need to provide at least your username, your email address and a valid password. Pay attention when choosing the password, for it not to be too common or too similar with your name.</p>
+                    </div>
+                       
+                    <div id="login" style="height:8%">
+                        <p></p>         
+                        <center><b>Log in</b></center>
+                        <p></p>
+                        <p>As mentioned above, you can only be provided with the functionalities related to POIs and friends management if you are logged in. You can opt for logging in via your social accounts, such as Google or Twitter. You can also log into an already existing account, if having one. You can select the log in option from the home page. The log in via Google or Twitter buttons are found in the bottom of the home page, while the simple log in option is to be found in the right upper part of the home page. If you possess a beacon, you can log in via it.
+                        Once you are logged in, you are redirected to your account page.</p>
+                    </div>
+
+                    <div id="myaccount" style="height:4%"> 
+                        <p></p>        
+                        <center><b>My account</b></center>
+                        <p></p>
+                        <p>There you can generate a QR code, in order to log in easier from other personal devices. You can also select to log out from the application. Also, you can get to the location page.</p>
+                    </div>
+
+                    <div id="friends" style="height:7%">         
+                        <p></p>
+                        <center><b>Friends</b></center>
+                        <p></p>
+                        <p>In the right upper part of the location page, you can find a variety of functionalities related to friends management. You can choose to add a new friend, remove an already existing friend or answer to a friend request. If you enable the location, by clicking the button with the same name from the left upper side of the page, you will be able to see the location of your friends on the map and your location as well. The location of each friend is represented on map with a pin, on which it is written his or her name.</p>
+                    </div>
+
+                    <div id="plugins" style="height:6%">         
+                        <p></p>
+                        <center><b>Plugins</b></center>
+                        <p></p>
+                        <p>In the right upper part of the location page you can find the functionalities related to plugins. If you want a certain functionality to be fulfilled, you can opt for adding a new plugin. Once the pluggin is loaded, the name will appear in the list of plugins available in the bottom right side of the page. Once the plugin is not relevant for you anymore, it can be removed.</p>
+                    </div>
+
+                    <div id="seeNearbyPlaces" style="height:15%">         
+                        <p></p>
+                        <center><b>See nearby places</b></center>
+                        <p></p>
+                        <p>In the right bottom of the page you can see the available list of already existing plugins. By defult, you have at your disposal 5 plugins:
+                        <lis>See nearby places</lis>
+                        <lis>See nearby places types</lis>
+                        <lis>Search location by name</lis>
+                        <lis>Search taxis</lis>
+                        <lis>See friends locations</lis>
+                        You can opt for checking the nearby points of interest. In this case, select the plugin with the same name from the list. You need to select the radius which determines the distance on which you want to see the points of interest. It has to be greater than 5 meters and lower than 2000 meters. You also need to select the language in which the information is shown, consisting in English or Romanian. The last parameter for your search consists in the type of point of interest which you are interested in. You can filter your results by proeminence by selecting the "Rank by proeminence filter" and you can also show only the opened points of interest, by selecting the "Open now" option. The response consists in a list of points of interest which meet the requirements. Each entry contains reviews, the description and contact information.
+                        </p>
+                    </div>
+
+                    <div id="seeNearbyPlacesTypes" style="height:7%">         
+                        <p></p>
+                        <center><b>See nearby places types</b></center>
+                        <p></p>
+                        <p>The second plugin can show you all the available types of points of interest on a specific area. The parameters needed for your search consist in the radius and the language. As in the previous example, the radius has to be greater than 5 and lower than 2000. Also, you can opt for showing only the types which correspond to opened points of interest. You will be provided with a list of types which meet the requirements.</p>
+                    </div>
+
+                    <div id="searchLocationByName" style="height:8%">         
+                        <p></p>
+                        <center><b>Search location by name</b></center>
+                        <p></p>
+                        <p>If you want to check a specific location, you can do it by selecting the plugin with the same name. You need to input the name in the first field and the type of POI you are looking for. Also, you need to select the radius, in order to define an area for search. The radius needs the have a value in the interval (5, 2000) meters. Finally, you need to provide the language in which you want the information to be shown. You will get one or more results, which correspond to your search. This results will contain the address, the available time and reviews, when existing.</p>
+                    </div>
+
+                    <div id="searchTaxis" style="height:7%">         
+                        <p></p>
+                        <center><b>Search taxis</b></center>
+                        <p></p>
+                        <p>If you want to see all the available taxis company, in order to move from one point to another, you can use the plugin with the same name. As in the previous examples, you will need to provide a radius with values between 5 and 2000 meters, as well as the language in which you want the information to be shown. You will get a list of results which meet the requirements, each entry containing reviews, description and contact information.</p>
+                    </div>
+
+                    <div id="seeFriends" style="height:6%">         
+                        <p></p>
+                        <center><b>Search friends</b></center>
+                        <p></p>
+                        <p>If you want to check the location of your friends, you can do this using the plugin with the same name. You will need to input the distance on which you want to see friends and the value of time used for filtering by users activity. You will therefore see pins on maps, each of them pointing to the location of one friend.</p>
+                    </div>
+
+                  </div>
                 </div>
             </div>
-
+        </div>
+    </div>
+</div>
 
 {% endblock %}
