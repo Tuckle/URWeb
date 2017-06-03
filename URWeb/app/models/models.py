@@ -3,6 +3,14 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+class Plugins(models.Model):
+	username = models.CharField(max_length = 50)
+	name = models.CharField(max_length = 50)
+	path = models.CharField(max_length = 255)
+	description = models.CharField(max_length = 1000)	
+	class Meta:
+		db_table = "Plugins"
+
 class Location(models.Model):
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
 	pos_lat = models.CharField(max_length = 30)

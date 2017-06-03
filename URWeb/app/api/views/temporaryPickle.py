@@ -1,3 +1,4 @@
+#from URWeb.app.models.models import Plugins as PluginDB
 import pickle
 
 path = r'pluginsList'
@@ -24,6 +25,10 @@ def dump(path, data):
 # print(data)
 # dump(path, data)
 data = load(path)
+#PluginDB.objects.all().delete()
+#for item in data:
+#	new_plugin = PluginDB(username='admin', name=item['name'], path=item['path'], description=item['description'])
+#	new_plugin.save()
 new = {
     'name': 'searchTaxis',
     'description': 'Searches taxis based on input radius',
@@ -31,7 +36,7 @@ new = {
 }
 
 print(data)
-#data = data[:4]
+data = data[:5]
 print(data)
 exit(1)
 #data.append(new)

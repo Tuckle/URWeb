@@ -1,116 +1,89 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 import json
 import requests
 import time
+import math
+
+from URWeb.app.models.models import FriendsRequest
+from URWeb.app.models.models import Location
+from django.contrib.auth.models import User
+from URWeb.app.models.models import Friends
+import datetime
 
 class Plugin():
+	def rad(self, value):
+		return value * math.pi / 180
 
-	def constructData(self, googlePlacesResponse, apiKey, count = None):
-		data = []
-		resultCode = 0
-		firstResultCode = 0
-		counter = 0
-		while True:
-			if count != None:
-				if counter >= count:
-					break
+	def computeDistance(self,point1, point2):
+		earthRadius = 6378137
+		p2lat = float(point2.pos_lat)
+		p2lng = float(point2.pos_lng)
+		p1lat = float(point1.pos_lat)
+		p1lng = float(point1.pos_lng)
 
-			if "status" in googlePlacesResponse:
-				if googlePlacesResponse['status'] == "OK":
-					resultCode = -1
-				elif googlePlacesResponse['status'] == "ZERO_RESULTS":
-					resultCode = 0
-				elif googlePlacesResponse['status'] == "OVER_QUERY_LIMIT":
-					resultCode = 1
-				elif googlePlacesResponse['status'] == "REQUEST_DENIED":
-					resultCode = 2
-				elif googlePlacesResponse['status'] == "INVALID_REQUEST":
-					resultCode = 3
-				else:
-					resultCode = 4
+		dLat = self.rad(p2lat - p1lat)
+		dLng = self.rad(p2lng - p1lng)
+		a = math.sin(dLat / 2) * math.sin(dLat / 2) + math.cos(self.rad(p1lat)) * math.cos(self.rad(p2lat)) * math.sin(dLng / 2) * math.sin(dLng / 2)
+		c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+		return earthRadius * c
 
-				if counter == 0:
-					firstResultCode = resultCode
-				
-				if resultCode == -1:
-					if "results" in googlePlacesResponse:
-						for result in googlePlacesResponse["results"]:
-							data.append(result)
+	def getFriendsLocation(self, username, distance, deltaTime):
+		my_id = User.objects.get(username = username)
+		# myLocation = Location.objects.all().filter(user_id = my_id).update(pos_lat = "47.137132717193964", pos_lng="27.545814514160156", pos_timestamp = datetime.datetime.now())
+		myLocation = Location.objects.get(user_id = my_id)
+		
+		friendsList = Friends.objects.all().filter(username1 = username)
+		locationSet = set()
+		actualFriends = set()
+		for item in friendsList:
+			actualFriends.add(item.username2)
 
-					if "next_page_token" in googlePlacesResponse:
-						if len(googlePlacesResponse["next_page_token"]):
-							url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?pagetoken={}&key={}".format(googlePlacesResponse["next_page_token"], apiKey)
-							currentTime = time.time()
-							limitTime = currentTime + 10
-							while limitTime < time.time():
-								time.sleep(1)
-								ret = requests.get(url)
-								googlePlacesResponse = ret.json()
-								if googlePlacesResponse['status'] == "OK":
-									break
-						else:
-							break
-					else:
-						break
-				else:
-					break
-			else:
-				break
-			counter += 1
+		friendsList = Friends.objects.all().filter(username2 = username)			
+		for item in friendsList:
+			actualFriends.add(item.username1)
 
-		return firstResultCode, resultCode, data
+		for friend in actualFriends:
+			user_id = User.objects.get(username = friend).id
+			location = Location.objects.get(user_id = user_id)
+			if self.friendIsNear(myLocation, location, distance, deltaTime):
+				locationSet.add(location)
+		locationSet.add(myLocation)
+		return locationSet
 
-	def processRequest(self, urlInput, apiKey, counter):
-		response = requests.get(urlInput)
-		response = response.json()
-		firstResultCode, resultCode, data = self.constructData(response, apiKey, counter)
+	def friendIsNear(self, myLocation, friendLocation, distance, deltaTime):
+		currentTime = datetime.datetime.now()
+		friendStoredTime = datetime.datetime.strptime(str(friendLocation.pos_timestamp), "%Y-%m-%d %H:%M:%S.%f")
+		myStoredTime = datetime.datetime.strptime(str(myLocation.pos_timestamp), "%Y-%m-%d %H:%M:%S.%f")
 
-		allTypes = {}
-		for x in data:
-			for item in x['types']:
-			# item = x['name']
-				if item not in allTypes:
-					allTypes[item] = 1
-				else:
-					allTypes[item] = allTypes[item] + 1
+		if friendStoredTime + datetime.timedelta(minutes=int(deltaTime)) > currentTime and myStoredTime + datetime.timedelta(minutes=int(deltaTime)) > currentTime:
+			if (self.computeDistance(myLocation, friendLocation) <= float(distance) * 1000):
+				return True
+		return False
 
-		"""<ul class="list-group">
-  <li class="list-group-item">First item</li>
-  <li class="list-group-item">Second item</li>
-  <li class="list-group-item">Third item</li>
-</ul>"""
-		data = '''<ul class="list-group">'''
-		for x in allTypes:
-			data +=''' <li class="list-group-item">''' + str(x) + '''<span class="badge">''' + str(allTypes[x]) +'''</span></li>'''
-		data += '''</ul>''' 
-		return data
+	def constructData(self, locationSet):
+		components = ""
+		for item in locationSet:
+			username = User.objects.get(id = item.user_id).username
+			loc = "var temp_location = {lat: " + item.pos_lat +  " , lng: "+ item.pos_lng +  "}"
+			components = components + """
+			""" + loc + """
+			addMarkerTer(temp_location, '"""+ username + """')
+			"""
+		script = """<script>console.log('ana')""" + components + """</script>"""
+		return script
 
-	def run(self, requestBody, format):
-		apiKey = "AIzaSyDXYDYmpNXAo01aw71oMT6KJXoI1aTTyvg"
-		data = json.loads(requestBody)
-		vlat = "-33.8670522"
-		vlng = "151.1957362"
-		radius = 500
-		if data['radius']:
-			radius = data['radius']
-		language = "en"
-		if data['lng']:
-			language = data['lng']
-		open_now = False
-		if data['open_now']:
-			open_now = data['open_now']
 
-		if data['ld']['lat']:
-			vlat = data['ld']['lat']
+	def processRequest(self):
+		return None
 
-		if data['ld']['lng']:
-			vlng = data['ld']['lng']
 
-		if open_now:
-			url = r'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={},{}&radius={}&language={}&opennow&key={}'.format(vlat, vlng, radius, language, apiKey)
-		else:
-			url = r'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={},{}&radius={}&language={}&key={}'.format(vlat, vlng, radius, language, apiKey)
-		data = self.processRequest(url, apiKey, 3)
+	def run(self, request_body, format):
+		data = json.loads(request_body)
+		distance = data['distance']
+		deltaTime = data['deltaTime']
+		username = data['username']
+		locationSet = self.getFriendsLocation(username, distance, deltaTime)
+		data = self.constructData(locationSet)
 		return data 
