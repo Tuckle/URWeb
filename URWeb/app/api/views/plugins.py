@@ -153,7 +153,10 @@ class Plugins(generic.View):
 			#		value = True
 			#		path = items['path']
 			#		break
-			path = PluginDB.objects.all().filter(name=name).get('name')
+			path = PluginDB.objects.all().filter(name=name)
+			if not path:
+				return HttpResponseNotFound('Plugin does not exist in database')
+			path = name
 			pathToPlugin = os.path.join(self.pluginsModulesPath, path, path + ".py")
 			exec('from .modules.{}.{} import Plugin'.format(name, name))
 			result = ''
