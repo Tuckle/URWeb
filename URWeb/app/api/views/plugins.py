@@ -64,11 +64,11 @@ class Plugins(generic.View):
 		
 		
 	def get(self, request, name, format):
-		#self.loadDict()
-		#PluginDB.objects.all().delete()
-		#for item in self.dictObject:
-		#	new_plugin = PluginDB(username='admin', name=item['name'], path=item['path'], description=item['description'])
-		#	new_plugin.save()
+		# self.loadDict()
+		# PluginDB.objects.all().delete()
+		# for item in self.dictObject:
+		# 	new_plugin = PluginDB(username='admin', name=item['name'], path=item['path'], description=item['description'])
+		# 	new_plugin.save()
 			
 		if not name:
 			#if not self.dictObject:
