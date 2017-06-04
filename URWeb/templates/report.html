@@ -132,12 +132,21 @@
 		</section>
 		<section>
 			<h2>Client Side application</h2>
+
+			--> todo: add pictures and explanations about the client experience
 			<p>On the client side, the application needs to be able to send requests to the server. The main use cases correspond to the plugins.</p>
-			<!-- <figure>
-				<img src="viewer_level_1.png" />
-				<caption>Whole scope view of the hash, simmilarities with some predefined big categories</caption>
+			<p>At the level of authentication, the user is able to generate a QR code in order to login easier from other personal devices.</p>
+			
+			<figure>
+				<img src="static/images/qrcode.png" />
 			</figure>
-			-->
+			
+			<p>In order to determine the POIs of interest, the user will have to select a plugin which meets the requirements and to provide the necessary parameters for the search.</p>
+			<figure>
+				<img src="static/images/findNearbyPlaces.png" />
+				<caption>Template for the nearby places search. The parameters need to be provided by the user.</caption>
+			</figure>
+
 		</section>
 
 
@@ -146,27 +155,87 @@
 			<section>
 				<h3>Authentication</h3>
 				<p>At the level of authentication there have been used the main function available in the authentication system provided by Django. For the sign up, we have done at the level of interface a particular form, in which the username, the first name, the last name, the email and the password would be provided as input. The first and the last name are not mandatory fields.
-				   				   
+				In order to defense agains CSRF attacks, we ensured that the GET requests are effect free. Also, the requests via unsafe methods, such as POST, PUT and DELETE have been protected through the following steps: in any template that uses a POST form, we have used the csrf_token tag inside the form element. In most of the cases, we have used render() function in the corresponding view functions, which made the application be covered, since this function already uses RequestContext.    
+				Consequently, the signup function receives a request as parameter and checks if the input data is valid, meeting the basic requirements of security.</p> 
 
-	   
-				</p>
+<pre>def signup(request):
+if request.method == 'POST':
+    form = SignUpForm(request.POST)
+    if form.is_valid():
+        form.save()
+        username = form.cleaned_data.get('username')
+        raw_password = form.cleaned_data.get('password1')
+        user = authenticate(username=username, password=raw_password)
+        login(request, user)
+        return redirect('home')
+	else:
+        form = SignUpForm()
+return render(request, 'signup.html', {'form': form})</pre>
+
+			<p>	Basically, what we are doing is handling the UserCreationForm processing. After the code reaches form.save(), the user is created. Afterwards, we take a step forward. We manually authenticate the user. In order to perform the authentication, we need to grab the raw password from the input. The user.password stores the hash and we can't use it directly to authenticate. If the authenticate() function is executed successfully, we can securely log the user in. After that, we redirect the user to the personal account page. </p>
+			<p></p>
+			<p>The login and logout are implemented on the basis of the functions provided by django.contrib.auth. In the urls.py document, each template is mapped with the corresponding functionality:</p>
+			<p> url(r'^login',  auth_views.login, {'template_name': 'login.html'}, name='login')</p>
+   			<p>url(r'^logout', auth_views.logout, {'template_name': 'logout.html', 'next_page': '/'}, name='logout')</p>
+   			<p></p>
+   			<p>Concerning the possible scenario of forgetting the password, once the user selects the reset password option, he will be asked to input an email address, in order to confirm the intention. In order to send the confirmation email, we have configured the Gmail SMTP. Once the user receives the email, he gets a link which redirects him to the main reset password form. This requires a new valid password to be introduced.</p> 
+   			<p></p>
+   			<p>Regarding the social authentication, we support Twitter and Google authentication. In order to implement this feature, we had to include the main auth URLs in the urlspatterns file:</p>
+   		<p>url('', include('django.contrib.auth.urls', namespace='auth'))</p>
+    	<p>url('', include('social.apps.django_app.urls', namespace='social'))</p>
+    		<p>Also, we had to add the key and access tokens for Twitter and Google in the configuration file. These have been obtained my making a new application in the provider's website. We have set the callback URL. Also, the login template has been modified. We added:</p>
+    	<p><'social:begin' 'google-oauth2' %}?next=/myaccount></p>
+		<p><'social:begin' 'twitter' %}?next=/myaccount></p>
 			</section>
 
 			<section>
-				<h3>QR Codes</h3>
-	    		</section>
+			<h3>QR Codes</h3>
+			<p>There has been also added the functionality of logging through QR codes. Once the user is logged in on the web application, he can generate a QR code, in order to log in easier from other personal devices. At the level of implementation, we had to install django-qrauth and Redis. In the templates directory, there have been added the invalid_code.html for handling invalid codes and the main page. In our root urlconf we have added the following pattern:</p>
+			<p>url(r'^qr/', include('qrauth.urls'))</p>
+			<p>In the configuration file, we had to set the expiration time and the redirect url.</p>
+			<p>AUTH_QR_CODE_EXPIRATION_TIME = 300</p> 
+			<p>AUTH_QR_CODE_REDIRECT_URL = "/myaccount"</p>		
+			<p>There is one security concern in this case, as it is possible for someone who has access to the user's session(for example, if the user is still logged in one the website, but is away from the computer), to scan the QR code and therefore to log into the user's account.</p>	
+    		</section>
 
-	   		<section>
-				<h3>Beacons</h3>
-	    		</section>
+   			<section>
+			<h3>Beacons</h3>
+			<p>We have also added the functionality of logging with Beacons, being available more as a proof of concept. In the templates we have added a form, in which the user can input the type of the beacon and the id. The name of the beacon is formatted as to the requirements:</p>
+			<p>beacon_name = '{}!{}'.format(request.POST['btype'], request.POST['bid'])</p>
+			<p>Afterwards, the request is formatted:</p>
+			<p>link = 'https://proximitybeacon.googleapis.com/v1beta1/beacons/{}'.format(beacon_name)</p>
+			<p>There is done a request in order to determine whether that beacon exists and to retrieve the location.</p>
+    		</section>
 
-	    		<section>
-				<h3>Find taxis nearby</h3>
-	    		</section>
+    		<section>
+			<h3>Find taxis nearby</h3>
+			<p>One of the plugins of the application supports the retrieval of data regarding the available taxi companies in the nearby. At the level of implementation, the first template which has been added is the one in which there are inputted the parameters. The user has to provide the radius for the search, the language in which prefers the information to be shown and whether or not he would like to do the filtering according to the availability from the point of view of the programe. There is done an ajax request to the module that fulfills this functionality:</p>
+	<pre>
+	$.ajax({
+	type: 'post',
+	url: '/api/plugins/' + document.getElementById("plugin-data").name,
+	data : JSON.stringify(data),
+	processData: false,
+	success: function(data){
+	  var div = document.getElementById("resultContent")
+	  div.innerHTML = data
+	  $("#resultText").removeClass('hidden');
+	}...})
 
-	    		<section>
-				<h3>Load plugins</h3>
-	    		</section>
+	</pre>
+
+		<p>On the backend side, there is done request to the Google API, looking as it follows:</p>
+		<p>request_link = r'https://maps.googleapis.com/maps/api/place/nearbysearch/' \
+					   r'json?location={},{}&radius={}&language={}&key={}&type=taxi_stand'.\
+			format(self.LOCATION_DATA['lat'], self.LOCATION_DATA['lng'],
+				   self.RADIUS, self.LANGUAGE, self.API_KEY)</p>
+		<p>The request above will provide a json response containing a list of entries which meet the requirements. In order to retrieve the details
+		about that particular entries, we need to make another request:</p>
+		<p>place_detail_link = r'https://maps.googleapis.com/maps/api/place/details/json?{}={}&key={}'</p>
+		<p>We iterate through the first list and for each valid entry we make the second request, in order to be provided with the details of the places.</p>
+		<p>The final response is formatted according to a second template and it is returned to the user.</p>
+		
+    	    </section>
 
 	    	---> todo: a se continua cu detalii despre implementarea celorlalte pluginuri;
 
