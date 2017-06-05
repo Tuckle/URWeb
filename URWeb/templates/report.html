@@ -4,30 +4,32 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title></title>
+	<meta name="description" content="URWeb application report in Scholarly Format with infromation regarding the development of the application">
+	<meta name="keywords" content="project, infoiasi, web, urweb">
+	<meta name="robots" content="noindex,nofollow">
+	<title>URWeb - Report</title>
 	
-	<link rel="stylesheet" href={% static "styles/scholary.css" %} />
-	<link rel="stylesheet" href="/static/styles/anexeScholarly.css"/>
+	<link rel="stylesheet" href="http://scholarly.vernacular.io/scholarly.css"/>
 	<style>
-	pre
-	{
-		font-family: Courier, 'New Courier', monospace;
-		line-height: 1.2;
-		font-size: 12px;
-		
-		white-space: pre-wrap;
-		white-space: -moz-pre-wrap;
-		white-space: -o-pre-wrap;
-		word-wrap: break-word;
-	}
+		pre
+		{
+			font-family: Courier, 'New Courier', monospace;
+			line-height: 1.2;
+			font-size: 12px;
 
-	p {
-		text-align: justify
-	  }
+			white-space: pre-wrap;
+			white-space: -moz-pre-wrap;
+			white-space: -o-pre-wrap;
+			word-wrap: break-word;
+		}
 
-	li {
-		text-align: justify
-	}
+		p {
+			text-align: justify
+		}
+
+		li {
+			text-align: justify
+		}
 
 	</style>
 </head>
@@ -36,59 +38,59 @@
 		<h1>U R Web</h1>
 		<section>
 			<ol>
-			  <!-- The first author, Gheorghe Balan -->
-			  <li property="schema:author" typeof="sa:ContributorRole">
-				<a property="schema:author" href="https://github.com/balangheorghe" typeof="schema:Person">
-				  <span property="schema:givenName">Gheorghe</span>
-				  <span property="schema:familyName">Balan</span>
-				</a>
-				<a href="#scienceai" property="sa:roleAffiliation" resource="https://github.com/balangheorghe">a</a>
-				<sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
-				  <a property="schema:email" href="mailto:balangheorghe1997@gmail.com" title="corresponding author">✉</a>
-				</sup>
-			  </li>
-			  <!-- The second author, Iulian Bute -->
-			  <li property="schema:author" typeof="sa:ContributorRole">
-				<a property="schema:author" href="https://github.com/iulianbute" typeof="schema:Person">
-				  <span property="schema:givenName">Iulian</span>
-				  <span property="schema:familyName">Bute</span>
-				</a>
-				<a href="#scienceai" property="sa:roleAffiliation" resource="https://github.com/iulianbute">a</a>
-				<sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
-				  <a property="schema:email" href="mailto:Iulian.bute@gmail.com" title="corresponding author">✉</a>
-				</sup>
-			  </li>
-			  <!-- The third author, Adrian Piriu -->
-			  <li property="schema:author" typeof="sa:ContributorRole">
-				<a property="schema:author" href="https://github.com/Tuckle" typeof="schema:Person">
-				  <span property="schema:givenName">Adrian</span>
-				  <span property="schema:familyName">Piriu</span>
-				</a>
-				<a href="#scienceai" property="sa:roleAffiliation" resource="https://github.com/Tuckle">a</a>
-				<sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
-				  <a property="schema:email" href="mailto:adi.piriu5113@yahoo.com" title="corresponding author">✉</a>
-				</sup>
-			  </li>
-			  <!-- The fourth author, Ingrid Stoleru -->
-			  <li property="schema:author" typeof="sa:ContributorRole">
-				<a property="schema:author" href="https://github.com/ingridstoleru" typeof="schema:Person">
-				  <span property="schema:givenName">Ingrid</span>
-				  <span property="schema:familyName">Stoleru</span>
-				</a>
-				<a href="#scienceai" property="sa:roleAffiliation" resource="https://github.com/ingridstoleru">a</a>
-				<sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
-				  <a property="schema:email" href="mailto:ingridstoleru@gmail.com" title="corresponding author">✉</a>
-				</sup>
-			  </li>
-			
+				<!-- The first author, Gheorghe Balan -->
+				<li property="schema:author" typeof="sa:ContributorRole">
+					<a property="schema:author" href="https://github.com/balangheorghe" typeof="schema:Person">
+						<span property="schema:givenName">Gheorghe</span>
+						<span property="schema:familyName">Balan</span>
+					</a>
+					<a href="#scienceai" property="sa:roleAffiliation" resource="https://github.com/balangheorghe">a</a>
+					<sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
+						<a property="schema:email" href="mailto:balangheorghe1997@gmail.com" title="corresponding author">✉</a>
+					</sup>
+				</li>
+				<!-- The second author, Iulian Bute -->
+				<li property="schema:author" typeof="sa:ContributorRole">
+					<a property="schema:author" href="https://github.com/iulianbute" typeof="schema:Person">
+						<span property="schema:givenName">Iulian</span>
+						<span property="schema:familyName">Bute</span>
+					</a>
+					<a href="#scienceai" property="sa:roleAffiliation" resource="https://github.com/iulianbute">a</a>
+					<sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
+						<a property="schema:email" href="mailto:Iulian.bute@gmail.com" title="corresponding author">✉</a>
+					</sup>
+				</li>
+				<!-- The third author, Adrian Piriu -->
+				<li property="schema:author" typeof="sa:ContributorRole">
+					<a property="schema:author" href="https://github.com/Tuckle" typeof="schema:Person">
+						<span property="schema:givenName">Adrian</span>
+						<span property="schema:familyName">Piriu</span>
+					</a>
+					<a href="#scienceai" property="sa:roleAffiliation" resource="https://github.com/Tuckle">a</a>
+					<sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
+						<a property="schema:email" href="mailto:adi.piriu5113@yahoo.com" title="corresponding author">✉</a>
+					</sup>
+				</li>
+				<!-- The fourth author, Ingrid Stoleru -->
+				<li property="schema:author" typeof="sa:ContributorRole">
+					<a property="schema:author" href="https://github.com/ingridstoleru" typeof="schema:Person">
+						<span property="schema:givenName">Ingrid</span>
+						<span property="schema:familyName">Stoleru</span>
+					</a>
+					<a href="#scienceai" property="sa:roleAffiliation" resource="https://github.com/ingridstoleru">a</a>
+					<sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
+						<a property="schema:email" href="mailto:ingridstoleru@gmail.com" title="corresponding author">✉</a>
+					</sup>
+				</li>
+
 			</ol>
 			<!-- The affiliation list -->
 			<ol>
-			  <li id="scienceai">
-				<a href="https://www.info.uaic.ro/bin/Main/" typeof="schema:Corporation">
-				  <span property="schema:name">Faculty of Informatics, UAIC</span>
-				</a>
-			  </li>
+				<li id="scienceai">
+					<a href="https://www.info.uaic.ro/bin/Main/" typeof="schema:Corporation">
+						<span property="schema:name">Faculty of Informatics, UAIC</span>
+					</a>
+				</li>
 			</ol>
 		</section>
 		<section typeof="sa:Abstract">
@@ -97,165 +99,163 @@
 		</section>
 		<section typeof="sa:MaterialsAndMethods">
 			<h2>Materials And Methods</h2>
-			<p>For the authentication stage, consisting in the sign up, log in and reset password functionalities there are used the main functions from the Django authentication system. The application also provides social authentication, through Google and Twitter. The functionality mentioned before uses the Django Social Auth content, consisting in Google OAuth and Twitter OAuth. In order to retrieve a particular requested POI there are used the Google Places and Google Maps APIs. The requests which are sent contain specific parameters, such as the longitude and the latitude, as well as the radius. These define the position of the requested POI and the maximum area in which the search whould be developed. The result of the search consists in a json which contains information about POIs which meet the requirement. The information contains contact data, working programe, as well as reviews.
-			---> todo: specifications about the rest of the technologies used in the further plugins;		
+			<p>For the authentication stage, consisting in the sign up, log in and reset password functionalities there are used the main functions from the Django authentication system. The application also provides social authentication, through Google and Twitter. The functionality mentioned before uses the Django Social Auth content, consisting in Google OAuth and Twitter OAuth. In order to retrieve a particular requested POI there are used the Google Places and Google Maps APIs. The requests which are sent contain specific parameters, such as the longitude and the latitude, as well as the radius. These define the position of the requested POI and the maximum area in which the search whould be developed. The result of the search consists in a json which contains information about POIs which meet the requirement. The information contains contact data, working programe, as well as reviews.</p>
+			<p>For the development of a new plugin created by a user, we offer the default libraries from python 3.6 and, in addition, a few more libraries like: requests (for easily working with URLs and URIs) and jinja2 (for easily creating of webpages based on templates). Any other needed libraries or modules can be added to the plugins directory before uploading the plugin.</p>
+			<p>Our app also uses already existing django utilities and functionalities like: Django ORM and QuerySet (for database management), Django Templating, Django Security (for prevention of known vulnerabilities)
+				<!-- todo: specifications about the rest of the technologies used in the further plugins; -->
 			</p>
 		</section>
 		<section>
-			--> todo: add detailed info at your own plugins here; how did you projected this?
-			<h2>Challenges</h2>
-			<section>
-				<h3>Friends management</h3>
-				<p>The application provides the user with the ability of checking the current friends request, as well as adding a new friend and removing an already existing friend. Once there is enabled the location, the user will be able to see the location of his friends on the map. The location of each friend is represented on the map with a pin, on which there is mentioned the corresponding name of the friend. The adding of a friend is done through the email address of that particular friend.</p>
-			</section>
-			<section>
-				<h3>Retrieving location of friends</h3>
-				<p>The user is able to see the location of his friend if and only if he enables the location. As mentioned above, each location of a friend will be marked on the map by a pin which shows the corresponding name.</p>
-			</section>
-			<section>
-				<h3>Find nearby points of interest</h3>
-				<p>The user can see the nearby points of interest. For this, there is needed the plugin with the same name. The first input parameter consists in the radius which determines the distance on which there is done the search. This value has to be greater than 5 meters and lower than 2000 meters. The language in which the information is shown needs to be selected. The last parameter for the search consists in the type of point of interest which the user is interested in. On the basis of these parameters there is made a request which is sent to the Google API. The result consists in a json, containing a list of entries which fulfill the requirements. Furthermore, the results can be filtered by proeminence or by the characteristic of being open at the current time of search. Each entry in the result contains reviews, the description and contact information, data which is incorporated in the json response.
-			</section>
-			<section>
-				<h3>Find nearby types of points of interest</h3>
-				<p>The user can also see the available types of points of interes in a specific area, on the basis of the provided radius. The parameters neeed for the search consist in the radius and the language. As in the previous example, the radius has to be greater than 5 and lower than 2000. The user can opt for showing only the types which correspond to the opened points of interest. On the basis on the input parameters, there is constructed a request which is sent to Google Places API. The response data is retrieved as a json and the types which need to be returned are obtained by parsing the current file.</p>
-			</section>
-			<section>
-				<h3>Find a particular point of interest</h3>
-				<p>The user can find a specific location by name, with the help of the plugin name "findLocationByName". The parameters needed consist in the name of the point of interest as well as the type of it. As before, the radius needs to be mentioned, in order to define the area of search. The value of the radius has to belong to the interval (5, 2000). Finally, the language in which the response is provided needs to be specified. The request made with the help of the input parameters is sent to Google Places API and the response consists in a json which contains the list of entries which match the requirements of the user. Each entry will contain the address, the available time and reviews, if existing. This information is returned after parsing the json response.
-				</p>
-			</section>
-  			<section>
-				<h3>Find nearby taxi companies</h3>
-				<p>The user can also see all the available taxi companies, in order to move easier from one point to another. As in the previous example, there needs to be provided the radius having values between 5 and 2000 meters, as well as the language in which the information will be shown. The request is constructed, containing a constraint of type, which will be set as "taxiStand". The answer consists in a json containing the entries which meet the requirements. The answer is parsed and the result is shown in a beautified manner on the interface side. </p>
-			</section>
-		</section>
-		<section>
+			<!-- todo: add detailed info at your own plugins here; how did you projected this? -->
 			<h2>Client Side application</h2>
 
-			--> todo: add pictures and explanations about the client experience
+			<!-- todo: add pictures and explanations about the client experience -->
 			<p>On the client side, the application needs to be able to send requests to the server. The main use cases correspond to the plugins.</p>
-			<p>At the level of authentication, the user is able to generate a QR code in order to login easier from other personal devices.</p>
 			
+			<p>Login form</p>
 			<figure>
-				<img src="static/images/qrcode.png" />
-			</figure>
-			
-			<p>In order to determine the POIs of interest, the user will have to select a plugin which meets the requirements and to provide the necessary parameters for the search.</p>
-			<figure>
-				<img src="static/images/findNearbyPlaces.png" />
-				<caption>Template for the nearby places search. The parameters need to be provided by the user.</caption>
+				<img src="{% static 'images/login.png' %}" alt="QRCode"/>
 			</figure>
 
+			<p>Help</p>
+			<figure>
+				<img src="{% static 'images/help.png' %}" alt="QRCode"/>
+			</figure>
+			
+			<p>At the level of authentication, the user is able to generate a QR code in order to login easier from other personal devices.</p>
+			<figure>
+				<img src="{% static 'images/qrcode.png' %}" alt="QRCode"/>
+			</figure>
+
+			<p>Home</p>
+			<figure>
+				<img src="{% static 'images/main.png' %}" alt="QRCode"/>
+			</figure>
+
+			<p>The main page of the application</p>
+			<figure>
+				<img src="{% static 'images/location1.png' %}" alt="QRCode"/>
+			</figure>
+
+			
 		</section>
 
-
 		<section>
-			<h2>Implementation details</h2>
+			<h3>Authentication details</h3>
 			<section>
 				<h3>Authentication</h3>
 				<p>At the level of authentication there have been used the main function available in the authentication system provided by Django. For the sign up, we have done at the level of interface a particular form, in which the username, the first name, the last name, the email and the password would be provided as input. The first and the last name are not mandatory fields.
-				In order to defense agains CSRF attacks, we ensured that the GET requests are effect free. Also, the requests via unsafe methods, such as POST, PUT and DELETE have been protected through the following steps: in any template that uses a POST form, we have used the csrf_token tag inside the form element. In most of the cases, we have used render() function in the corresponding view functions, which made the application be covered, since this function already uses RequestContext.    
-				Consequently, the signup function receives a request as parameter and checks if the input data is valid, meeting the basic requirements of security.</p> 
+					In order to defense agains CSRF attacks, we ensured that the GET requests are effect free. Also, the requests via unsafe methods, such as POST, PUT and DELETE have been protected through the following steps: in any template that uses a POST form, we have used the csrf_token tag inside the form element. In most of the cases, we have used render() function in the corresponding view functions, which made the application be covered, since this function already uses RequestContext.    
+					Consequently, the signup function receives a request as parameter and checks if the input data is valid, meeting the basic requirements of security.</p> 
 
-<pre>def signup(request):
-if request.method == 'POST':
-    form = SignUpForm(request.POST)
-    if form.is_valid():
-        form.save()
-        username = form.cleaned_data.get('username')
-        raw_password = form.cleaned_data.get('password1')
-        user = authenticate(username=username, password=raw_password)
-        login(request, user)
-        return redirect('home')
-	else:
-        form = SignUpForm()
-return render(request, 'signup.html', {'form': form})</pre>
+					<pre>def signup(request):
+						if request.method == 'POST':
+						form = SignUpForm(request.POST)
+						if form.is_valid():
+						form.save()
+						username = form.cleaned_data.get('username')
+						raw_password = form.cleaned_data.get('password1')
+						user = authenticate(username=username, password=raw_password)
+						login(request, user)
+						return redirect('home')
+						else:
+						form = SignUpForm()
+						return render(request, 'signup.html', {'form': form})</pre>
 
-			<p>	Basically, what we are doing is handling the UserCreationForm processing. After the code reaches form.save(), the user is created. Afterwards, we take a step forward. We manually authenticate the user. In order to perform the authentication, we need to grab the raw password from the input. The user.password stores the hash and we can't use it directly to authenticate. If the authenticate() function is executed successfully, we can securely log the user in. After that, we redirect the user to the personal account page. </p>
-			<p></p>
-			<p>The login and logout are implemented on the basis of the functions provided by django.contrib.auth. In the urls.py document, each template is mapped with the corresponding functionality:</p>
-			<p> url(r'^login',  auth_views.login, {'template_name': 'login.html'}, name='login')</p>
-   			<p>url(r'^logout', auth_views.logout, {'template_name': 'logout.html', 'next_page': '/'}, name='logout')</p>
-   			<p></p>
-   			<p>Concerning the possible scenario of forgetting the password, once the user selects the reset password option, he will be asked to input an email address, in order to confirm the intention. In order to send the confirmation email, we have configured the Gmail SMTP. Once the user receives the email, he gets a link which redirects him to the main reset password form. This requires a new valid password to be introduced.</p> 
-   			<p></p>
-   			<p>Regarding the social authentication, we support Twitter and Google authentication. In order to implement this feature, we had to include the main auth URLs in the urlspatterns file:</p>
-   		<p>url('', include('django.contrib.auth.urls', namespace='auth'))</p>
-    	<p>url('', include('social.apps.django_app.urls', namespace='social'))</p>
-    		<p>Also, we had to add the key and access tokens for Twitter and Google in the configuration file. These have been obtained my making a new application in the provider's website. We have set the callback URL. Also, the login template has been modified. We added:</p>
-    	<p><'social:begin' 'google-oauth2' %}?next=/myaccount></p>
-		<p><'social:begin' 'twitter' %}?next=/myaccount></p>
-			</section>
+						<p>	Basically, what we are doing is handling the UserCreationForm processing. After the code reaches form.save(), the user is created. Afterwards, we take a step forward. We manually authenticate the user. In order to perform the authentication, we need to grab the raw password from the input. The user.password stores the hash and we can't use it directly to authenticate. If the authenticate() function is executed successfully, we can securely log the user in. After that, we redirect the user to the personal account page. </p>
+						<p></p>
+						<p>The login and logout are implemented on the basis of the functions provided by django.contrib.auth. In the urls.py document, each template is mapped with the corresponding functionality:</p>
+						<p> url(r'^login',  auth_views.login, {'template_name': 'login.html'}, name='login')</p>
+						<p>url(r'^logout', auth_views.logout, {'template_name': 'logout.html', 'next_page': '/'}, name='logout')</p>
+						<p></p>
+						<p>Concerning the possible scenario of forgetting the password, once the user selects the reset password option, he will be asked to input an email address, in order to confirm the intention. In order to send the confirmation email, we have configured the Gmail SMTP. Once the user receives the email, he gets a link which redirects him to the main reset password form. This requires a new valid password to be introduced.</p> 
+						<p></p>
+						<p>Regarding the social authentication, we support Twitter and Google authentication. In order to implement this feature, we had to include the main auth URLs in the urlspatterns file:</p>
+						<p>url('', include('django.contrib.auth.urls', namespace='auth'))</p>
+						<p>url('', include('social.apps.django_app.urls', namespace='social'))</p>
+						<p>Also, we had to add the key and access tokens for Twitter and Google in the configuration file. These have been obtained my making a new application in the provider's website. We have set the callback URL. Also, the login template has been modified. We added:</p>
+						<p><'social:begin' 'google-oauth2' %}?next=/myaccount></p>
+						<p><'social:begin' 'twitter' %}?next=/myaccount></p>
+					</section>
 
-			<section>
-			<h3>QR Codes</h3>
-			<p>There has been also added the functionality of logging through QR codes. Once the user is logged in on the web application, he can generate a QR code, in order to log in easier from other personal devices. At the level of implementation, we had to install django-qrauth and Redis. In the templates directory, there have been added the invalid_code.html for handling invalid codes and the main page. In our root urlconf we have added the following pattern:</p>
-			<p>url(r'^qr/', include('qrauth.urls'))</p>
-			<p>In the configuration file, we had to set the expiration time and the redirect url.</p>
-			<p>AUTH_QR_CODE_EXPIRATION_TIME = 300</p> 
-			<p>AUTH_QR_CODE_REDIRECT_URL = "/myaccount"</p>		
-			<p>There is one security concern in this case, as it is possible for someone who has access to the user's session(for example, if the user is still logged in one the website, but is away from the computer), to scan the QR code and therefore to log into the user's account.</p>	
-    		</section>
+					<section>
+						<h3>QR Codes</h3>
+						<p>There has been also added the functionality of logging through QR codes. Once the user is logged in on the web application, he can generate a QR code, in order to log in easier from other personal devices. At the level of implementation, we had to install django-qrauth and Redis. In the templates directory, there have been added the invalid_code.html for handling invalid codes and the main page. In our root urlconf we have added the following pattern:</p>
+						<p>url(r'^qr/', include('qrauth.urls'))</p>
+						<p>In the configuration file, we had to set the expiration time and the redirect url.</p>
+						<p>AUTH_QR_CODE_EXPIRATION_TIME = 300</p> 
+						<p>AUTH_QR_CODE_REDIRECT_URL = "/myaccount"</p>		
+						<p>There is one security concern in this case, as it is possible for someone who has access to the user's session(for example, if the user is still logged in one the website, but is away from the computer), to scan the QR code and therefore to log into the user's account.</p>	
+					</section>
 
-   			<section>
-			<h3>Beacons</h3>
-			<p>We have also added the functionality of logging with Beacons, being available more as a proof of concept. In the templates we have added a form, in which the user can input the type of the beacon and the id. The name of the beacon is formatted as to the requirements:</p>
-			<p>beacon_name = '{}!{}'.format(request.POST['btype'], request.POST['bid'])</p>
-			<p>Afterwards, the request is formatted:</p>
-			<p>link = 'https://proximitybeacon.googleapis.com/v1beta1/beacons/{}'.format(beacon_name)</p>
-			<p>There is done a request in order to determine whether that beacon exists and to retrieve the location.</p>
-    		</section>
+					<section>
+						<h3>Beacons</h3>
+						<p>We have also added the functionality of logging with Beacons, being available more as a proof of concept. In the templates we have added a form, in which the user can input the type of the beacon and the id. The name of the beacon is formatted as to the requirements:</p>
+						<p>beacon_name = '{}!{}'.format(request.POST['btype'], request.POST['bid'])</p>
+						<p>Afterwards, the request is formatted:</p>
+						<p>link = 'https://proximitybeacon.googleapis.com/v1beta1/beacons/{}'.format(beacon_name)</p>
+						<p>There is done a request in order to determine whether that beacon exists and to retrieve the location.</p>
+					</section>
 
-    		<section>
-			<h3>Find taxis nearby</h3>
-			<p>One of the plugins of the application supports the retrieval of data regarding the available taxi companies in the nearby. At the level of implementation, the first template which has been added is the one in which there are inputted the parameters. The user has to provide the radius for the search, the language in which prefers the information to be shown and whether or not he would like to do the filtering according to the availability from the point of view of the programe. There is done an ajax request to the module that fulfills this functionality:</p>
-	<pre>
-	$.ajax({
-	type: 'post',
-	url: '/api/plugins/' + document.getElementById("plugin-data").name,
-	data : JSON.stringify(data),
-	processData: false,
-	success: function(data){
-	  var div = document.getElementById("resultContent")
-	  div.innerHTML = data
-	  $("#resultText").removeClass('hidden');
-	}...})
+					<section>
+						<h3>Available Plugins</h3>
+						<section>
+							<h4>Friends management</h4>
+							<p>The application provides the user with the ability of checking the current friends request, as well as adding a new friend and removing an already existing friend. Once there is enabled the location, the user will be able to see the location of his friends on the map (only those that are currently sharing their location). The location of each friend is represented on the map with a pin, on which there is mentioned the corresponding name of the friend. The adding of a friend is done through the email address of that particular friend.</p>
+						</section>
+						<section>
+							<h4>Retrieving location of friends</h4>
+							<p>The user is able to see the location of his friend if and only if he enables the location. As mentioned above, each location of a friend will be marked on the map by a pin which shows the corresponding name.</p>
+						</section>
+						<section>
+							<h4>Find nearby points of interest</h4>
+							<p>The user can see the nearby points of interest. For this, there is needed the plugin with the same name. The first input parameter consists in the radius which determines the distance on which there is done the search. This value has to be greater than 5 meters and lower than 2000 meters. The language in which the information is shown needs to be selected. The last parameter for the search consists in the type of point of interest which the user is interested in. On the basis of these parameters there is made a request which is sent to the Google API. The result consists in a json, containing a list of entries which fulfill the requirements. Furthermore, the results can be filtered by proeminence or by the characteristic of being open at the current time of search. Each entry in the result contains reviews, the description and contact information, data which is incorporated in the json response.
+							</section>
+							<section>
+								<h4>Find nearby types of points of interest</h4>
+								<p>The user can also see the available types of points of interes in a specific area, on the basis of the provided radius. The parameters neeed for the search consist in the radius and the language. As in the previous example, the radius has to be greater than 5 and lower than 2000. The user can opt for showing only the types which correspond to the opened points of interest. On the basis on the input parameters, there is constructed a request which is sent to Google Places API. The response data is retrieved as a json and the types which need to be returned are obtained by parsing the current file.</p>
+							</section>
+							<section>
+								<h4>Find a particular point of interest</h4>
+								<p>The user can find a specific location by name, with the help of the plugin name "findLocationByName". The parameters needed consist in the name of the point of interest as well as the type of it. As before, the radius needs to be mentioned, in order to define the area of search. The value of the radius has to belong to the interval (5, 2000). Finally, the language in which the response is provided needs to be specified. The request made with the help of the input parameters is sent to Google Places API and the response consists in a json which contains the list of entries which match the requirements of the user. Each entry will contain the address, the available time and reviews, if existing. This information is returned after parsing the json response.
+								</p>
+							</section>
+							<section>
+								<h4>Find nearby taxi companies</h4>
+								<p>The user can also see all the available taxi companies, in order to move easier from one point to another. As in the previous example, there needs to be provided the radius having values between 5 and 2000 meters, as well as the language in which the information will be shown. The request is constructed, containing a constraint of type, which will be set as "taxiStand". The answer consists in a json containing the entries which meet the requirements. The answer is parsed and the result is shown in a beautified manner on the interface side. </p>
+							</section>
+						</section>
 
-	</pre>
+						<section>
 
-		<p>On the backend side, there is done request to the Google API, looking as it follows:</p>
-		<p>request_link = r'https://maps.googleapis.com/maps/api/place/nearbysearch/' \
-					   r'json?location={},{}&radius={}&language={}&key={}&type=taxi_stand'.\
-			format(self.LOCATION_DATA['lat'], self.LOCATION_DATA['lng'],
-				   self.RADIUS, self.LANGUAGE, self.API_KEY)</p>
-		<p>The request above will provide a json response containing a list of entries which meet the requirements. In order to retrieve the details
-		about that particular entries, we need to make another request:</p>
-		<p>place_detail_link = r'https://maps.googleapis.com/maps/api/place/details/json?{}={}&key={}'</p>
-		<p>We iterate through the first list and for each valid entry we make the second request, in order to be provided with the details of the places.</p>
-		<p>The final response is formatted according to a second template and it is returned to the user.</p>
-		
-    	    </section>
+							<section>
+								<h3>Tooling</h3>
+								<p>The toolset chosen for the job is straight forward:</p>
+								<ul>
+									<li>Frontend: HTML, CSS, Bootstrap. These techonologies have been used in order to render the forms 
+										and to define the conceptual design of the pages.</li>
+										<li>Backend: Django. This high level framework has been used as it provides a variety of functions useful at the level of authentication and data management. It provides cross site scripting, cross site request forgery, SQL injection and clickjacking protection. What is more, it provides predefined models, which makes it easier to model the information stored in the database.</li>
+										<li>Database: SQLLite3</li>
+										<!-- to be done; specificatii despre baza de date, cum a fost folosita;  -->
+									</ul>
+								</section>
+							</section>
+							<section>
+								<h3>Team Work</h3>
+								<p>
+								The development of the project has started 3 months ago. We chose to use a public versioning platform in order to keep a track of our work and to help us in the development process as a team. GitHub platform helped us to fulfill this request and offered us the ability to easily integrate and syncronize each part of the application. We only stored, pushed and pulled from the main branch making sure that no conflicts would arise and when they did, we managed to solve them.</p>
+								<p>We started with a plan of our application in our mind and based on that each member came up with different ideas which have been used not only in the development of the core but also for extending its capabilities. In spite of some dificulties, this strategy gave us liberty in creating the app and a continuous unknown process of development to enrich our applications functionalities.</p>
+								<p>
+								The team has been divided into two sub teams, each with specific targets and deadlines regarding a certain functionality. This distribution did not affect our communication and if it was an important problem or issue that was stalling our development process, we would all engage it and try to solve as fast as we could. The team is made of four young and restless developers: Piriu Adrian (Tuckle), Balan Gheorghe  (Gigi), Bute Iulian (Uli), Stoleru Ingrid (Gorgya). For the first half of the development Ingrid and Iulian were assigned to work on the login functionality and Adi and Gigi on plugins system and for the second half Adi and Ingrid implemented the upload system for the plugins and added a new one, while Gigi and Iulian added friends feature and a related plugin.
+								</p>
+							</section>
 
-	    	---> todo: a se continua cu detalii despre implementarea celorlalte pluginuri;
 
-			<section>
-				<h3>Tooling</h3>
-				<p>The toolset chosen for the job is straight forward:</p>
-	             	<ul>
-	             	<li>Frontend: HTML, CSS, Bootstrap. These techonologies have been used in order to render the forms 
-	             		and to define the conceptual design of the pages.</li>
-	             	<li>Backend: Django. This high level framework has been used as it provides a variety of functions useful at the level of authentication and data management. It provides cross site scripting, cross site request forgery, SQL injection and clickjacking protection. What is more, it provides predefined models, which makes it easier to model the information stored in the database.</li>
-					<li>Database:</li> --> to be done; specificatii despre baza de date, cum a fost folosita; 
-			</ul>
-			</section>
-		</section>
+							<section typeof="sa:Conclusion">
+								<h2>Conclusion</h2>
+								<p>The application is provided to any user who is interested in retrieving through a customized service further information about the points of interest in the nearby. Also, it provides the user with a particular way of managing the friends and checking the locations of them, in order to make the computation of the routes an easier task.</p>
+							</section>
+						</article>
 
-		<section typeof="sa:Conclusion">
-			<h2>Conclusion</h2>
-			<p>The application is provided to any user who is interested in retrieving through a customized service further information about the points of interest in the nearby. Also, it provides the user with a particular way of managing the friends and checking the locations of them, in order to make the computation of the routes an easier task.</p>
-		</section>
-	</article>
-    
-</body>
-</html>
+					</body>
+					</html>
