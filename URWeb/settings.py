@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'social_django',
     'social.apps.django_app.default',
     'django.contrib.sites',
-    'URWeb.app.models'
+    'URWeb.app.models',
+    'letsencrypt',
 ]
 
 MIDDLEWARE = [

@@ -12,6 +12,7 @@ Pillow
 social-auth-app-django
 jinja2
 qrcode
+django-letsencrypt
 
 # django-qrauth
 
