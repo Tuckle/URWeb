@@ -2,6 +2,8 @@
 
 import redis
 
+from django.contrib.sites.models import Site
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, get_backends
 try:
@@ -76,13 +78,16 @@ def qr_code_picture(request, auth_code, r=None):
     if (user_id == None) or (int(user_id.decode(), 10) != request.user.id):
         raise Http404("No such auth code")
 
-    current_site = get_current_site(request)
+    #current_site = get_current_site(request)
+    #current_site = Site.objects.get_current()
+    current_site = request.get_host()
+    print("Current site 25", request.get_host())
     scheme = request.is_secure() and "https" or "http"
 
     login_link = "".join([
         scheme,
         "://",
-        current_site.domain,
+        current_site,
         reverse("qr_code_login", args=(auth_code_hash,)),
     ])
 
