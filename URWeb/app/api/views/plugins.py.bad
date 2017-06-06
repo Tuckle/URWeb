@@ -13,11 +13,11 @@ import zipfile
 
 class PluginConstants:
 	# PLUGIN_PATH_LIST = r'URWeb\app\api\views\pluginsList'
-	PLUGIN_PATH_LIST = os.path.join(os.getcwd(), 'URWeb', 'app', 'api', 'views', 'pluginsList')
+	PLUGIN_PATH_LIST = os.path.join(os.path.dirname(__file__), 'pluginsList')
 	# PLUGINS_MODULES_PATH = r'URWeb\app\api\views\modules'
-	PLUGINS_MODULES_PATH = os.path.join(os.getcwd(), 'URWeb', 'app', 'api', 'views', 'modules')
+	PLUGINS_MODULES_PATH = os.path.join(os.path.dirname(__file__), 'modules')
 	# PLUGINS_DOWNLOAD_PATH = r'URWeb\app\api\views\temp_downloads'
-	PLUGINS_DOWNLOAD_PATH = os.path.join(os.getcwd(), 'URWeb', 'app', 'api', 'views', 'temp_downloads')
+	PLUGINS_DOWNLOAD_PATH = os.path.join(os.path.dirname(__file__), 'temp_downloads')
 	TEMPLATE_DICT = {
 		'name': '',
 		'description': '',
@@ -37,8 +37,8 @@ class Plugins(generic.View):
 
 	# pluginsPathList = r'URWeb\app\api\views\pluginsList'
 	# pluginsModulesPath = r'URWeb\app\api\views\modules'
-	pluginsPathList = os.path.join(os.getcwd(), 'URWeb', 'app', 'api', 'views', 'pluginsList')
-	pluginsModulesPath = os.path.join(os.getcwd(), 'URWeb', 'app', 'api', 'views', 'modules')
+	pluginsPathList = os.path.join(os.path.dirname(__file__), 'pluginsList')
+	pluginsModulesPath = os.path.join(os.path.dirname(__file__), 'modules')
 	dictObject = None
 	plugin_template = {
 		'username': '',

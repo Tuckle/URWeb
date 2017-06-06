@@ -88,6 +88,7 @@ class Plugin():
 		return data
 
 	def run(self, request_body, format):
+		print("Gigel frone")
 		apiKey = "AIzaSyDXYDYmpNXAo01aw71oMT6KJXoI1aTTyvg"
 		data = json.loads(request_body)
 		vlat = "-33.8670522"
