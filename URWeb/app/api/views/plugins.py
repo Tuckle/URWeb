@@ -12,9 +12,12 @@ import pickle
 import zipfile
 
 class PluginConstants:
-	PLUGIN_PATH_LIST = r'URWeb\app\api\views\pluginsList'
-	PLUGINS_MODULES_PATH = r'URWeb\app\api\views\modules'
-	PLUGINS_DOWNLOAD_PATH = r'URWeb\app\api\views\temp_downloads'
+	# PLUGIN_PATH_LIST = r'URWeb\app\api\views\pluginsList'
+	PLUGIN_PATH_LIST = os.path.join(os.getcwd(), 'URWeb', 'app', 'api', 'views', 'pluginsList')
+	# PLUGINS_MODULES_PATH = r'URWeb\app\api\views\modules'
+	PLUGINS_MODULES_PATH = os.path.join(os.getcwd(), 'URWeb', 'app', 'api', 'views', 'modules')
+	# PLUGINS_DOWNLOAD_PATH = r'URWeb\app\api\views\temp_downloads'
+	PLUGINS_DOWNLOAD_PATH = os.path.join(os.getcwd(), 'URWeb', 'app', 'api', 'views', 'temp_downloads')
 	TEMPLATE_DICT = {
 		'name': '',
 		'description': '',
@@ -32,8 +35,10 @@ class PluginConstants:
                                 
 class Plugins(generic.View):
 
-	pluginsPathList = r'URWeb\app\api\views\pluginsList'
-	pluginsModulesPath = r'URWeb\app\api\views\modules'
+	# pluginsPathList = r'URWeb\app\api\views\pluginsList'
+	# pluginsModulesPath = r'URWeb\app\api\views\modules'
+	pluginsPathList = os.path.join(os.getcwd(), 'URWeb', 'app', 'api', 'views', 'pluginsList')
+	pluginsModulesPath = os.path.join(os.getcwd(), 'URWeb', 'app', 'api', 'views', 'modules')
 	dictObject = None
 	plugin_template = {
 		'username': '',
@@ -140,6 +145,7 @@ class Plugins(generic.View):
 		return HttpResponse("OK")
 
 	def post(self, request, name, format):
+		print("Stuuf")
 		if not name:
 			data = json.loads(request.body)
 			result = ''
