@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = r'&ncu9ucx_4oz9_k$k&%=b=3^2=!&vn-8i01qm5#pn1=_996_#u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [u'URWeb.pythonanywhere.com', u'127.0.0.1', "home.com", "444a02ca4c9d.sn.mynetname.net"]
 
@@ -145,7 +145,7 @@ MEDIA_ROOT = r'static/media'
 MEDIA_URL = '/media/'
 STATIC_ROOT = r'static'
 STATIC_URL = '/static/'
-STATIC_URL = os.path.join(os.path.dirname(os.path.dirname(__file__)), '/static/')
+#STATIC_URL = os.path.join(os.path.dirname(os.path.dirname(__file__)), '/static/')
 
 APPEND_SLASH = False
 LOGIN_REDIRECT_URL = '/myaccount'
