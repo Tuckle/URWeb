@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'social.apps.django_app.default',
     'django.contrib.sites',
     'URWeb.app.models',
-    'letsencrypt',
+    # 'letsencrypt',
 ]
 
 MIDDLEWARE = [
@@ -145,6 +145,7 @@ MEDIA_ROOT = r'static/media'
 MEDIA_URL = '/media/'
 STATIC_ROOT = r'static'
 STATIC_URL = '/static/'
+STATIC_URL = os.path.join(os.path.dirname(os.path.dirname(__file__)), '/static/')
 
 APPEND_SLASH = False
 LOGIN_REDIRECT_URL = '/myaccount'

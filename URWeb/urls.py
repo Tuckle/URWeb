@@ -33,5 +33,5 @@ urlpatterns = [
     url(r'^api', include(api_urls)),
     url(r'^qr', include('qrauth.urls')),
     url(r'^beacon(?:/(?P<beacon_name>\d![a-zA-Z0-9]+))?', Beacon.as_view(), name='beacon'),
-    url(r'^\.well-known/', include('letsencrypt.urls')),
+    # url(r'^\.well-known/', include('letsencrypt.urls')),
    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
